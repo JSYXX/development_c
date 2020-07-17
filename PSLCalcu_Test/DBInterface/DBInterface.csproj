@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9F0614AD-6CA6-4946-8C99-26E7D997E684}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DBInterface</RootNamespace>
+    <AssemblyName>DBInterface</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\lib\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Config, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Config.dll</HintPath>
+    </Reference>
+    <Reference Include="Golden.DotNetSDK, Version=3.0.2896.0, Culture=neutral, PublicKeyToken=679b0b76d5596727, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>RTDBHelper\ExternalDll\Golden.DotNetSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="IBM.Data.DB2, Version=9.0.0.2, Culture=neutral, PublicKeyToken=7c307b91aa13d208, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DBHelper\ExternalDll\IBM.Data.DB2.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess, Version=10.2.0.100, Culture=neutral, PublicKeyToken=89b483f429c47342">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DBHelper\ExternalDll\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="OSIsoft.PISDK, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c3309f0734ba2805">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>RTDBHelper\ExternalDll\OSIsoft.PISDK.dll</HintPath>
+    </Reference>
+    <Reference Include="OSIsoft.PISDKCommon, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c3309f0734ba2805">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>RTDBHelper\ExternalDll\OSIsoft.PISDKCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="OSIsoft.PITimeServer, Version=1.2.0.0, Culture=neutral, PublicKeyToken=c3309f0734ba2805">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>RTDBHelper\ExternalDll\OSIsoft.PITimeServer.dll</HintPath>
+    </Reference>
+    <Reference Include="PCCommon, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\PCCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="PGIMNet, Version=5.0.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>RTDBHelper\ExternalDll\PGIMNet.dll</HintPath>
+    </Reference>
+    <Reference Include="PlantConNet, Version=5.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>RTDBHelper\ExternalDll\PlantConNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DBHelper\ExternalDll\System.Data.OracleClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DBHelper\ExternalDll\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DBHelper\BaseDbInfo.cs" />
+    <Compile Include="DBHelper\CurrentDbType.cs" />
+    <Compile Include="DBHelper\DBProvider\BaseDbHelper.cs" />
+    <Compile Include="DBHelper\DbHelper.cs" />
+    <Compile Include="DBHelper\DbHelperFactory.cs" />
+    <Compile Include="DBHelper\DBProvider\IDbHelper.cs" />
+    <Compile Include="DBHelper\DBProvider\IDbHelper.Expand.cs" />
+    <Compile Include="DBHelper\DBProvider\MSOracleHelper.cs" />
+    <Compile Include="DBHelper\DBProvider\MySqlHelper.cs" />
+    <Compile Include="DBHelper\DBProvider\OleDbHelper.cs" />
+    <Compile Include="DBHelper\DBProvider\SqlHelper.cs" />
+    <Compile Include="DBHelper\DBProvider\SqLiteHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RTDBHelper\BaseRTDbInfo.cs" />
+    <Compile Include="RTDBHelper\CurrentRTDbType.cs" />
+    <Compile Include="RTDBHelper\RTDBHelperLongPGIM.cs" />
+    <Compile Include="RTDBHelper\RTDbHelper.cs" />
+    <Compile Include="RTDBHelper\RTDbHelperFactory.cs" />
+    <Compile Include="RTDBHelper\RTDBHelperLongTOM.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RTDBHelper\RTDBHelperLongXIANDB.cs" />
+    <Compile Include="RTDBHelper\RTDBProvider\BaseRTDbHelper.cs" />
+    <Compile Include="RTDBHelper\RTDBProvider\GoldenHelper.cs" />
+    <Compile Include="RTDBHelper\RTDBProvider\IRTDbHelper.cs" />
+    <Compile Include="RTDBHelper\RTDBProvider\IRTDbHelper.Expand.cs" />
+    <Compile Include="RTDBHelper\RTDBProvider\PGIMHelper.cs" />
+    <Compile Include="RTDBHelper\RTDBProvider\PIHelper.cs" />
+    <Compile Include="RTDBHelper\RTDBHelperLongPI.cs" />
+    <Compile Include="RTDBHelper\RTDBProvider\TOMHelper.cs" />
+    <Compile Include="RTDBHelper\RTDBProvider\XIANDBHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DBHelper\ExternalDll\IBM.Data.DB2.dll" />
+    <Content Include="DBHelper\ExternalDll\MySql.Data.dll" />
+    <Content Include="DBHelper\ExternalDll\Oracle.DataAccess.dll" />
+    <Content Include="DBHelper\ExternalDll\System.Data.OracleClient.dll" />
+    <Content Include="DBHelper\ExternalDll\System.Data.SQLite.dll" />
+    <Content Include="RTDBHelper\ExternalDll\gcsl.dll" />
+    <Content Include="RTDBHelper\ExternalDll\Golden.DotNetSDK.dll" />
+    <Content Include="RTDBHelper\ExternalDll\PGIMNet.dll" />
+    <Content Include="RTDBHelper\ExternalDll\PlantConNet.dll" />
+    <Content Include="RTDBHelper\RTDBProvider\PGIMNet.dll接口说明.txt" />
+    <Content Include="RTDBHelper\RTDBProvider\PGIMNet.dll特别注意，要使用gcsl.DLL.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

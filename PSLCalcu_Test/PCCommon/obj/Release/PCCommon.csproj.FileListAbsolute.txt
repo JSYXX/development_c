@@ -1,0 +1,32 @@
+C:\MyProgram\性能计算平台 .net版\performance calculation\bin\PCCommon.dll
+C:\MyProgram\性能计算平台 .net版\performance calculation\bin\PCCommon.pdb
+C:\MyProgram\性能计算平台 .net版\performance calculation\PerformanceCalculation\PCCommon\obj\Release\PCCommon.csprojResolveAssemblyReference.cache
+C:\MyProgram\性能计算平台 .net版\performance calculation\PerformanceCalculation\PCCommon\obj\Release\PCCommon.dll
+C:\MyProgram\性能计算平台 .net版\performance calculation\PerformanceCalculation\PCCommon\obj\Release\PCCommon.pdb
+C:\MyProgram\RealCalc\bin\PCCommon.dll
+C:\MyProgram\RealCalc\bin\PCCommon.pdb
+C:\MyProgram\RealCalc\PCCommon\obj\Release\PCCommon.csprojResolveAssemblyReference.cache
+C:\MyProgram\RealCalc\PCCommon\obj\Release\PCCommon.dll
+C:\MyProgram\RealCalc\PCCommon\obj\Release\PCCommon.pdb
+C:\MyProgram\RealCalc\lib\PCCommon.dll
+C:\MyProgram\RealCalc\lib\PCCommon.pdb
+E:\CProject\RealCalc\lib\PCCommon.dll
+E:\CProject\RealCalc\lib\PCCommon.pdb
+E:\CProject\RealCalc\PCCommon\obj\Release\PCCommon.dll
+E:\CProject\RealCalc\PCCommon\obj\Release\PCCommon.pdb
+E:\CProject\RealCalc\PCCommon\obj\Release\PCCommon.csprojResolveAssemblyReference.cache
+E:\CProject\PSL\lib\PCCommon.dll
+E:\CProject\PSL\lib\PCCommon.pdb
+E:\CProject\PSL\PCCommon\obj\Release\PCCommon.csprojResolveAssemblyReference.cache
+E:\CProject\PSL\PCCommon\obj\Release\PCCommon.dll
+E:\CProject\PSL\PCCommon\obj\Release\PCCommon.pdb
+D:\c#\PSLCalcu\lib\PCCommon.dll
+D:\c#\PSLCalcu\lib\PCCommon.pdb
+D:\c#\PSLCalcu\PCCommon\obj\Release\PCCommon.csprojResolveAssemblyReference.cache
+D:\c#\PSLCalcu\PCCommon\obj\Release\PCCommon.dll
+D:\c#\PSLCalcu\PCCommon\obj\Release\PCCommon.pdb
+D:\c#\PSLCalcu_Test\lib\PCCommon.dll
+D:\c#\PSLCalcu_Test\lib\PCCommon.pdb
+D:\c#\PSLCalcu_Test\PCCommon\obj\Release\PCCommon.csprojResolveAssemblyReference.cache
+D:\c#\PSLCalcu_Test\PCCommon\obj\Release\PCCommon.dll
+D:\c#\PSLCalcu_Test\PCCommon\obj\Release\PCCommon.pdb

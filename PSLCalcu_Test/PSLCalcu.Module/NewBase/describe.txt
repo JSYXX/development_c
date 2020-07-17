@@ -1,0 +1,3 @@
+NewBase 包于2019/11/8  新建  zuoweiqiang 编写相关计算函数
+
+

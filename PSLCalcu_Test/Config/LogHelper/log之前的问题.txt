@@ -1,0 +1,9 @@
+之前的log，不能正常的按照设定大小分割文件。是log4net.dll的版本问题。
+要从网站http://logging.apache.org/log4net/download_log4net.cgi上下载新版本即可。
+
+目前使用的是log4net-2.0.8版本下的.net4.0版。
+
+
+log4net设置说明请参考
+https://blog.csdn.net/pfe_nova/article/details/12225349
+https://blog.csdn.net/binnygoal/article/details/79557746

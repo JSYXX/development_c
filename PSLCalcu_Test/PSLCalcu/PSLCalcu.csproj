@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C9D0D2A6-8EAB-49B3-85A0-B0243228651A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PSLCalcu</RootNamespace>
+    <AssemblyName>PSLCalcu</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>16e64026</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\lib\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>calcu.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accord">
+      <HintPath>..\packages\Accord.3.8.0\lib\net45\Accord.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.MachineLearning">
+      <HintPath>..\packages\Accord.MachineLearning.3.8.0\lib\net45\Accord.MachineLearning.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math">
+      <HintPath>..\packages\Accord.Math.3.8.0\lib\net45\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math.Core">
+      <HintPath>..\packages\Accord.Math.3.8.0\lib\net45\Accord.Math.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics">
+      <HintPath>..\packages\Accord.Statistics.3.8.0\lib\net45\Accord.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="Config, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Config.dll</HintPath>
+    </Reference>
+    <Reference Include="DBInterface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\DBInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="Expression, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Expression.dll</HintPath>
+    </Reference>
+    <Reference Include="gcsl, Version=5.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\gcsl.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\lib\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="PGIMNet">
+      <HintPath>..\lib\PGIMNet.dll</HintPath>
+    </Reference>
+    <Reference Include="PlantConNet">
+      <HintPath>..\lib\PlantConNet.dll</HintPath>
+    </Reference>
+    <Reference Include="PSLCalcu.Module, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\PSLCalcu.Module.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph, Version=5.1.5.28844, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppRunForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AppRunForm.designer.cs">
+      <DependentUpon>AppRunForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\ConfigCSV.cs" />
+    <Compile Include="DAO\DAOSupport.cs" />
+    <Compile Include="DAO\OPCDAO.cs" />
+    <Compile Include="DAO\PSLCalcuConfigDAO.cs" />
+    <Compile Include="DAO\PSLDataDAO.cs" />
+    <Compile Include="DAO\PSLHistoryCalcuConfigDAO.cs" />
+    <Compile Include="DAO\PSLModulesDAO.cs" />
+    <Compile Include="DAO\IniTable.cs" />
+    <Compile Include="DAO\PSLScoreWeightConfig.cs" />
+    <Compile Include="DAO\PSLTagIdNameMapDAO.cs" />
+    <Compile Include="DAO\PSLTimeRecordDAO.cs" />
+    <Compile Include="DAO\RTDBDAO.cs" />
+    <Compile Include="DAO\PSLShiftInfoDAO.cs" />
+    <Compile Include="DAO\WebTagIdNameMapDAO.cs" />
+    <Compile Include="FormCalcuConfig\CheckCurve.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCalcuConfig\CheckCurve.Designer.cs">
+      <DependentUpon>CheckCurve.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCalcuConfig\DeleteConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCalcuConfig\DeleteConfig.Designer.cs">
+      <DependentUpon>DeleteConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDataManager\DataDelete.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDataManager\DataDelete.Designer.cs">
+      <DependentUpon>DataDelete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDataManager\DataGraph.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDataManager\DataGraph.Designer.cs">
+      <DependentUpon>DataGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDebugTools\DateTransTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDebugTools\DateTransTool.Designer.cs">
+      <DependentUpon>DateTransTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDebugTools\DateValue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDebugTools\DateValue.Designer.cs">
+      <DependentUpon>DateValue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDebugTools\DebugLogon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDebugTools\DebugLogon.Designer.cs">
+      <DependentUpon>DebugLogon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDebugTools\LogTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDebugTools\LogTest.Designer.cs">
+      <DependentUpon>LogTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormHisCalcu\HistoryHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHisCalcu\HistoryHelp.Designer.cs">
+      <DependentUpon>HistoryHelp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\CsvFileReader.cs" />
+    <Compile Include="Helper\TxtFileHelper.cs" />
+    <Compile Include="FormHisCalcu\HistoryCalcu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHisCalcu\HistoryCalcu.Designer.cs">
+      <DependentUpon>HistoryCalcu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormHisCalcu\HistoryCalcuAuto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHisCalcu\HistoryCalcuAuto.Designer.cs">
+      <DependentUpon>HistoryCalcuAuto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MyseltTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchHelp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchHelp.Designer.cs">
+      <DependentUpon>SearchHelp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Support\CurrentCalcuEngine.cs" />
+    <Compile Include="Support\ImportProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Support\ImportProgress.Designer.cs">
+      <DependentUpon>ImportProgress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MaxStartTime.cs" />
+    <Compile Include="Models\OPCDataItem.cs" />
+    <Compile Include="Models\OPCTagIdMap.cs" />
+    <Compile Include="Models\PSLModule.cs" />
+    <Compile Include="Models\PSLTagNameIdMapItem.cs" />
+    <Compile Include="Models\ShiftItem.cs" />
+    <Compile Include="Models\TimeRecord.cs" />
+    <Compile Include="Models\PSLCalcuItem.cs" />
+    <Compile Include="FormDatabase\ReadConstInfo2PSLData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDatabase\ReadConstInfo2PSLData.Designer.cs">
+      <DependentUpon>ReadConstInfo2PSLData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FormDebugTools\PSLCalcuModuleTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDebugTools\PSLCalcuModuleTest.Designer.cs">
+      <DependentUpon>PSLCalcuModuleTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDatabase\ReadShiftInfo2PSLData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDatabase\ReadShiftInfo2PSLData.Designer.cs">
+      <DependentUpon>ReadShiftInfo2PSLData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDataManager\DataSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDataManager\DataSearch.Designer.cs">
+      <DependentUpon>DataSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSystem\Setup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSystem\Setup.Designer.cs">
+      <DependentUpon>Setup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Support\CondExpression.cs" />
+    <Compile Include="FormDataManager\DataUniqeCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDataManager\DataUniqeCheck.Designer.cs">
+      <DependentUpon>DataUniqeCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Support\DoubleBufferListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Support\HistoryCalcuEngine.cs" />
+    <Compile Include="Support\Inputbox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Support\RealCalcuEngine.cs" />
+    <Compile Include="Support\SpansLogic.cs" />
+    <Compile Include="TestSupport\PValueTestData.cs" />
+    <Compile Include="TestSupport\SimulateGenerator.cs" />
+    <Compile Include="FormCalcuConfig\UpdateTagname.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCalcuConfig\UpdateTagname.Designer.cs">
+      <DependentUpon>UpdateTagname.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AppRunForm.resx">
+      <DependentUpon>AppRunForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCalcuConfig\CheckCurve.resx">
+      <DependentUpon>CheckCurve.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCalcuConfig\DeleteConfig.resx">
+      <DependentUpon>DeleteConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDataManager\Datadelete.resx">
+      <DependentUpon>DataDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDataManager\DataGraph.resx">
+      <DependentUpon>DataGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDebugTools\DateTransTool.resx">
+      <DependentUpon>DateTransTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDebugTools\DateValue.resx">
+      <DependentUpon>DateValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDebugTools\DebugLogon.resx">
+      <DependentUpon>DebugLogon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDebugTools\LogTest.resx">
+      <DependentUpon>LogTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormHisCalcu\HistoryCalcu.resx">
+      <DependentUpon>HistoryCalcu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormHisCalcu\HistoryCalcuAuto.resx">
+      <DependentUpon>HistoryCalcuAuto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormHisCalcu\HistoryHelp.resx">
+      <DependentUpon>HistoryHelp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchHelp.resx">
+      <DependentUpon>SearchHelp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Support\ImportProgress.resx">
+      <DependentUpon>ImportProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="FormDebugTools\PSLCalcuModuleTest.resx">
+      <DependentUpon>PSLCalcuModuleTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDatabase\ReadConstInfo2PSLData.resx">
+      <DependentUpon>ReadConstInfo2PSLData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDatabase\ReadShiftInfo2PSLData.resx">
+      <DependentUpon>ReadShiftInfo2PSLData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDataManager\DataSearch.resx">
+      <DependentUpon>DataSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSystem\Setup.resx">
+      <DependentUpon>Setup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDataManager\DataUniqeCheck.resx">
+      <DependentUpon>DataUniqeCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCalcuConfig\UpdateTagname.resx">
+      <DependentUpon>UpdateTagname.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PCCommon\PCCommon.csproj">
+      <Project>{b553aaf8-d36a-49e5-936f-f03e4015a227}</Project>
+      <Name>PCCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="calcu.ico" />
+    <Content Include="Resources\abb_logo.bmp" />
+    <Content Include="Resources\config.gif" />
+    <Content Include="Resources\exit.jpg" />
+    <Content Include="Resources\plant.ico" />
+    <None Include="PSLCalcu_rdbset的三种配置方式.xlsm" />
+    <None Include="Resources\start.bmp" />
+    <Content Include="Resources\start.ico" />
+    <Content Include="Resources\stop.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

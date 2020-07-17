@@ -1,0 +1,60 @@
+namespace PgimNet.PGIM
+{
+    public class PgimDatabase : IDatabase
+    {
+        public PgimDatabase();
+
+        public bool IsLogon { get; }
+
+        public int IsServerOnline(string server);
+        public int LicenseFor(string server, string appname);
+        public void Logoff();
+        public bool Logon(string server, string userName, string password);
+        public bool LogonAsService(string server, string userName, string password);
+        
+
+		//读取标签列表（所有标签）主要信息。以服务器名称和过滤字符串为参数，返回的是所有标签的名称、上下限，工程单位，描述等5个主要参数。
+        public List<Signal> QuerySignals(string server, string filter);
+		//读取标签列表（所有标签）详细信息。以用户登录名和过滤字符串为参数，返回的是所有标签的详细信息。包含了20多项标签信息。
+		public List<PgimSignal> ReadSignals(string userName, string filter);
+		//读取单个标签详细信息。tag为单个标签名称，如果找到标签，则返回标签详细信息，如果找不到，则返回null。包含了20多项标签信息。
+		public PgimSignal ReadDescription(string tag);
+        //读取标签描述。tag为单个标签名称，userName为windows登录名称。如果使用非登录用户名，会抛出异常
+		public PgimSignal ReadDescription(string userName, string tag);
+
+        //***************读接口****************************************
+		//读取历史数据，插值，单个标签
+		public List<SignalValue> ReadAggregates(string tag, DateTime startTime, DateTime endTime, CompressType compress, string resolution, int top);
+        //读取历史数据，插值，带时区参数，单个标签
+		public List<SignalValue> ReadAggregates(string userName, string tag, DateTime startTime, DateTime endTime, CompressType compress, string resolution, int top, TimeZoneType timezone);
+        //读取当前值，单个标签
+		public SignalValue ReadCurrent(string userName, string tag);
+        //读取当前值，批量标签
+		public List<SignalValue> ReadCurrents(string[] tags);        
+        //读取历史数据，原始值，单个标签。对应时间段内的数据数量不能超过22w。否则直接报错。参数top，仅在数据量不超过22w的情况下，指定取出前多少条数据。不能阻止报错发生。
+		//不带时区设置，入参startTime、endTime，返回数据时间，均按照timezone.txt配置文件设置。
+		public List<SignalValue> ReadRaw(string tag, DateTime startTime, DateTime endTime, int top);
+        //读取历史数据，原始值，单个标签
+		//带时区设置，入参startTime、endTime，返回数据时间，均按照timezone参数进行转换。
+		public List<SignalValue> ReadRaw(string userName, string tag, DateTime startTime, DateTime endTime, int top, TimeZoneType timezone);
+        
+        //读取趋势值
+		public List<SignalValue> ReadTrendValues(string userName, string tag, DateTime startTime, DateTime endTime, string resolution, int top, TimeZoneType timezone);
+        public void RemoveNtaValueDb(string tag);
+        public void RewindHist(string tag, DateTime time);        
+        
+		//**************写接口********************************
+		//写标签信息。一次写入的标签数据量不能超过5w条。超过6w条，该接口会直接报错。
+		public void WriteSignals(string server, List<Signal> signals);
+        //写当前值(用该接口写入历史值，写不进去)
+		public void WriteValues(string tag, List<SignalValue> values);
+		//写历史值，如果值已经存在，则覆盖
+		public void OverwriteValues(string tag, List<SignalValue> values);
+		
+		//**************sql语句********************************
+		//sql语句
+		public string TalkTo(string userName, string sql);
+        //sql语句
+		public byte[] TalkToBinary(string userName, string sql);
+    }
+}

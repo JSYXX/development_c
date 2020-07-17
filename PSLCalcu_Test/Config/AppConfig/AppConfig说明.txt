@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<config>
+  <common  appmode="debug" password="wenjiug" interval_calculate="5" interval_display="5" ></common>  
+  appmode，app运行方式，选择user，则主界面不显示debug菜单项。选择debug，则主界面显示debug菜单项。
+  password，在选择debug时，必须填写密码wenjiug，才能显示debug菜单项。
+  interval_display界面刷新速度。（目前无用，界面按时间计算来刷新）
+  <calcu autorun="0" runmode="" period="500" periodwritepslcalcuitem="12" recordcalcutime="1" maxreadrtdb="100000"></calcu> 
+  autorun：启动app时，是否自动启动计算。
+  period：计算引擎扫描周期。一般设为200毫秒比较合适。
+  periodwritepslcalcuitem：写计算对象时间信息。单位小时，一般设为6小时。
+  recordcalcutime：是否记录计算时间。正常运行后一般设为不记录。
+  maxreadrtdb：计算引擎读取实时数据，单次读取最大值，根据内存容量来设定，一般设定为100000条。这个还需要测试。根据测试来设定。
+  <rtdb type="Golden" connstring="server=192.168.1.55;port=6327;username=sa;password=golden"></rtdb>  
+  <rdb type="MySql" connstring="server=localhost;user id=root;password=mysql;database=psldb"></rdb>
+  <rdbtable resulttagauto="1" resulttagincludeinterval="1" tag2idalwaysreset="1" iniTableIncludePsldata="1"></rdbtable>
+  <psldata startyear="2010" endyear="2025"></psldata>
+  startyear：自动创建概化数据表的起始年份
+  endyear：自动创建概化数据表的截止年份。
+</config>

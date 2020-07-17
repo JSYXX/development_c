@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DC4F96F5-9A66-4AFD-9C69-7F340A841E3B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PSLCalcu.Module</RootNamespace>
+    <AssemblyName>PSLCalcu.Module</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\lib\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Accord.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.MachineLearning, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Accord.MachineLearning.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math.Core, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Accord.Math.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Accord.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="Config, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Config.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=4.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\MathNet.Numerics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PCCommon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\PCCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Adv_Temperature\MMTAEquBase.cs" />
+    <Compile Include="Adv_Temperature\MMTAEquCorrelation.cs" />
+    <Compile Include="Adv_Temperature\MMTAEquDevOR.cs" />
+    <Compile Include="Adv_Temperature\MMTAEquDevORSpan.cs" />
+    <Compile Include="Adv_Temperature\MMTAEquRTD.cs" />
+    <Compile Include="Adv_Temperature\MMTAEquTDOR.cs" />
+    <Compile Include="Adv_Temperature\MMTAEquDORDay.cs" />
+    <Compile Include="Adv_Temperature\MMTAEquEVSOR.cs" />
+    <Compile Include="Adv_Temperature\MMTAEquRegression.cs" />
+    <Compile Include="Adv_Temperature\MMTAEquRegressStdev.cs" />
+    <Compile Include="Adv_Temperature\MMTAEquRTD_old.cs" />
+    <Compile Include="Adv_Temperature\MMTATEva.cs" />
+    <Compile Include="Adv_Temperature\MMTAUnitEVSOR.cs" />
+    <Compile Include="Base_Distribution\MFDistribute202.cs" />
+    <Compile Include="Base_Distribution\MFRegresssion.cs" />
+    <Compile Include="Base\MKWeightSumAvg.cs" />
+    <Compile Include="Base_Const\MReadConst.cs" />
+    <Compile Include="Adv_Deviation\MDeviation2DS.cs" />
+    <Compile Include="Adv_Deviation\MDeviationS.cs" />
+    <Compile Include="Adv_Deviation\MDivBase.cs" />
+    <Compile Include="Adv_Deviation\MCurveAssess2DS%28新项目不再使用%29.cs" />
+    <Compile Include="Adv_Deviation\MCurveAssessS%28新项目不再使用%29.cs" />
+    <Compile Include="Adv_Deviation\MLDivLimit.cs" />
+    <Compile Include="Base_Guangfu\BWGPwrEff.cs" />
+    <Compile Include="Base_Guangfu\CleanF.cs" />
+    <Compile Include="Base_Guangfu\HLXLEFF.cs" />
+    <Compile Include="Base_Guangfu\StaPwrEff.cs" />
+    <Compile Include="Base_MultiInput\M2AnalogAvg.cs" />
+    <Compile Include="Base_MultiInput\M2AnalogDiv.cs" />
+    <Compile Include="Base_MultiInput\M2AnalogMul.cs" />
+    <Compile Include="Base_MultiInput\MMultiAnalogAvg.cs" />
+    <Compile Include="Base_MultiInput\MMultiAnalogSum.cs" />
+    <Compile Include="CalcuTemplate.cs" />
+    <Compile Include="Interface_RTDB\MOPC2Avg.cs" />
+    <Compile Include="Interface_RTDB\MOPCSegmentFilter.cs" />
+    <Compile Include="Adv_Deviation\MDeviation2DSpan.cs" />
+    <Compile Include="Adv_Deviation\CurveConfig.cs" />
+    <Compile Include="Adv_Deviation\MDeviationSpan.cs" />
+    <Compile Include="Adv_Deviation\MReadShift.cs" />
+    <Compile Include="Base_ConditionSpan\MFCondSpanValid.cs" />
+    <Compile Include="Helper\CsvFileReader.cs" />
+    <Compile Include="Interface_RTDB\MOPCFilter2One.cs" />
+    <Compile Include="Interface_RTDB\MAnalogRead.cs" />
+    <Compile Include="Base_MultiInput\M2AnalogSum.cs" />
+    <Compile Include="Base_MultiInput\M2AnalogSub.cs" />
+    <Compile Include="Base_MultiInput\MMultiDigitalSum.cs" />
+    <Compile Include="Base_MultiInput\MMultiDigitalSelect.cs" />
+    <Compile Include="Base_Distribution\MDigitalSetStats.cs" />
+    <Compile Include="BaseModule.cs" />
+    <Compile Include="Base\MArithmeticSumAvg.cs" />
+    <Compile Include="Base_MultiInput\MFindMaxInfo.cs" />
+    <Compile Include="Base_MultiInput\MFindMinInfo.cs" />
+    <Compile Include="Base_MultiInput\MIndex9.cs" />
+    <Compile Include="Base_MultiInput\MIndex20.cs" />
+    <Compile Include="Base\MNormalize.cs" />
+    <Compile Include="CalcuInfo.cs" />
+    <Compile Include="Base_ConditionSpan\MCondSpanSum.cs" />
+    <Compile Include="Base_ConditionSpan\MCondSpanLong.cs" />
+    <Compile Include="Base_ConditionSpan\MDigitalSpan.cs" />
+    <Compile Include="Base_ConditionSpan\MFCondSpan2.cs" />
+    <Compile Include="Base_ConditionSpan\MSpanDelay.cs" />
+    <Compile Include="IModule.cs" />
+    <Compile Include="IModuleExPara.cs" />
+    <Compile Include="Base_ConditionSpan\MLCondSpan2.cs" />
+    <Compile Include="Base\MDiff.cs" />
+    <Compile Include="Base_Distribution\MFDistribute12.cs" />
+    <Compile Include="Base_Distribution\MFDistribute22.cs" />
+    <Compile Include="Base_Distribution\MFDistribute52.cs" />
+    <Compile Include="Base\MFourQuantileRange.cs" />
+    <Compile Include="Base\MGeometricMean.cs" />
+    <Compile Include="Base\MHarMean.cs" />
+    <Compile Include="Base\MIntegral.cs" />
+    <Compile Include="Base\MKCenterDistance.cs" />
+    <Compile Include="Base\MKMaxMin.cs" />
+    <Compile Include="Base\MKOriginMoment.cs" />
+    <Compile Include="Base_Distribution\MLDistribute22.cs" />
+    <Compile Include="Base_Distribution\MLimitStatistics.cs" />
+    <Compile Include="Base\MFastMaxMinRange.cs" />
+    <Compile Include="Base\MModeVariation.cs" />
+    <Compile Include="Base\MQuality.cs" />
+    <Compile Include="Base\MSkewCofee.cs" />
+    <Compile Include="Base\MSkewness_Kurtosis.cs" />
+    <Compile Include="Base\MTrimMeam.cs" />
+    <Compile Include="Base\MTurnCount.cs" />
+    <Compile Include="Base\MVar_STD.cs" />
+    <Compile Include="Base\MVelocity.cs" />
+    <Compile Include="Base\MVolatility.cs" />
+    <Compile Include="Base\MWeightSumAvg.cs" />
+    <Compile Include="Interface_RTDB\MRDFilter2One.cs" />
+    <Compile Include="Interface_RTDB\MRDSegmentMaxMinAvg.cs" />
+    <Compile Include="test\Limit.cs" />
+    <Compile Include="test\LimitTest.cs" />
+    <Compile Include="test\Model\D22STimeClass.cs" />
+    <Compile Include="test\Model\MDevLimitClass.cs" />
+    <Compile Include="test\Model\MDevLimitMessageOutBadClass.cs" />
+    <Compile Include="test\Model\MDevLimitMessageOutClass.cs" />
+    <Compile Include="test\Model\MDevLimitMultiMessageInClass.cs" />
+    <Compile Include="test\Model\MPVBaseMessageInBadClass.cs" />
+    <Compile Include="test\Model\MPVBaseMessageInClass.cs" />
+    <Compile Include="test\Model\MPVBaseMessageOutBadClass.cs" />
+    <Compile Include="test\Model\MPVBaseMultiMessageInClass.cs" />
+    <Compile Include="test\Model\MultiEffectMessageInClass.cs" />
+    <Compile Include="test\Model\MultiMessageInClass.cs" />
+    <Compile Include="test\MPVBasePlus.cs" />
+    <Compile Include="test\Util\AlgorithmHelper.cs" />
+    <Content Include="Interface_RTDB\关于读取实时数据周期的选择问题.txt" />
+    <Compile Include="NewBase\BaseCalcu.cs" />
+    <Compile Include="NewBase\MAddMul.cs" />
+    <Compile Include="NewBase\MLinearRegression.cs" />
+    <Compile Include="NewBase\MPVBase.cs" />
+    <Compile Include="NewBase\MSpecOutline.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Interface_RTDB\MAnalogReadCurrent.cs" />
+    <Compile Include="StatusConst.cs" />
+    <Compile Include="Adv_Temperature\MMTAAnaBase.cs" />
+    <Compile Include="Adv_Temperature\MMTAAnaDevOR.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NewBase\describe.txt" />
+    <Content Include="关于计算模块的设计说明.txt" />
+    <Content Include="在多线程中使用静态方法是否有线程安全问题.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Adv_Temperature\壁温分析计算分类框图.vsd" />
+    <None Include="Base_Const\PSLCalcu_rdbset的三种配置方式.xlsm" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

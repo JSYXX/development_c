@@ -1,0 +1,14 @@
+D:\c#\PSLCalcu\Config\bin\Release\Config.dll
+D:\c#\PSLCalcu\Config\bin\Release\Config.pdb
+D:\c#\PSLCalcu\Config\bin\Release\log4net.dll
+D:\c#\PSLCalcu\Config\bin\Release\log4net.pdb
+D:\c#\PSLCalcu\Config\obj\Release\Config.csprojResolveAssemblyReference.cache
+D:\c#\PSLCalcu\Config\obj\Release\Config.dll
+D:\c#\PSLCalcu\Config\obj\Release\Config.pdb
+D:\c#\PSLCalcu_Test\Config\bin\Release\Config.dll
+D:\c#\PSLCalcu_Test\Config\bin\Release\Config.pdb
+D:\c#\PSLCalcu_Test\Config\bin\Release\log4net.dll
+D:\c#\PSLCalcu_Test\Config\bin\Release\log4net.pdb
+D:\c#\PSLCalcu_Test\Config\obj\Release\Config.csprojResolveAssemblyReference.cache
+D:\c#\PSLCalcu_Test\Config\obj\Release\Config.dll
+D:\c#\PSLCalcu_Test\Config\obj\Release\Config.pdb

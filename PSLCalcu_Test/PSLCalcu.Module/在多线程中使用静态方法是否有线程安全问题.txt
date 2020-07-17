@@ -1,0 +1,32 @@
+﻿类的成员分为两类，静态成员（static member）和实例成员(instance member)。静态成员属于类，实例成员则属于对象，即类的实例。
+
+简单讨论一下在一个类中使用静态字段(static field)和静态方法(static method)是否会有线程安全问题。 
+
+我们在知道, 静态字段(static field)和静态方法(static method)的调用是通过类来调用。静态方法不对特定的实例操作，只能访问静态成员。实例方法可对特定的实例操作，既能访问静态成员，也能访问实例成员。
+
+那么,在多线程中使用静态方法是否有线程安全问题?
+
+这要看静态方法是否使用了静态成员。
+
+因为，在多线程中使用同一个静态方法时，每个线程使用各自的实例字段(instance field)的副本，而共享一个静态字段(static field)。
+所以说，如果该静态方法不去操作一个静态成员，只在方法内部使用实例字段(instance field)，不会引起安全性问题。
+但是，如果该静态方法操作了一个静态字段，则需要静态方法中采用互斥访问的方式进行安全处理。
+
+
+对于公式模板，有两个主计算函数。
+第一个Calcu()不带参数，利用静态变量_inputData, _calcuInfo来传参数
+第二个Calcu()带参数，不利用静态变量_inputData, _calcuInfo来传参数
+public static List<PValue>[] Calcu()
+{
+    return Calcu(_inputData, _calcuInfo);
+}
+public static List<PValue>[] Calcu(List<PValue>[] inputs, CalcuInfo calcuinfo)
+{
+
+}
+
+在计算引擎中，
+非并发的实时数据计算引擎，使用不带参数的Calcu()，利用静态变量传递参数。
+并发的历史数据计算引擎，必须使用带参数的Calcu()。因为在并发状态下，静态变量存在线程安全问题。不同的线程都会对_inputData、_calcuInfo赋值。会造成混乱。
+
+但是，目前对于计算的报错，仍使用的是静态变量。这个需要仔细考虑。怎么解决。
