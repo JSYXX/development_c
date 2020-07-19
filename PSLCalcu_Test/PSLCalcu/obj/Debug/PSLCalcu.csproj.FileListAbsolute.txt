@@ -197,3 +197,6 @@ D:\SM\备份\C#修改版本\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.UpdateTagn
 D:\SM\备份\C#修改版本\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.csproj.GenerateResource.Cache
 D:\SM\备份\C#修改版本\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.exe
 D:\SM\备份\C#修改版本\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.pdb
+D:\C# Project\JSYXX\PSLCalcu_Test\lib\PSLCalcu.exe.config
+D:\C# Project\JSYXX\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.exe
+D:\C# Project\JSYXX\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.pdb
