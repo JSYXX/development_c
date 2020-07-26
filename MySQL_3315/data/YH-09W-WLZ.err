@@ -1,0 +1,20 @@
+2020-03-23 13:36:05 3672 [Note] Plugin 'FEDERATED' is disabled.
+2020-03-23 13:36:05 3672 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2020-03-23 13:36:05 3672 [Note] InnoDB: The InnoDB memory heap is disabled
+2020-03-23 13:36:05 3672 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2020-03-23 13:36:05 3672 [Note] InnoDB: Memory barrier is not used
+2020-03-23 13:36:05 3672 [Note] InnoDB: Compressed tables use zlib 1.2.3
+2020-03-23 13:36:05 3672 [Note] InnoDB: Not using CPU crc32 instructions
+2020-03-23 13:36:05 3672 [Note] InnoDB: Initializing buffer pool, size = 128.0M
+2020-03-23 13:36:05 3672 [Note] InnoDB: Completed initialization of buffer pool
+2020-03-23 13:36:05 3672 [Note] InnoDB: Highest supported file format is Barracuda.
+2020-03-23 13:36:05 3672 [Note] InnoDB: 128 rollback segment(s) are active.
+2020-03-23 13:36:05 3672 [Note] InnoDB: Waiting for purge to start
+2020-03-23 13:36:05 3672 [Note] InnoDB: 5.6.39 started; log sequence number 1875335
+2020-03-23 13:36:05 3672 [Note] Server hostname (bind-address): '*'; port: 3307
+2020-03-23 13:36:05 3672 [Note] IPv6 is available.
+2020-03-23 13:36:05 3672 [Note]   - '::' resolves to '::';
+2020-03-23 13:36:05 3672 [Note] Server socket created on IP: '::'.
+2020-03-23 13:36:05 3672 [Note] Event Scheduler: Loaded 0 events
+2020-03-23 13:36:05 3672 [Note] mysql_suqian: ready for connections.
+Version: '5.6.39'  socket: ''  port: 3307  MySQL Community Server (GPL)
