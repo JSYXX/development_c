@@ -40,3 +40,8 @@ D:\SM\备份\C#修改版本\PSLCalcu_Test\lib\Config.pdb
 D:\SM\备份\C#修改版本\PSLCalcu_Test\Config\obj\Debug\Config.csprojResolveAssemblyReference.cache
 D:\SM\备份\C#修改版本\PSLCalcu_Test\Config\obj\Debug\Config.dll
 D:\SM\备份\C#修改版本\PSLCalcu_Test\Config\obj\Debug\Config.pdb
+D:\C# Project\JSYXX\PSLCalcu_Test\lib\Config.dll
+D:\C# Project\JSYXX\PSLCalcu_Test\lib\Config.pdb
+D:\C# Project\JSYXX\PSLCalcu_Test\Config\obj\Debug\Config.csprojResolveAssemblyReference.cache
+D:\C# Project\JSYXX\PSLCalcu_Test\Config\obj\Debug\Config.dll
+D:\C# Project\JSYXX\PSLCalcu_Test\Config\obj\Debug\Config.pdb
