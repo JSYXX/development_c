@@ -20,7 +20,7 @@ namespace PSLCalcu
         public static string rdbConnStr = "";
         public static string testStatus = "";
         #endregion
-        
+
         //测试关系数据库连接
         public static bool connectTest()
         {
@@ -29,15 +29,15 @@ namespace PSLCalcu
             {
                 rdbConnStr = (DbHelper.DbConnection).Replace(" ", "_ ");
                 DbHelper dbhelper = new DbHelper();     //如果出现“类型初始值设定项引发异常”的错误，请检查RTDbType、RTDbConnection两个静态参数的设置是否正确。尤其是改为xml配置时，如果配置不正确，则或报出该错误。               
-                testStatus = dbhelper.ConnTest();                
+                testStatus = dbhelper.ConnTest();
                 return true;
             }
             catch (Exception ex)
             {
                 ErrorInfo = ex.ToString();
 
-                string messageStr;                
-                messageStr = String.Format("DAO层connectTest()错误：---------->")+Environment.NewLine;
+                string messageStr;
+                messageStr = String.Format("DAO层connectTest()错误：---------->") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 messageStr += String.Format("详细错误信息:" + ex.ToString());
                 logHelper.Error(messageStr);
@@ -56,9 +56,9 @@ namespace PSLCalcu
                 sqlStr = String.Format("drop database if exists {0}", databasename);
                 dbhelper.ExecuteNonQuery(sqlStr);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("删除数据库psldb失败。请检查mysql服务！"+Environment.NewLine+ex.ToString());
+                MessageBox.Show("删除数据库psldb失败。请检查mysql服务！" + Environment.NewLine + ex.ToString());
                 return false;
             }
 
@@ -72,11 +72,11 @@ namespace PSLCalcu
             catch (Exception ex)
             {
                 MessageBox.Show("创建数据库psldb失败。请检查mysql服务！" + Environment.NewLine +
-                                "——请先尝试将数据库连接配置中的默认连接数据库改为sys！" + Environment.NewLine +               
+                                "——请先尝试将数据库连接配置中的默认连接数据库改为sys！" + Environment.NewLine +
                                 ex.ToString()
                                 );
                 return false;
-            } 
+            }
         }
         //计算模块信息表
         public static bool createTable_pslmodules()
@@ -200,7 +200,7 @@ namespace PSLCalcu
 
             string databasename = "psldb";
             string tablename = "psltagnameidmap";
-            string[] filedname ={                                                          
+            string[] filedname ={
                                 "psltagid mediumint unsigned not null primary key auto_increment",  //tagid，无符号中整形，3个字节，范围0~16777215，主键，提高索引效率
                                 "psltagsaveflag tinyint unsigned not null",                         //tagsaveflag，标签是否保存的标记
                                 "psltagname text not null",                                         //tagname标签名
@@ -218,20 +218,20 @@ namespace PSLCalcu
         {
             string databasename = "psldb";
             string tablename = "webtagnameidmap";
-            string[] filedname ={                                                          
+            string[] filedname ={
                                 "psltagid mediumint unsigned not null primary key auto_increment",//tagid，无符号中整形，3个字节，范围0~16777215，主键，提高索引效率
                                 "psltagname text not null",                                       //tagstarttime是TIMESTAMP类型，4个字节，普通索引，提高索引效率 
                                 "pslcalcuconfigindex mediumint not null",
                                 "psltagdesc text",
                                 "psltaggroup text",
                                 "psltagorder integer",
-                                "outputtablename varchar(60)"                                                    
+                                "outputtablename varchar(60)"
                                 };
 
             return createTable(databasename, tablename, filedname);
         }
         //概化数据表
-        public static bool createTable_psldata(int startYear, int endYear,int intervalMonth)
+        public static bool createTable_psldata(int startYear, int endYear, int intervalMonth)
         {
             //对于概化计算，psldata是对占用空间和效率最敏感的一张表
             //1、标签点标识采用tagid，而不用tagname。同时tagid作为主索引。（字符串索引比整形索引慢的多 http://blog.csdn.net/mypqx/article/details/8469319）
@@ -281,7 +281,7 @@ namespace PSLCalcu
             {
                 for (int j = 1; j <= 12 / intervalMonth; j++)
                 {
-                    createTable(databasename, tablename + i.ToString()+j.ToString("D2"), filedname);
+                    createTable(databasename, tablename + i.ToString() + j.ToString("D2"), filedname);
                 }
             }
             return true;
@@ -289,7 +289,7 @@ namespace PSLCalcu
         }
         //值次信息表
         public static bool createTable_pslshift()
-        { 
+        {
             string databasename = "psldb";
             string tablename = "pslshiftinfo";
             string[] filedname ={
@@ -359,6 +359,665 @@ namespace PSLCalcu
                                 };
             return createTable(databasename, tablename, filedname);
         }
+        public static bool createTable_pslMpvbase()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mpvbase";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`PVBMin` varchar(45) DEFAULT NULL'",
+                                  "`PVBMinTime` varchar(45) DEFAULT NULL",
+                                  "`PVBAvg` varchar(45) DEFAULT NULL",
+                                  "`PVBMax` varchar(45) DEFAULT NULL",
+                                  "`PVBMaxTime` varchar(45) DEFAULT NULL",
+                                  "`PVBDMax` varchar(45) DEFAULT NULL",
+                                  "`PVBSum` varchar(45) DEFAULT NULL",
+                                  "`PVBSumkb` varchar(45) DEFAULT NULL",
+                                  "`PVBLinek` varchar(45) DEFAULT NULL",
+                                  "`PVBLineb` varchar(45) DEFAULT NULL",
+                                  "`PVBSumPNR` varchar(45) DEFAULT NULL",
+                                  "`PVBAbsSum` varchar(45) DEFAULT NULL",
+                                  "`PVBStdev` varchar(45) DEFAULT NULL",
+                                  "`PVBVolatility` varchar(45) DEFAULT NULL",
+                                  "`PVBSDMax` varchar(45) DEFAULT NULL",
+                                  "`PVBSDMaxR` varchar(45) DEFAULT NULL",
+                                  "`PVBDN1Num` varchar(45) DEFAULT NULL",
+                                  "`PVBDN2Num` varchar(45) DEFAULT NULL",
+                                  "`PVBDN3Num` varchar(45) DEFAULT NULL",
+                                  "`PVBTNum` varchar(45) DEFAULT NULL",
+                                  "`PVBVMax` varchar(45) DEFAULT NULL",
+                                  "`PVBVMin` varchar(45) DEFAULT NULL",
+                                  "`PVBVAvg` varchar(45) DEFAULT NULL",
+                                  "`PVBStbTR` varchar(45) DEFAULT NULL",
+                                  "`PVBNoStbTR` varchar(45) DEFAULT NULL",
+                                  "`PVBStbTSL` varchar(45) DEFAULT NULL",
+                                  "`PVBStbTSLR` varchar(45) DEFAULT NULL",
+                                  "`PVBNoStbTSL` varchar(45) DEFAULT NULL",
+                                  "`PVBNoStbTSLR` varchar(45) DEFAULT NULL",
+                                  "`PVBUpTSL` varchar(45) DEFAULT NULL",
+                                  "`PVBUpTSLR` varchar(45) DEFAULT NULL",
+                                  "`PVBDownTSL` varchar(45) DEFAULT NULL",
+                                  "`PVBDownTSLR` varchar(45) DEFAULT NULL",
+                                  "`PVBPNum` varchar(45) DEFAULT NULL",
+                                  "`PVBQltR` varchar(45) DEFAULT NULL",
+                                  "`PVBQa` varchar(45) DEFAULT NULL",
+                                  "`PVBQb` varchar(45) DEFAULT NULL",
+                                  "`PVBQc` varchar(45) DEFAULT NULL",
+                                  "`PVBStbTSLPV` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`tagId` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+
+        public static bool createTable_pslalgorithm()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_algorithm";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`AlgorithmName` varchar(45) DEFAULT NULL'"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslcolumndata()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_columndata";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`columnName` varchar(45) DEFAULT NULL'"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmdevlimit()
+        {
+
+            string databasename = "psldb";
+            string tablename = "psl_mdevlimit";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`DevHHN` varchar(45) DEFAULT NULL",
+                                  "`DevHHT` varchar(45) DEFAULT NULL",
+                                  "`DevHHR` varchar(45) DEFAULT NULL",
+                                  "`DevHHTMax` varchar(45) DEFAULT NULL",
+                                  "`DevHHA` varchar(45) DEFAULT NULL",
+                                  "`DevHHET` varchar(45) DEFAULT NULL",
+                                  "`DevHN` varchar(45) DEFAULT NULL",
+                                  "`DevHT` varchar(45) DEFAULT NULL",
+                                  "`DevHR` varchar(45) DEFAULT NULL",
+                                  "`DevHTMax` varchar(45) DEFAULT NULL",
+                                  "`DevHA` varchar(45) DEFAULT NULL",
+                                  "`DevHET` varchar(45) DEFAULT NULL",
+                                  "`DevRPN` varchar(45) DEFAULT NULL",
+                                  "`DevRPT` varchar(45) DEFAULT NULL",
+                                  "`DevRPR` varchar(45) DEFAULT NULL",
+                                  "`DevRPTMax` varchar(45) DEFAULT NULL",
+                                  "`DevRPA` varchar(45) DEFAULT NULL",
+                                  "`DevRPET` varchar(45) DEFAULT NULL",
+                                  "`Dev0PN` varchar(45) DEFAULT NULL",
+                                  "`Dev0PT` varchar(45) DEFAULT NULL",
+                                  "`Dev0PR` varchar(45) DEFAULT NULL",
+                                  "`Dev0PTMax` varchar(45) DEFAULT NULL",
+                                  "`Dev0PA` varchar(45) DEFAULT NULL",
+                                  "`Dev0PET` varchar(45) DEFAULT NULL",
+                                  "`Dev0NN` varchar(45) DEFAULT NULL",
+                                  "`Dev0NT` varchar(45) DEFAULT NULL",
+                                  "`Dev0NR` varchar(45) DEFAULT NULL",
+                                  "`Dev0NTMax` varchar(45) DEFAULT NULL",
+                                  "`Dev0NA` varchar(45) DEFAULT NULL",
+                                  "`Dev0NET` varchar(45) DEFAULT NULL",
+                                  "`DevRNN` varchar(45) DEFAULT NULL",
+                                  "`DevRNT` varchar(45) DEFAULT NULL",
+                                  "`DevRNR` varchar(45) DEFAULT NULL",
+                                  "`DevRNTMax` varchar(45) DEFAULT NULL",
+                                  "`DevRNA` varchar(45) DEFAULT NULL",
+                                  "`DevRNET` varchar(45) DEFAULT NULL",
+                                  "`DevLN` varchar(45) DEFAULT NULL",
+                                  "`DevLT` varchar(45) DEFAULT NULL",
+                                  "`DevLR` varchar(45) DEFAULT NULL",
+                                  "`DevLTMax` varchar(45) DEFAULT NULL",
+                                  "`DevLA` varchar(45) DEFAULT NULL",
+                                  "`DevLET` varchar(45) DEFAULT NULL",
+                                  "`DevLLN` varchar(45) DEFAULT NULL",
+                                  "`DevLLT` varchar(45) DEFAULT NULL",
+                                  "`DevLLR` varchar(45) DEFAULT NULL",
+                                  "`DevLLTMax` varchar(45) DEFAULT NULL",
+                                  "`DevLLA` varchar(45) DEFAULT NULL",
+                                  "`DevLLET` varchar(45) DEFAULT NULL",
+                                  "`Dev0HT` varchar(45) DEFAULT NULL",
+                                  "`Dev0HTR` varchar(45) DEFAULT NULL",
+                                  "`Dev0HHT` varchar(45) DEFAULT NULL",
+                                  "`Dev0HHTR` varchar(45) DEFAULT NULL",
+                                  "`Dev0L` varchar(45) DEFAULT NULL",
+                                  "`Dev0LR` varchar(45) DEFAULT NULL",
+                                  "`Dev0LLT` varchar(45) DEFAULT NULL",
+                                  "`Dev0LLTR` varchar(45) DEFAULT NULL",
+                                  "`DevHHLLT` varchar(45) DEFAULT NULL",
+                                  "`DevHHLLTR` varchar(45) DEFAULT NULL",
+                                  "`DevHLHHLLT` varchar(45) DEFAULT NULL",
+                                  "`DevHLHHLLR` varchar(45) DEFAULT NULL",
+                                  "`DevRPRMHLT` varchar(45) DEFAULT NULL",
+                                  "`DevRPRMHLTR` varchar(45) DEFAULT NULL",
+                                  "`Dev0RPRMT` varchar(45) DEFAULT NULL",
+                                  "`Dev0RPRMTR` varchar(45) DEFAULT NULL",
+                                  "`Dev0RPRMTMax` varchar(45) DEFAULT NULL",
+                                  "`DevHLT` varchar(45) DEFAULT NULL",
+                                  "`DevHLTR` varchar(45) DEFAULT NULL",
+                                  "`DevHLTMax` varchar(45) DEFAULT NULL",
+                                  "`DevPT` varchar(45) DEFAULT NULL",
+                                  "`DevPTR` varchar(45) DEFAULT NULL",
+                                  "`DevPTRTMax` varchar(45) DEFAULT NULL",
+                                  "`DevNT` varchar(45) DEFAULT NULL",
+                                  "`DevNTR` varchar(45) DEFAULT NULL",
+                                  "`DevNTRTMax` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`tagId` int(11) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+
+        public static bool createTable_pslm2analogdiv()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_m2analogdiv";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`Div` varchar(45) DEFAULT NULL'",
+                                  "`DivAbs` varchar(45) DEFAULT NULL'"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmdevlimitmulti()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mdevlimitmulti";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`DevHHNOrder` text",
+                                  "`DevHHTOrder` text",
+                                  "`DevHHROrder` text",
+                                  "`DevHHTMaxOrder` text",
+                                  "`DevHHAOrder` text",
+                                  "`DevHHETOrder` text",
+                                  "`DevHNOrder` text",
+                                  "`DevHTOrder` text",
+                                  "`DevHROrder` text",
+                                  "`DevHTMaxOrder` text",
+                                  "`DevHAOrder` text",
+                                  "`DevHETOrder` text",
+                                  "`DevRPNOrder` text",
+                                  "`DevRPTOrder` text",
+                                  "`DevRPROrder` text",
+                                  "`DevRPTMaxOrder` text",
+                                  "`DevRPAOrder` text",
+                                  "`DevRPETOrder` text",
+                                  "`Dev0PNOrder` text",
+                                  "`Dev0PTOrder` text",
+                                  "`Dev0PROrder` text",
+                                  "`Dev0PTMaxOrder` text",
+                                  "`Dev0PAOrder` text",
+                                  "`Dev0PETOrder` text",
+                                  "`Dev0NNOrder` text",
+                                  "`Dev0NTOrder` text",
+                                  "`Dev0NROrder` text",
+                                  "`Dev0NTMaxOrder` text",
+                                  "`Dev0NAOrder` text",
+                                  "`Dev0NETOrder` text",
+                                  "`DevRNNOrder` text",
+                                  "`DevRNTOrder` text",
+                                  "`DevRNROrder` text",
+                                  "`DevRNTMaxOrder` text",
+                                  "`DevRNAOrder` text",
+                                  "`DevRNETOrder` text",
+                                  "`DevLNOrder` text",
+                                  "`DevLTOrder` text",
+                                  "`DevLROrder` text",
+                                  "`DevLTMaxOrder` text",
+                                  "`DevLAOrder` text",
+                                  "`DevLETOrder` text",
+                                  "`DevLLNOrder` text",
+                                  "`DevLLTOrder` text",
+                                  "`DevLLROrder` text",
+                                  "`DevLLTMaxOrder` text",
+                                  "`DevLLAOrder` text",
+                                  "`DevLLETOrder` text",
+                                  "`Dev0HTOrder` text",
+                                  "`Dev0HTROrder` text",
+                                  "`Dev0HHTOrder` text",
+                                  "`Dev0HHTROrder` text",
+                                  "`Dev0LOrder` text",
+                                  "`Dev0LROrder` text",
+                                  "`Dev0LLTOrder` text",
+                                  "`Dev0LLTROrder` text",
+                                  "`DevHHLLTOrder` text",
+                                  "`DevHHLLTROrder` text",
+                                  "`DevHLHHLLTOrder` text",
+                                  "`DevHLHHLLROrder` text",
+                                  "`DevRPRMHLTOrder` text",
+                                  "`DevRPRMHLTROrder` text",
+                                  "`Dev0RPRMTOrder` text",
+                                  "`Dev0RPRMTROrder` text",
+                                  "`Dev0RPRMTMaxOrder` text",
+                                  "`DevHLTOrder` text",
+                                  "`DevHLTROrder` text",
+                                  "`DevHLTMaxOrder` text",
+                                  "`DevPTOrder` text",
+                                  "`DevPTROrder` text",
+                                  "`DevPTRTMaxOrder` text",
+                                  "`DevNTOrder` text",
+                                  "`DevNTROrder` text",
+                                  "`DevNTRTMaxOrder` text"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmfdistribute22()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mfdistribute22";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`D22Avg` varchar(45) DEFAULT NULL",
+                                  "`D22Sigama` varchar(45) DEFAULT NULL",
+                                  "`D22k` varchar(45) DEFAULT NULL",
+                                  "`D22b` varchar(45) DEFAULT NULL",
+                                  "`D22A` varchar(45) DEFAULT NULL",
+                                  "`D22BB` varchar(45) DEFAULT NULL",
+                                  "`D22C` varchar(45) DEFAULT NULL",
+                                  "`D22S00` varchar(45) DEFAULT NULL",
+                                  "`D22S01` varchar(45) DEFAULT NULL",
+                                  "`D22S02` varchar(45) DEFAULT NULL",
+                                  "`D22S03` varchar(45) DEFAULT NULL",
+                                  "`D22S04` varchar(45) DEFAULT NULL",
+                                  "`D22S05` varchar(45) DEFAULT NULL",
+                                  "`D22S06` varchar(45) DEFAULT NULL",
+                                  "`D22S07` varchar(45) DEFAULT NULL",
+                                  "`D22S08` varchar(45) DEFAULT NULL",
+                                  "`D22S09` varchar(45) DEFAULT NULL",
+                                  "`D22S10` varchar(45) DEFAULT NULL",
+                                  "`D22S11` varchar(45) DEFAULT NULL",
+                                  "`D22S12` varchar(45) DEFAULT NULL",
+                                  "`D22S13` varchar(45) DEFAULT NULL",
+                                  "`D22S14` varchar(45) DEFAULT NULL",
+                                  "`D22S15` varchar(45) DEFAULT NULL",
+                                  "`D22S16` varchar(45) DEFAULT NULL",
+                                  "`D22S17` varchar(45) DEFAULT NULL",
+                                  "`D22S18` varchar(45) DEFAULT NULL",
+                                  "`D22S19` varchar(45) DEFAULT NULL",
+                                  "`D22S20` varchar(45) DEFAULT NULL",
+                                  "`D22S21` varchar(45) DEFAULT NULL",
+                                  "`D22SS0102` varchar(45) DEFAULT NULL",
+                                  "`D22SS0304` varchar(45) DEFAULT NULL",
+                                  "`D22SS0506` varchar(45) DEFAULT NULL",
+                                  "`D22SS0708` varchar(45) DEFAULT NULL",
+                                  "`D22SS0910` varchar(45) DEFAULT NULL",
+                                  "`D22SS1112` varchar(45) DEFAULT NULL",
+                                  "`D22SS1314` varchar(45) DEFAULT NULL",
+                                  "`D22SS1516` varchar(45) DEFAULT NULL",
+                                  "`D22SS1718` varchar(45) DEFAULT NULL",
+                                  "`D22SS1920` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`tagId` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmmultical()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mmultical";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`MultiCalSum` varchar(45) DEFAULT NULL",
+                                  "`MultiCalAbsSum` varchar(45) DEFAULT NULL",
+                                  "`MultiCalMul` varchar(45) DEFAULT NULL",
+                                  "`MultiCalAbsMul` varchar(45) DEFAULT NULL",
+                                  "`MultiCalAvg` varchar(45) DEFAULT NULL",
+                                  "`MultiCalAbsAvg` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmmultipv()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mmultipv";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`MultiPVMin` text",
+                                  "`MultiPVMinP` text",
+                                  "`MultiPVAvg` text",
+                                  "`MultiPVAvgP` text",
+                                  "`MultiPVMax` text",
+                                  "`MultiPVMaxP` text",
+                                  "`MultiPVSum` text",
+                                  "`MultiPVSumABS` text",
+                                  "`MultiPVStdev` text",
+                                  "`MultiPVDmax` text",
+                                  "`MultiPVDmaxDN` text",
+                                  "`MultiPVDmaxR` text",
+                                  "`MultiPVTop` text",
+                                  "`MultiPVTopP` text",
+                                  "`MultiPVDown` text",
+                                  "`MultiPVDownP` text",
+                                  "`MultiPVTurnN` text",
+                                  "`MultiPVHHN` text",
+                                  "`MultiPVHHR` text",
+                                  "`MultiPVHN` text",
+                                  "`MultiPVHR` text",
+                                  "`MultiPVRRPN` text",
+                                  "`MultiPVRRPNR` text",
+                                  "`MultiPVHL` text",
+                                  "`MultiPVHLR` text",
+                                  "`MultiPVLN` text",
+                                  "`MultiPVLR` text",
+                                  "`MultiPVLLN` text",
+                                  "`MultiPVLLR` text",
+                                  "`MultiPVMedian` text",
+                                  "`MultiPVLinek` text",
+                                  "`MultiPVLineb` text",
+                                  "`MultiPVLineR` text",
+                                  "`MultiPVQuada` text",
+                                  "`MultiPVQuadb` text",
+                                  "`MultiPVQuadc` text",
+                                  "`MultiPVQuadR` text",
+                                  "`MultiPVPVOrd` text",
+                                  "`MultiPVPVAbsOrd` text"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmmultipvavgdistance()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mmultipvavgdistance";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`MultiPVAvgDistanceMin` varchar(45) DEFAULT NULL",
+                                  "`MultiPVAvgDistanceMinTime` varchar(45) DEFAULT NULL",
+                                  "`MultiPVAvgDistanceMax` varchar(45) DEFAULT NULL",
+                                  "`MultiPVAvgDistanceMaxTime` varchar(45) DEFAULT NULL",
+                                  "`MultiPVAvgDistanceAvg` varchar(45) DEFAULT NULL",
+                                  "`MultiPVAvgDistanceStdev` varchar(45) DEFAULT NULL",
+                                  "`MultiPVAvgDistanceLT` varchar(45) DEFAULT NULL",
+                                  "`MultiPVAvgDistanceLTR` varchar(45) DEFAULT NULL",
+                                  "`MultiPVAvgDistanceHT` varchar(45) DEFAULT NULL",
+                                  "`MultiPVAvgDistanceHTR` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmmultipvavgdistancedetail()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mmultipvavgdistance_detail";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`pid` int(11) DEFAULT NULL",
+                                  "`valueDate` varchar(45) DEFAULT NULL",
+                                  "`valueAmount` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmpvbasemulti()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mpvbasemulti";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`PVBSymbolMin` varchar(45) DEFAULT NULL",
+                                  "`PVBSymbolMax` varchar(45) DEFAULT NULL",
+                                  "`PVBSymbolAvg` varchar(45) DEFAULT NULL",
+                                  "`PVBSymbolDMax` varchar(45) DEFAULT NULL",
+                                  "`PVBSymbolStdev` varchar(45) DEFAULT NULL",
+                                  "`PVBSymbolLinek` varchar(45) DEFAULT NULL",
+                                  "`PVBSymbolLineb` varchar(45) DEFAULT NULL",
+                                  "`PVBSymbolQa` varchar(45) DEFAULT NULL",
+                                  "`PVBSymbolQb` varchar(45) DEFAULT NULL",
+                                  "`PVBSymbolQc` varchar(45) DEFAULT NULL",
+                                  "`PVBSymbol_PVBMin_Ord` text",
+                                  "`PVBSymbol_PVBMinTime_Ord` text",
+                                  "`PVBSymbol_PVBAvg_Ord` text",
+                                  "`PVBSymbol_PVBMax_Ord` text",
+                                  "`PVBSymbol_PVBMaxTime_Ord` text",
+                                  "`PVBSymbol_PVBDMax_Ord` text",
+                                  "`PVBSymbol_PVBSum_Ord` text",
+                                  "`PVBSymbol_PVBSumkb_Ord` text",
+                                  "`PVBSymbol_PVBLinek_Ord` text",
+                                  "`PVBSymbol_PVBLineb_Ord` text",
+                                  "`PVBSymbol_PVBSumPNR_Ord` text",
+                                  "`PVBSymbol_PVBAbsSum_Ord` text",
+                                  "`PVBSymbol_PVBStdev_Ord` text",
+                                  "`PVBSymbol_PVBVolatility_Ord` text",
+                                  "`PVBSymbol_PVBSDMax_Ord` text",
+                                  "`PVBSymbol_PVBSDMaxR_Ord` text",
+                                  "`PVBSymbol_PVBDN1Num_Ord` text",
+                                  "`PVBSymbol_PVBDN2Num_Ord` text",
+                                  "`PVBSymbol_PVBDN3Num_Ord` text",
+                                  "`PVBSymbol_PVBTNum_Ord` text",
+                                  "`PVBSymbol_PVBVMax_Ord` text",
+                                  "`PVBSymbol_PVBVMin_Ord` text",
+                                  "`PVBSymbol_PVBVAvg_Ord` text",
+                                  "`PVBSymbol_PVBStbTR_Ord` text",
+                                  "`PVBSymbol_PVBNoStbTR_Ord` text",
+                                  "`PVBSymbol_PVBStbTSL_Ord` text",
+                                  "`PVBSymbol_PVBStbTSLR_Ord` text",
+                                  "`PVBSymbol_PVBNoStbTSL_Ord` text",
+                                  "`PVBSymbol_PVBNoStbTSLR_Ord` text",
+                                  "`PVBSymbol_PVBUpTSL_Ord` text",
+                                  "`PVBSymbol_PVBUpTSLR_Ord` text",
+                                  "`PVBSymbol_PVBDownTSL_Ord` text",
+                                  "`PVBSymbol_PVBDownTSLR_Ord` text",
+                                  "`PVBSymbol_PVBPNum_Ord` text",
+                                  "`PVBSymbol_PVBQltR_Ord` text",
+                                  "`PVBSymbol_PVBStatus_Ord` text",
+                                  "`PVBSymbol_PVBQa_Ord` text",
+                                  "`PVBSymbol_PVBQb_Ord` text",
+                                  "`PVBSymbol_PVBQc_Ord` text",
+                                  "`PVBSymbol_PVBStbTSLPV_Ord` text"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmpvoverrangeeva()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mpvoverrangeeva";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`OverHRange` varchar(45) DEFAULT NULL",
+                                  "`OverHFre` varchar(45) DEFAULT NULL",
+                                  "`OverLRange` varchar(45) DEFAULT NULL",
+                                  "`OverLFre` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`tagId` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmpvscoreeva()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mpvscoreeva";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`SftScoreMin` varchar(45) DEFAULT NULL",
+                                  "`SftScoreMinT` varchar(45) DEFAULT NULL",
+                                  "`SftScoreMax` varchar(45) DEFAULT NULL",
+                                  "`SftScoreMaxT` varchar(45) DEFAULT NULL",
+                                  "`SftScoreAvg` varchar(45) DEFAULT NULL",
+                                  "`SftScoreAvgP` varchar(45) DEFAULT NULL",
+                                  "`SftScoreTotal` varchar(45) DEFAULT NULL",
+                                  "`SftScoreTotalP` varchar(45) DEFAULT NULL",
+                                  "`SftScoreHighT` varchar(45) DEFAULT NULL",
+                                  "`SftScoreHighTR` varchar(45) DEFAULT NULL",
+                                  "`SftScoreHighST` varchar(45) DEFAULT NULL",
+                                  "`SftScoreLowT` varchar(45) DEFAULT NULL",
+                                  "`SftScoreLowTR` varchar(45) DEFAULT NULL",
+                                  "`SftScoreLowST` varchar(45) DEFAULT NULL",
+                                  "`SftScoreEva` varchar(45) DEFAULT NULL",
+                                  "`StartTime` varchar(45) DEFAULT NULL,
+                                  "`totalHour` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`tagId` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmpvtyperangedetail()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mpvtyperange_detail";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`parentId` int(11) DEFAULT NULL",
+                                  "`PVDAvg` varchar(45) DEFAULT NULL",
+                                  "`PVDMax` varchar(45) DEFAULT NULL",
+                                  "`PVDMin` varchar(45) DEFAULT NULL",
+                                  "`PVMAvg` varchar(45) DEFAULT NULL",
+                                  "`PVMMax` varchar(45) DEFAULT NULL",
+                                  "`PVMMin` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmpvtyprange()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mpvtyprange";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`tagid` int(11) DEFAULT NULL",
+                                  "`PVDArea` varchar(45) DEFAULT NULL",
+                                  "`PVMArea` varchar(45) DEFAULT NULL",
+                                  "`PVDAvgClsDay` varchar(45) DEFAULT NULL",
+                                  "`PVDAvgFarDay` varchar(45) DEFAULT NULL",
+                                  "`PVDMaxClsDay` varchar(45) DEFAULT NULL",
+                                  "`PVDMaxFarDay` varchar(45) DEFAULT NULL",
+                                  "`PVDMinClsDay` varchar(45) DEFAULT NULL",
+                                  "`PVDMinFarDay` varchar(45) DEFAULT NULL",
+                                  "`PVMAvgClsMonth` varchar(45) DEFAULT NULL",
+                                  "`PVMAvgFarMonth` varchar(45) DEFAULT NULL",
+                                  "`PVMMaxClsMonth` varchar(45) DEFAULT NULL",
+                                  "`PVMMaxFarMonth` varchar(45) DEFAULT NULL",
+                                  "`PVMMinClsMonth` varchar(45) DEFAULT NULL",
+                                  "`PVMMinFarMonth` varchar(45) DEFAULT NULL",
+                                  "`PVDAvgClsDist` varchar(45) DEFAULT NULL",
+                                  "`PVDAvgFarDist` varchar(45) DEFAULT NULL",
+                                  "`PVDMaxClsDist` varchar(45) DEFAULT NULL",
+                                  "`PVDMaxFarDist` varchar(45) DEFAULT NULL",
+                                  "`PVDMinClsDist` varchar(45) DEFAULT NULL",
+                                  "`PVDMinFarDist` varchar(45) DEFAULT NULL",
+                                  "`PVMAvgClsDist` varchar(45) DEFAULT NULL",
+                                  "`PVMAvgFarDist` varchar(45) DEFAULT NULL",
+                                  "`PVMMaxClsDist` varchar(45) DEFAULT NULL",
+                                  "`PVMMaxFarDist` varchar(45) DEFAULT NULL",
+                                  "`PVMMinClsDist` varchar(45) DEFAULT NULL",
+                                  "`PVMMinFarDist` varchar(45) DEFAULT NULL",
+                                  "`PVDAvgDistStdev` varchar(45) DEFAULT NULL",
+                                  "`PVMAvgDistStdev` varchar(45) DEFAULT NULL",
+                                  "`PVDAvgDistLinek` varchar(45) DEFAULT NULL",
+                                  "`PVDAvgDistLineb` varchar(45) DEFAULT NULL",
+                                  "`PVMAvgDistLinek` varchar(45) DEFAULT NULL",
+                                  "`PVMAvgDistLineb` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmpvutnv()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mpvutnv";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`tagId` int(11) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_pslmpvutnvdetail()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mpvutnv_detail";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`pid` int(11) NOT NULL",
+                                  "`valueType` varchar(45) DEFAULT NULL",
+                                  "`MPVUTNVH` varchar(45) DEFAULT NULL",
+                                  "`MPVUTNVD` varchar(45) DEFAULT NULL",
+                                  "`MPVUTNVM` varchar(45) DEFAULT NULL",
+                                  "`MPVUTNVY` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+        public static bool createTable_psltimedatal()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_timedata";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`AlgorithmId` int(11) DEFAULT NULL",
+                                  "`parentid` int(11) DEFAULT NULL",
+                                  "`columnid` int(11) DEFAULT NULL",
+                                  "`startDate` varchar(45) DEFAULT NULL",
+                                  "`endDate` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+
+
+
         //概化计算时间记录表
         public static bool createTable_psltimerecord()
         {

@@ -35,10 +35,10 @@ namespace PSLCalcu
         private String CSVFileName = "";                                                            //概化计算配置表名称
         private bool IMPORTOK;                                                                      //概化计算配置表导入标志       
         private static List<PSLCalcuItem> PslCalcuItems = new List<PSLCalcuItem>();                        //概化计算(公式)配置对象集
-        private static CurrentCalcuEngine currentCalcuEngine=new CurrentCalcuEngine();
-        private List<string> ModuleNames=new List<string>();                                        //概化计算使用的公式名称集
+        private static CurrentCalcuEngine currentCalcuEngine = new CurrentCalcuEngine();
+        private List<string> ModuleNames = new List<string>();                                        //概化计算使用的公式名称集
         //private Dictionary<string, string> ModuleOutputDesc = new Dictionary<string, string>();   //概化计算使用的公式结算结果字典
-        private bool resetTagIDMap; 
+        private bool resetTagIDMap;
         //标签id映射是否重置
 
         private static List<PSLCalcuItem> secondList;
@@ -46,36 +46,36 @@ namespace PSLCalcu
         private static List<PSLCalcuItem> hourList;
         private static List<PSLCalcuItem> dayList;
         private static List<PSLCalcuItem> monthList;
-        private static List<PSLCalcuItem> yearList;  
+        private static List<PSLCalcuItem> yearList;
 
-       
+
         private static Dictionary<int, List<PSLCalcuItem>> secondMap;
         private static Dictionary<int, List<PSLCalcuItem>> minMap;
         private static Dictionary<int, List<PSLCalcuItem>> hourMap;
         private static Dictionary<int, List<PSLCalcuItem>> dayMap;
         private static Dictionary<int, List<PSLCalcuItem>> monthMap;
-        private static Dictionary<int, List<PSLCalcuItem>> yearMap;  
-        
+        private static Dictionary<int, List<PSLCalcuItem>> yearMap;
+
         //计算引擎主线程对象
         private System.Timers.Timer _timer;                                         //概化计算主线程
         private static long errorCount;                                                    //概化计算主线程错误统计
         private static long warningCount;                                                  //概化计算主线程警告统计
-        private static long beforeCalcount=0;  
+        private static long beforeCalcount = 0;
         private static long calcount;                                                      //计算次数
-        private List<TimeRecord>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           TimeRecords = new List<TimeRecord>();              //概化计算时间记录对象   
+        private List<TimeRecord> TimeRecords = new List<TimeRecord>();              //概化计算时间记录对象   
         private PSLCalcuItem previousItem = new PSLCalcuItem();                     //上一个计算对象
 
         //主界面               
         private static bool calcurunningflag = false;
         private static long calstatus = 0;
         private string[] IntervalType = { "second", "minute", "hour", "day", "week", "month", "year" };
-        
+
 
         #region 主界面初始化与载入
-       
+
         public AppRunForm()
         {
-            
+
 
             InitializeComponent();
             //初始化窗口大小
@@ -90,7 +90,7 @@ namespace PSLCalcu
             {
                 this.DebugToolStripMenuItem.Visible = true;
             }
-            else 
+            else
             {
                 this.DebugToolStripMenuItem.Visible = false;
             }
@@ -108,7 +108,7 @@ namespace PSLCalcu
             this.cb_intervaltype.SelectedIndex = 2;
             this.cb_moduletype.Items.Clear();
         }
-         
+
         //主界面载入时
         private void AppRunForm_Load(object sender, EventArgs e)
         {
@@ -126,13 +126,13 @@ namespace PSLCalcu
                 //messageStr = String.Format("数据库:\n--{0}\n连接测试结果:{1}", RTDBDAO.rtdbConnStr, RTDBDAO.testStatus); //非调试状态成功时不显示
                 //MessageBox.Show(messageStr, "实时数据库连接信息");
             }
-            else 
+            else
             {
                 messageStr = String.Format("实时数据库连接失败：\n\r1、检查实时数据库服务是否正常；\n\r2、检查网络连接是否正常；\n\r3、详细错误信息请查看log文件。");
                 MessageBox.Show(messageStr, "实时数据库连接失败");
             }
             //测试关系数据库
-            if(IniTable.connectTest())
+            if (IniTable.connectTest())
             {
                 //初始化时，只有不成功才显示信息
                 //messageStr = String.Format("数据库:\r\n--{0}\n连接测试结果:{1}", IniTable.rdbConnStr, IniTable.testStatus);
@@ -148,40 +148,43 @@ namespace PSLCalcu
                 this.Close();
             }
             //初始化概化计算对象集、概化计算标签字典、listview控件
-            if (!InitialCalcu()) return; 
+            if (!InitialCalcu()) return;
 
             //自动运行
             if (APPConfig.realcalcu_autorun == "1")
                 this.tsbt_Start_Click(null, null);
-        }        
+        }
         #endregion
 
         #region 图标按钮
         //“启动/暂停计算”按钮_
         public static void minCal()
         { //分钟线程执行方法
-            if (null != minList && minList.Count > 0) {
+            if (null != minList && minList.Count > 0)
+            {
                 while (true)
                 {
                     if (Interlocked.Read(ref calstatus) == 1)  //计算状态为true时才执行
                     {
-                        currentCalcuEngine.calcu(logHelper, minList, APPConfig.CALCUMODULE_THRESHOLD, ref errorCount, ref warningCount, ref calcount, ref  beforeCalcount, ref calstatus);
+                        currentCalcuEngine.calcu(logHelper, minList, APPConfig.CALCUMODULE_THRESHOLD, ref errorCount, ref warningCount, ref calcount, ref beforeCalcount, ref calstatus);
                     }
                 }
             }
         }
         public static void hourCal()
         {   //小时线程执行方法
-            if (null != hourList && hourList.Count > 0) {
+            if (null != hourList && hourList.Count > 0)
+            {
                 while (true)
                 {
                     if (Interlocked.Read(ref calstatus) == 1)  //计算状态为true时才执行
                     {
-                        bool flag = currentCalcuEngine.calcu(logHelper, hourList, APPConfig.CALCUMODULE_THRESHOLD, ref errorCount, ref warningCount, ref calcount, ref  beforeCalcount, ref calstatus);
+                        bool flag = currentCalcuEngine.calcu(logHelper, hourList, APPConfig.CALCUMODULE_THRESHOLD, ref errorCount, ref warningCount, ref calcount, ref beforeCalcount, ref calstatus);
                         if (flag)
                         {
                             PSLCalcuItem min = hourList.Min();       //时间最小配置
-                            if (null != minList && minList.Count > 0) {
+                            if (null != minList && minList.Count > 0)
+                            {
                                 PSLCalcuItem minuteMin = minList.Min();  //分钟数据时间最小配置
                                 //如果小于分钟最小配置  则进行计算  否则不进行计算
                                 if (min.fnextstarttime > minuteMin.fnextstarttime)
@@ -202,13 +205,14 @@ namespace PSLCalcu
                 {
                     if (Interlocked.Read(ref calstatus) == 1)  //计算状态为true时才执行
                     {
-                        bool flag = currentCalcuEngine.calcu(logHelper, dayList, APPConfig.CALCUMODULE_THRESHOLD, ref errorCount, ref warningCount, ref calcount, ref  beforeCalcount, ref calstatus);
+                        bool flag = currentCalcuEngine.calcu(logHelper, dayList, APPConfig.CALCUMODULE_THRESHOLD, ref errorCount, ref warningCount, ref calcount, ref beforeCalcount, ref calstatus);
                         if (flag)
                         {
                             PSLCalcuItem min = dayList.Min();       //时间最小配置
                             PSLCalcuItem hourMin = hourList.Min();  //小时计算截止时间最小的值
-                            if (min.fnextstarttime > hourMin.fnextstarttime) { //如果天的最小时间配置 大于小时的最小时间配置  说明小时计算还没有完成
-                                Thread.Sleep(60000*60);  //线程休眠一小时
+                            if (min.fnextstarttime > hourMin.fnextstarttime)
+                            { //如果天的最小时间配置 大于小时的最小时间配置  说明小时计算还没有完成
+                                Thread.Sleep(60000 * 60);  //线程休眠一小时
                             }
                         }
                     }
@@ -223,14 +227,14 @@ namespace PSLCalcu
                 {
                     if (Interlocked.Read(ref calstatus) == 1)  //计算状态为true时才执行
                     {
-                        bool flag = currentCalcuEngine.calcu(logHelper, monthList, APPConfig.CALCUMODULE_THRESHOLD, ref errorCount, ref warningCount, ref calcount, ref  beforeCalcount, ref calstatus);
+                        bool flag = currentCalcuEngine.calcu(logHelper, monthList, APPConfig.CALCUMODULE_THRESHOLD, ref errorCount, ref warningCount, ref calcount, ref beforeCalcount, ref calstatus);
                         if (flag)
                         {
                             PSLCalcuItem min = monthList.Min(); //时间最小配置
                             PSLCalcuItem dayMin = dayList.Min(); //天时间最小配置
                             if (min.fnextstarttime > dayMin.fnextstarttime)
-                            {  
-                                Thread.Sleep(60000*60);
+                            {
+                                Thread.Sleep(60000 * 60);
                             }
                         }
                     }
@@ -245,7 +249,7 @@ namespace PSLCalcu
                 {
                     if (Interlocked.Read(ref calstatus) == 1)  //计算状态为true时才执行
                     {
-                        bool flag = currentCalcuEngine.calcu(logHelper, yearList, APPConfig.CALCUMODULE_THRESHOLD, ref errorCount, ref warningCount, ref calcount, ref  beforeCalcount, ref calstatus);
+                        bool flag = currentCalcuEngine.calcu(logHelper, yearList, APPConfig.CALCUMODULE_THRESHOLD, ref errorCount, ref warningCount, ref calcount, ref beforeCalcount, ref calstatus);
                         if (flag)
                         {
                             PSLCalcuItem min = yearList.Min();      //时间最小配置
@@ -266,12 +270,12 @@ namespace PSLCalcu
         Thread monthThread; //月线程
         Thread yearThread;  //年线程
         private void tsbt_Start_Click(object sender, EventArgs e)
-        {   
+        {
             if (tsbt_Start.Text.ToLower() == "start")
             {
                 if (PslCalcuItems.Count > 0)
                 {
-                    tsbt_Start.Image = Properties.Resources.stop;   
+                    tsbt_Start.Image = Properties.Resources.stop;
                     tsbt_Start.Text = "Stop";
                     tsbt_Quit.Enabled = false;
                     btn_SetStartDate.Enabled = false;
@@ -290,7 +294,7 @@ namespace PSLCalcu
                     initalMap();//初始化计算map
                     minThread = new Thread(new ThreadStart(minCal));    //分钟线程
                     hourThread = new Thread(new ThreadStart(hourCal));  //小时线程
-                    dayThread=new Thread(new ThreadStart(dayCal));      //天线程
+                    dayThread = new Thread(new ThreadStart(dayCal));      //天线程
                     monthThread = new Thread(new ThreadStart(monthCal));  //月线程
                     yearThread = new Thread(new ThreadStart(yearCal)); ;  //年线程
                     minThread.Start();
@@ -317,10 +321,10 @@ namespace PSLCalcu
                 stop.Elapsed += new ElapsedEventHandler(stopCalcu);          //
                 stop.AutoReset = false;                                      //设置执行一次
                 stop.Start();
-                if (this._timer != null) 
+                if (this._timer != null)
                 {
                     this._timer.Dispose();                                                      //停止主线程。
-                }      
+                }
 
             }
         }
@@ -351,7 +355,7 @@ namespace PSLCalcu
         //“全选”复选框check改变的时候，
         private void checkBox_SelectAll_CheckedChanged(object sender, EventArgs e)
         {
-            
+
             if (flag_selectall)
             {
                 for (int i = 0; i < lV_DataList.Items.Count; i++)
@@ -365,7 +369,7 @@ namespace PSLCalcu
         private void checkBox_SelectIntervalType_MouseDown(object sender, MouseEventArgs e)
         {
             flag_selectintervaltype = true;
-            flag_selectall = false;           
+            flag_selectall = false;
             flag_selectmodulename = false;
             checkBox_SelectAll.Checked = false;
             checkBox_SelectModule.Checked = false;
@@ -373,10 +377,10 @@ namespace PSLCalcu
         //“按间隔类型选”复选框check变化的时候
         private void checkBox_SelectIntervalType_CheckedChanged(object sender, EventArgs e)
         {
-           
+
             if (flag_selectintervaltype == true)
             {
-               
+
                 for (int i = 0; i < lV_DataList.Items.Count; i++)
                 {
                     string intervalStr = lV_DataList.Items[i].SubItems[17].Text;
@@ -411,7 +415,7 @@ namespace PSLCalcu
         //"按算法"复选框，check变化
         private void checkBox_SelectModule_CheckedChanged(object sender, EventArgs e)
         {
-           
+
             if (flag_selectmodulename)
             {
                 for (int i = 0; i < lV_DataList.Items.Count; i++)
@@ -450,9 +454,9 @@ namespace PSLCalcu
             //启动前台进度条界面
             importProgress.StartPosition = FormStartPosition.CenterParent;  //进度条界面位置
             importProgress.ShowDialog();                                    //模态方式启动进度条界面，后台线程work以消息的方式操作进度条界面
-            */         
-           
-        } 
+            */
+
+        }
         //
         private void lV_DataList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -464,7 +468,7 @@ namespace PSLCalcu
             SearchHelp help = new SearchHelp();
             help.ShowDialog();
         }
-       
+
         //主界面“导出”按钮
         private void btn_exportCSV_Click(object sender, EventArgs e)
         {
@@ -532,7 +536,7 @@ namespace PSLCalcu
                     this.lV_DataList.EnsureVisible(fixedIndx);//滚动到指定的行位置
                     this.lV_DataList.Items[fixedIndx].Focused = true;
                 }
-                catch 
+                catch
                 {
                     MessageBox.Show("请输入正确的行号！");
                 }
@@ -553,26 +557,26 @@ namespace PSLCalcu
             }
         }
         #endregion
-         
+
         #region 菜单
         //设置setup菜单
         private void setupToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!calcurunningflag)
             {
-                Setup setupform = new Setup();                
+                Setup setupform = new Setup();
                 setupform.ShowDialog();
             }
-            else 
+            else
             {
                 string messageStr = String.Format("计算引擎还在运行！请先停止计算引擎，再进行参数设定！");
                 MessageBox.Show(messageStr, "计算引擎参数设置");
             }
-            
+
         }
         //实时数据库连接测试
         private void rTDBToolStripMenuItem_Click(object sender, EventArgs e)
-        {            
+        {
             //如报错“初始值设定项引发异常”，请检查DbHelper的数据库类型和连接字符串赋值是否正确。
             //注意，xml中定义的数据库类型必须与枚举型CurrentRTDbType中的描述一致，大小写敏感。
             //修改config项目中的AppConfig.xml，然后必须将该文档拷贝到..\lib\config下。
@@ -589,9 +593,9 @@ namespace PSLCalcu
                                                     "2、检查网络连接是否正常。" + Environment.NewLine +
                                                     "3、检查PGIM是否有可用的客户端连接剩余。" + Environment.NewLine +
                                                     "请检查log文件！", RTDBDAO.rtdbConnStr);
-                MessageBox.Show(messageStr, "实时数据库连接失败。");                
-            }            
-           
+                MessageBox.Show(messageStr, "实时数据库连接失败。");
+            }
+
         }
         //关系数据库连接测试
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -614,7 +618,7 @@ namespace PSLCalcu
                                                       "请检查log文件！", IniTable.rdbConnStr);
                 MessageBox.Show(messageStr, "关系数据库连接失败");
                 return; //启动时检测到关系数据库出错，要跳出，后面要从关系库读取数据。
-            } 
+            }
         }
         //初始化数据表
         private void iniToolTable_Click(object sender, EventArgs e)
@@ -624,7 +628,7 @@ namespace PSLCalcu
                 string messageStr = String.Format("计算引擎还在运行！请先停止计算引擎，再进行参数设定！");
                 MessageBox.Show(messageStr, "计算引擎参数设置");
                 return;
-            } 
+            }
             Boolean runflag = false;
             runflag = IniTable.createDB_psldb();
             if (runflag) runflag = IniTable.createTable_pslmodules();                                       //创建计算模块信息表            
@@ -639,6 +643,25 @@ namespace PSLCalcu
             if (runflag) runflag = IniTable.createTable_pslemployeeforshift();                              //创建值班员工信息表
             if (runflag) runflag = IniTable.createTable_pslplanforshift();                                  //创建员工排班表
             if (runflag) runflag = IniTable.createTable_pslscoreweight();                                   //创建得分权重表
+            if (runflag) runflag = IniTable.createTable_pslMpvbase();
+            if (runflag) runflag = IniTable.createTable_pslalgorithm();
+            if (runflag) runflag = IniTable.createTable_pslcolumndata();
+            if (runflag) runflag = IniTable.createTable_pslm2analogdiv();
+            if (runflag) runflag = IniTable.createTable_pslmdevlimit();
+            if (runflag) runflag = IniTable.createTable_pslmdevlimitmulti();
+            if (runflag) runflag = IniTable.createTable_pslmfdistribute22();
+            if (runflag) runflag = IniTable.createTable_pslmmultical();
+            if (runflag) runflag = IniTable.createTable_pslmmultipv();
+            if (runflag) runflag = IniTable.createTable_pslmmultipvavgdistance();
+            if (runflag) runflag = IniTable.createTable_pslmmultipvavgdistancedetail();
+            if (runflag) runflag = IniTable.createTable_pslmpvbasemulti();
+            if (runflag) runflag = IniTable.createTable_pslmpvoverrangeeva();
+            if (runflag) runflag = IniTable.createTable_pslmpvscoreeva();
+            if (runflag) runflag = IniTable.createTable_pslmpvtyperangedetail();
+            if (runflag) runflag = IniTable.createTable_pslmpvtyprange();
+            if (runflag) runflag = IniTable.createTable_pslmpvutnv();
+            if (runflag) runflag = IniTable.createTable_pslmpvutnvdetail();
+            if (runflag) runflag = IniTable.createTable_psltimedatal();
             if (runflag && APPConfig.rdbtable_iniTableIncludePsldata == "1")
             {
                 if (APPConfig.psldata_startyear > 2000 && APPConfig.psldata_endyear > 2000 && APPConfig.psldata_endyear > APPConfig.psldata_startyear)
@@ -662,8 +685,8 @@ namespace PSLCalcu
             {
                 MessageBox.Show("初始化失败，请检查数据表！");
             }
-            
-            
+
+
         }
         //导入得分权重表
         private void importweightToolStripMenuItem_Click(object sender, EventArgs e)
@@ -693,27 +716,27 @@ namespace PSLCalcu
                 return;
             }
             FileSystemInfo[] files = dir.GetFileSystemInfos();      //获取路径文件夹下所有文件
-            
+
             //首先寻找合适的文件
             DateTime maxdatetime = new DateTime();                     //记录文件最大时间
             for (i = 0; i < files.Length; i++)
             {
                 try
-                {                    
+                {
                     string[] fields = new string[3];
                     //文件名称必须由2部分构成，如WeightConfig_2018-01.csv
                     fields = files[i].Name.Split('_');
                     string weightname = fields[0].ToUpper();                                            //文件名称                   
-                    DateTime filedate = DateTime.Parse(fields[1].Substring(0,7) + "-01 00:00:00" );     //文件时间
+                    DateTime filedate = DateTime.Parse(fields[1].Substring(0, 7) + "-01 00:00:00");     //文件时间
                     string filetype = fields[1].Split('.')[1];
                     if (weightname.ToUpper() == filepre &&
-                        filetype.ToUpper() == "CSV" 
+                        filetype.ToUpper() == "CSV"
                        )
                     {
                         if (filedate > maxdatetime)
                             maxdatetime = filedate;
                     }
-                   
+
                 }
                 catch (Exception ex)
                 {
@@ -727,7 +750,7 @@ namespace PSLCalcu
                 return;
             }
             //读取时间最大的文件的配置数据
-            string filename = csvFilePath + filepre+"_" + maxdatetime.ToString("yyyy-MM") + ".csv";
+            string filename = csvFilePath + filepre + "_" + maxdatetime.ToString("yyyy-MM") + ".csv";
             string[][] filedata = CsvFileReaderForModule.Read(filename);
             if (filedata == null || filedata.Length == 0)
             {
@@ -737,12 +760,12 @@ namespace PSLCalcu
 
             //检查标签是否在标签映射表中
             Dictionary<string, uint> TagName2Id = PSLTagNameIdMapDAO.ReadMap();
-           
+
             List<string> errorlines = new List<string>();
             for (i = 1; i < filedata.Length; i++)
             {
                 string tagname = filedata[i][1];
-                if (tagname.Trim() != "" && !TagName2Id.ContainsKey(tagname.Trim().ToUpper())) errorlines.Add((i-1).ToString());
+                if (tagname.Trim() != "" && !TagName2Id.ContainsKey(tagname.Trim().ToUpper())) errorlines.Add((i - 1).ToString());
             }
 
             if (errorlines.Count != 0)
@@ -777,10 +800,10 @@ namespace PSLCalcu
                 string messageStr = String.Format("计算引擎还在运行！请先停止计算引擎，再进行参数设定！");
                 MessageBox.Show(messageStr, "计算引擎参数设置");
                 return;
-            } 
+            }
             bool flag = true;
             //每次抽取计算模块信息前，应该先清除原来所有记录
-            flag=PSLModulesDAO.ClearData();
+            flag = PSLModulesDAO.ClearData();
             if (!flag)
             {
                 string messageStr = String.Format("清空模块信息表错误，检查log文件！");
@@ -788,25 +811,25 @@ namespace PSLCalcu
                 return;
             }
             //抽取计算模块信息到计算模块信息表
-            flag=PSLModulesDAO.extractData();
+            flag = PSLModulesDAO.extractData();
             if (!flag)
             {
                 string messageStr = String.Format("抽取模块信息表错误，检查log文件！");
                 MessageBox.Show(messageStr);
                 return;
             }
-            
+
             if (flag)
             {
                 //初始化计算配置对象
-                if(!InitialCalcu())  return;
+                if (!InitialCalcu()) return;
                 MessageBox.Show("计算模块信息抽取完毕，请检查数据表pslmodules！");
             }
-            else 
+            else
             {
                 MessageBox.Show("计算模块信息抽取错误，详细错误信息请检查log文件！");
             }
-            
+
         }
         //算法信息导出到csv文件
         private void ExcelToolStripMenuItem_Click(object sender, EventArgs e)
@@ -814,7 +837,7 @@ namespace PSLCalcu
             List<PSLModule> moduleinfo = new List<PSLModule>();
             //从数据表中读取数据
             try
-            {               
+            {
                 moduleinfo = PSLModulesDAO.ReadData();
             }
             catch (Exception ex)
@@ -824,7 +847,7 @@ namespace PSLCalcu
                 string messageStr = String.Format("算法信息读取错误，详细错误信息请检查log文件！");
                 MessageBox.Show(messageStr, "算法信息导出");
                 return;
-                
+
             }
 
             if (moduleinfo.Count != 0)
@@ -832,9 +855,9 @@ namespace PSLCalcu
             //转换成csv的string[][]格式
             string[][] csvdata = new string[moduleinfo.Count][];
 
-            for(int i=0;i<moduleinfo.Count;i++)
-            { 
-                csvdata[i]=new string[13];
+            for (int i = 0; i < moduleinfo.Count; i++)
+            {
+                csvdata[i] = new string[13];
                 csvdata[i][0] = moduleinfo[i].id.ToString();
                 csvdata[i][1] = moduleinfo[i].modulename;
                 csvdata[i][2] = moduleinfo[i].moduledesc;
@@ -863,15 +886,15 @@ namespace PSLCalcu
                 return;
             }
             catch (Exception ex)
-            { 
-                string errInfo = string.Format("算法信息导出错误。详细错误信息：",ex.ToString());
-                logHelper.Fatal(errInfo); 
+            {
+                string errInfo = string.Format("算法信息导出错误。详细错误信息：", ex.ToString());
+                logHelper.Fatal(errInfo);
                 string messageStr = String.Format("算法信息导出错误，详细错误信息请检查log文件！");
                 MessageBox.Show(messageStr, "算法信息导出");
                 return;
             }
 
-        }      
+        }
         //检查期望曲线和得分曲线
         private void checkCurveToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
@@ -886,7 +909,7 @@ namespace PSLCalcu
             DateTime startDate=DateTime.Parse(APPConfig.psldata_startyear.ToString() + "-1-1");
             DateTime endDate=DateTime.Parse(APPConfig.psldata_endyear.ToString() + "-12-30");
             bool flag = PSLDataDAO.OpenIndex(startDate, endDate);
-            */ 
+            */
             if (false)
             {
                 MessageBox.Show("所有PSLData数据表索引已经开启。");
@@ -960,7 +983,7 @@ namespace PSLCalcu
         private void 检查并抽取值次信息ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ReadShiftInfo2PSLData readshift = new ReadShiftInfo2PSLData();
-            readshift.readShiftItems = PslCalcuItems.Where(m=>m.fmodulename =="MReadShift").ToList();
+            readshift.readShiftItems = PslCalcuItems.Where(m => m.fmodulename == "MReadShift").ToList();
             readshift.ShowDialog();
         }
         //抽取常数标签信息到概化库
@@ -978,20 +1001,20 @@ namespace PSLCalcu
                 string messageStr = String.Format("计算引擎还在运行！请先停止计算引擎，再导入计算配置组态信息！");
                 MessageBox.Show(messageStr, "导入计算配置组态信息");
                 return;
-            } 
+            }
             DialogResult dr;
             string StrMsg = "";
-            
+
             StrMsg = "如果重新导入计算配置组态信息："
-                    +Environment.NewLine
-                    +"——原有的计算配置组态信息将完全丢失！"
                     + Environment.NewLine
-                    +"——计算结果标签id会全部被重新分配，原有的计算结果也将全部删除！"
+                    + "——原有的计算配置组态信息将完全丢失！"
                     + Environment.NewLine
-                    +"——常数读取项必须配置在第一张计算配置组态信息表中！"
+                    + "——计算结果标签id会全部被重新分配，原有的计算结果也将全部删除！"
                     + Environment.NewLine
-                    +"确定要重新导入吗？";
-           
+                    + "——常数读取项必须配置在第一张计算配置组态信息表中！"
+                    + Environment.NewLine
+                    + "确定要重新导入吗？";
+
             dr = MessageBox.Show(StrMsg, "导入计算配置组态信息", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
             if (dr == DialogResult.No || dr == DialogResult.Cancel)
             {
@@ -1007,15 +1030,15 @@ namespace PSLCalcu
             //清空已存在的pslitem列表
             PslCalcuItems.Clear();
             //清空PSLTagIdMap表
-            PSLTagNameIdMapDAO.ClearData();                 
+            PSLTagNameIdMapDAO.ClearData();
             PSLTagNameIdMapDAO.SetAutoIncrement(APPConfig.rdbtable_constmaxnumber);       //设定id从100开始自增。注意，这个是预留出一个范围的id给特殊的值用。在PSLTagNameIdMapDAO.generateMap()会对这些变量进行初始化
             //清空WebTagidmap表
-            WebTagNameIdMapDAO.ClearData();                 
+            WebTagNameIdMapDAO.ClearData();
             WebTagNameIdMapDAO.SetAutoIncrement(APPConfig.rdbtable_constmaxnumber);       //设定id从100开始自增。注意，这个是预留出一个范围的id给特殊的值用。在PSLTagNameIdMapDAO.generateMap()会对这些变量进行初始化
             //重建PSLData表
             if (APPConfig.psldata_startyear > 2000 && APPConfig.psldata_endyear > 2000 && APPConfig.psldata_endyear > APPConfig.psldata_startyear)
             {
-                IniTable.createTable_psldata(APPConfig.psldata_startyear, APPConfig.psldata_endyear,APPConfig.psldata_intervalmonth);            //创建概化数据表
+                IniTable.createTable_psldata(APPConfig.psldata_startyear, APPConfig.psldata_endyear, APPConfig.psldata_intervalmonth);            //创建概化数据表
                 PSLDataDAO.optiTable_psldata(APPConfig.psldata_startyear, APPConfig.psldata_endyear, APPConfig.psldata_intervalmonth);            //优化概化数据表
             }
             else
@@ -1047,7 +1070,7 @@ namespace PSLCalcu
                 //启动前台进度条界面
                 importProgress.StartPosition = FormStartPosition.CenterParent;  //进度条界面位置
                 importProgress.ShowDialog();                                    //模态方式启动进度条界面，后台线程work以消息的方式操作进度条界面                
-            }  
+            }
         }
         //2、从csv文件追加计算配置文件到pslcalcuconfig表，原标签id映射不变，在后面继续添加
         private void appendToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1055,9 +1078,9 @@ namespace PSLCalcu
             if (calcurunningflag)
             {
                 string messageStr = String.Format("计算引擎还在运行！请先停止计算引擎，再追加计算配置组态信息！");
-                MessageBox.Show(messageStr, "追加计算配置组态信息");               
+                MessageBox.Show(messageStr, "追加计算配置组态信息");
                 return;
-            } 
+            }
             DialogResult dr;
             string StrMsg = "";
 
@@ -1113,9 +1136,9 @@ namespace PSLCalcu
                 //启动前台进度条界面
                 importProgress.StartPosition = FormStartPosition.CenterParent;  //进度条界面位置
                 importProgress.ShowDialog();                                    //模态方式启动进度条界面，后台线程work以消息的方式操作进度条界面                
-            }  
+            }
         }
-                
+
         //后台处理函数，检测并导入计算配置信息
         void worker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -1125,7 +1148,7 @@ namespace PSLCalcu
             ConfigCSV configcsv = new ConfigCSV();
             configcsv.MAX_NUMBER_CONSTTAG = APPConfig.rdbtable_constmaxnumber;
             configcsv.readyPslCalcuItems = PslCalcuItems;                  //在追加新计算项时，有可能会用到已经存在的计算项
-            configcsv.importdata = CsvFileReader.Read(this.CSVFileName); 
+            configcsv.importdata = CsvFileReader.Read(this.CSVFileName);
             //检查读入的csv数据
             worker.ReportProgress(0, String.Format("检查配置信息！"));
             this.IMPORTOK = configcsv.CheckCSVData();
@@ -1151,7 +1174,7 @@ namespace PSLCalcu
             {
                 worker.ReportProgress(0, String.Format("处理pgim路径字符！"));
                 this.IMPORTOK = configcsv.PGIMPathCharChange();
-            }           
+            }
 
             //自动生成计算结果标签、别名、中文描述
             //不自动生成计算结果标签：采用configcsv中psltagnames字段中手动配置的标签名，作为计算结果的标签名称
@@ -1162,10 +1185,10 @@ namespace PSLCalcu
                 worker.ReportProgress(0, String.Format("自动生成标签！"));
                 this.IMPORTOK = configcsv.AutoGeneratePSLTags();
             }
-            
+
             //判断rdbset类型的源源标签是否正确。在自动生成标签后，计算结果描述字段内容，由于核心描述替换为真正的计算结果描述。此时将rdbset类型的源标签位置，替换为计算结果描述
             if (this.IMPORTOK)
-            { 
+            {
                 worker.ReportProgress(0, String.Format("替换rdbset类型源标签！"));
                 this.IMPORTOK = configcsv.AutoReplaceSourceTags();
             }
@@ -1185,25 +1208,25 @@ namespace PSLCalcu
                 worker.ReportProgress(0, String.Format("检查计算配置表中计算结果别名与库中标签有无重名！"));
                 this.IMPORTOK = WebTagNameIdMapDAO.CheckUnique(configcsv);
             }
-           
+
             //检查概化型源标签是否存在：源标签必须存在于即将导入的csv配置信息表中或者psltagidnamemap表中
             if (this.IMPORTOK)
             {
                 worker.ReportProgress(0, String.Format("检查计算配置表中概化类型的源标签是否存在！"));
                 this.IMPORTOK = PSLTagNameIdMapDAO.CheckSourcePSLName(configcsv);
-            } 
+            }
 
             //检查条件标签名是否存在：计算条件标签名必须存在于即将导入的csv配置信息表或者psltagidnamemap表中
             if (this.IMPORTOK)
             {
                 worker.ReportProgress(0, String.Format("检查计算配置表中计算条件标签是否存在！"));
                 this.IMPORTOK = PSLTagNameIdMapDAO.CheckCondPSLName(configcsv);
-            } 
-            
+            }
+
             //写入pslcalcuconfig
             if (this.IMPORTOK)
             {
-                worker.ReportProgress(0, String.Format("导入计算配置信息...")); 
+                worker.ReportProgress(0, String.Format("导入计算配置信息..."));
                 PSLCalcuConfigDAO.worker = worker;                              //将work传入PSLCalcuConfigDAO，供子程序刷新界面
                 this.IMPORTOK = PSLCalcuConfigDAO.ImportFromCSV(configcsv);     //数据表PSLCalcuConfig导入数据 
             }
@@ -1229,25 +1252,25 @@ namespace PSLCalcu
             if (this.IMPORTOK)
             {
                 //读取标签id映射
-                Dictionary<string,System.UInt32> TagName2Id = PSLTagNameIdMapDAO.ReadMap();
+                Dictionary<string, System.UInt32> TagName2Id = PSLTagNameIdMapDAO.ReadMap();
                 //写回csv文件
                 //worker.ReportProgress(0, String.Format("回写csv文件..."));
                 string csvfilename = this.CSVFileName.ToString();
-                int pos = csvfilename.LastIndexOf('.');                
-                string newCSVFilename= csvfilename.Substring(0,pos)+"_resultTags.csv";      //文件名
-                string[][] csvdataWithTagId = csvDataPlusTagId(configcsv,TagName2Id);  //在数据string[][]末尾，添加计算结果标签对应的id号字符串。
-                CsvFileReader.Save(csvdataWithTagId,newCSVFilename);
+                int pos = csvfilename.LastIndexOf('.');
+                string newCSVFilename = csvfilename.Substring(0, pos) + "_resultTags.csv";      //文件名
+                string[][] csvdataWithTagId = csvDataPlusTagId(configcsv, TagName2Id);  //在数据string[][]末尾，添加计算结果标签对应的id号字符串。
+                CsvFileReader.Save(csvdataWithTagId, newCSVFilename);
             }
             else
             {
                 MessageBox.Show("在数据库中更新计算配置信息过程中发生错误，请检查log文件！");
             }
 
-                       
+
         }
         void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)   //进度条窗体进度控制：后台线程完成时（操作完成消息），关闭进度条窗体
         {
-            
+
             importProgress.Close();
             //执行完毕后，要移除注册的事件
             worker.DoWork -= new DoWorkEventHandler(worker_DoWork);                                     //执行完毕，解除注册的事件
@@ -1259,9 +1282,9 @@ namespace PSLCalcu
                 InitialCalcu();     //这里不用再判断是否会成功。由于程序初始化时，必然执行InitialCalcu，不成功，则直接退出程序。可以执行到这里，则说明InitialCalcu可以运行成功。
                 MessageBox.Show("计算配置导入完毕，请检查主界面listview中的计算配置信息！");
             }
-            
+
         }
-        
+
         //修改算法配置中的一般信息
         //——修改算法信息程序，与导入程序完全相同。仅在两处有差别：
         //——在写入pslcalcuconfig表时，这里是更新部分可更新字段
@@ -1432,7 +1455,7 @@ namespace PSLCalcu
             UpdateTagname updatetagname = new UpdateTagname();
             updatetagname.ShowDialog();
         }
-        
+
 
         //删除计算配置项
         //——删除对应标签的所有数据（最耗时，不可恢复，放在最前面）
@@ -1457,7 +1480,7 @@ namespace PSLCalcu
             deleteconfig.TagName2Id = TagName2Id;
             deleteconfig.ShowDialog();
         }
-        
+
         //检查实时标签有效性
         private void checkTagToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1548,7 +1571,7 @@ namespace PSLCalcu
                 MessageBox.Show(messageStr, "数据删除");
                 return;
             }
-            
+
             //读取标签id映射
             Dictionary<string, System.UInt32> TagName2Id = PSLTagNameIdMapDAO.ReadMap();
 
@@ -1589,14 +1612,14 @@ namespace PSLCalcu
                 try
                 {
                     CsvFileReader.Save(csvData, sfd.FileName);
-                    MessageBox.Show("时间数据已经成功写入CSV文件！"); 
+                    MessageBox.Show("时间数据已经成功写入CSV文件！");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("导出到CSV文件失败，请检查目标文件是否被占用！");
                 }
             }
-            
+
         }
         //关闭退出
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1608,7 +1631,7 @@ namespace PSLCalcu
                 worker.Dispose();
             }
             catch { };
-            
+
             Application.ExitThread();
             Application.Exit();
             this.Close();
@@ -1652,7 +1675,8 @@ namespace PSLCalcu
             //当窗口由最小化回复为正常时，对Listview进行一次即时更新
             if (this.WindowState == FormWindowState.Normal)
             {
-                if (null != this._timer) {
+                if (null != this._timer)
+                {
                     this._timer.Start();
                 }
                 InitialListView();
@@ -1700,21 +1724,21 @@ namespace PSLCalcu
             }
             else
             {
-                this.tslb_CurrentIndex.Text = "当前计算速度" + (calcount - beforeCalcount)*60+"项/分钟";
+                this.tslb_CurrentIndex.Text = "当前计算速度" + (calcount - beforeCalcount) * 60 + "项/分钟";
                 beforeCalcount = long.Parse(count);
             }
         }
         private void updateView(object source, ElapsedEventArgs e)
         {
-           
-           
+
+
             UpdateCalcuError(string.Format("计算过程中发生{0}次错误", errorCount));
             UpdateCalcuWarning(string.Format("计算过程中发生{0}次警告", warningCount));
             //InitialListView();
             UpdateListView();
             UpdateCalcuIndex(string.Format("{0}", calcount));
         }
-      
+
         #endregion
 
         #region 初始化计算项
@@ -1722,7 +1746,8 @@ namespace PSLCalcu
         //——采用线程锁定，如果当次计算未完成，则到定时周期，也不会启动第二次计算。
         //——DBHelper接口的静态方法不支持多线程同时调用，会出现混乱。
         //——计算配置有前后要求，有些算法要求采用前面算法的结果，必须前面算法完成后，才能启动。
-        public void initalMap() {
+        public void initalMap()
+        {
             secondList = new List<PSLCalcuItem>();
             minList = new List<PSLCalcuItem>();
             hourList = new List<PSLCalcuItem>();
@@ -1861,9 +1886,9 @@ namespace PSLCalcu
                 }
             }
         }
-      
-       #endregion
-     
+
+        #endregion
+
         #region 辅助函数
         //初始化概化计算对象集、概化计算标签字典、listview控件
         private bool InitialCalcu()
@@ -1871,7 +1896,7 @@ namespace PSLCalcu
             try
             {
                 //读取概化计算标签字典
-                logHelper.Info("读取概化计算标签字典..." );
+                logHelper.Info("读取概化计算标签字典...");
                 Dictionary<string, System.UInt32> TagName2Id = PSLTagNameIdMapDAO.ReadMap();   //标签名称跟id映射关系
                 Dictionary<string, bool> TagName2Flag = PSLTagNameIdMapDAO.ReadFlagMap();
                 if (PSLTagNameIdMapDAO.ErrorFlag)
@@ -1894,7 +1919,7 @@ namespace PSLCalcu
                 PslCalcuItems = PSLCalcuConfigDAO.ReadConfig();
                 if (PSLCalcuConfigDAO.ErrorFlag)
                 {
-                    string strMsg = String.Format("读取概化计算配置对象集错误！" + Environment.NewLine +                                              
+                    string strMsg = String.Format("读取概化计算配置对象集错误！" + Environment.NewLine +
                                                "——请手动检查数据库计算配置表" + Environment.NewLine +
                                                "——查看log文件。");
                     MessageBox.Show(strMsg);
@@ -1923,7 +1948,7 @@ namespace PSLCalcu
                     MessageBox.Show(strMsg);
                     return false;
                 }
-                
+
                 //概化计算配置对象集的计算时间初始化:起始时间、结束时间、下一次计算时间。如果起始时间为空，则用系统当前时间初始化starttime
                 //注意，计算引擎的第一次计算，是第一个“下一次计算时间”。比如起始时间是12点，周期1小时，延迟5minutes。则第一次计算时间为13:05:00。
                 logHelper.Info("准备计算时间...");
@@ -1943,7 +1968,7 @@ namespace PSLCalcu
                 this.cb_moduletype.Items.AddRange(this.ModuleNames.ToArray());
 
                 //主界面listview数据初始化 
-                logHelper.Info("初始化界面listview...");       
+                logHelper.Info("初始化界面listview...");
                 InitialListView();
                 //主界面信息栏信息初始化
                 logHelper.Info("初始化界面信息栏...");
@@ -1958,12 +1983,12 @@ namespace PSLCalcu
                 //这里出错，主要是：
                 //——PSLTagNameIdMapDAO.ReadMap()出错
                 //—— PSLCalcuConfigDAO.ReadConfig()出错
-                string messageStr = String.Format("界面初始化失败，请检查log文件！"+ Environment.NewLine +
-                                                  "——请检出数据库是否初始化，计算配置表和标签id映射表是否正常。"+ Environment.NewLine +
+                string messageStr = String.Format("界面初始化失败，请检查log文件！" + Environment.NewLine +
+                                                  "——请检出数据库是否初始化，计算配置表和标签id映射表是否正常。" + Environment.NewLine +
                                                   "详细出错信息查看log文件。"
                                                     );
                 MessageBox.Show(messageStr);
-                logHelper.Fatal("界面初始化失败。详细信息："+ex.ToString());
+                logHelper.Fatal("界面初始化失败。详细信息：" + ex.ToString());
                 return false;
             }
 
@@ -1971,11 +1996,11 @@ namespace PSLCalcu
         //更新概化计算对象集、listview控件
         //——由于仅更新了和周期相关的starttime、endtime、nextstarttim
         //——因此不会引起fid的变化,无需重新读取概化计算配置对象集PslCalcuItems            
-        private void updateCalcu() 
+        private void updateCalcu()
         {
             //概化计算配置对象集的计算时间更新
             string datetimeStr = string.Format("{0} {1}", this.dtStartDate.Text, this.dtStartTime.Text);
-            DateTime setDateTime=DateTime.Parse(datetimeStr); 
+            DateTime setDateTime = DateTime.Parse(datetimeStr);
             for (int i = 0; i < lV_DataList.Items.Count; i++)
             {
                 //UI提示
@@ -1985,10 +2010,10 @@ namespace PSLCalcu
                 {
                     //20181212修改，不在采用fid来寻找。PslCalcuItems和lV_DataList.Items一一对应。
                     PSLCalcuItem checkeditem = PslCalcuItems[i];
-                    int preMonth=checkeditem.fstarttime.Month;
-                    int preDay=checkeditem.fstarttime.Day;
-                    int preHour=checkeditem.fstarttime.Hour;
-                    int preMinute=checkeditem.fstarttime.Minute;
+                    int preMonth = checkeditem.fstarttime.Month;
+                    int preDay = checkeditem.fstarttime.Day;
+                    int preHour = checkeditem.fstarttime.Hour;
+                    int preMinute = checkeditem.fstarttime.Minute;
                     int preSecond = checkeditem.fstarttime.Second;
                     //修改当前概化计算配置对象的starttime
                     if (checkeditem.fintervaltype == "y" || checkeditem.fintervaltype == "year" || checkeditem.fintervaltype == "years")
@@ -2015,7 +2040,7 @@ namespace PSLCalcu
                     {
                         checkeditem.fstarttime = setDateTime;
                     }
-                    
+
                     //根据starttime修改endtime和nextstarttime
                     checkeditem.IniDate();
                     PSLCalcuConfigDAO.UpdateStartTime(checkeditem.fid, checkeditem.fstarttime);
@@ -2028,10 +2053,10 @@ namespace PSLCalcu
             //主界面信息栏信息初始化
             tslb_CalcuConfig.Text = string.Format("--共{0}项计算配置", PslCalcuItems.Count);
         }
-        private void updatepslcalcuconfig(object sender, DoWorkEventArgs e) 
+        private void updatepslcalcuconfig(object sender, DoWorkEventArgs e)
         {
             //将改变的信息，更新到pslcalcuconfig表starttime  
-            worker.ReportProgress(0, String.Format("更新计算信息配置表'计算起始时间'！"));   
+            worker.ReportProgress(0, String.Format("更新计算信息配置表'计算起始时间'！"));
             PSLCalcuConfigDAO.worker = worker;
             PSLCalcuConfigDAO.UpdateStartTimeBatch(PslCalcuItems); //更新pslconfig表中的starttime字段，为了记录当前计算到的时间。如果计算出错，后面会从这个位置开始计算                       
         }
@@ -2081,33 +2106,34 @@ namespace PSLCalcu
         delegate void ListUpdate();                         //线程刷新UI代理
         private void UpdateListView()
         {
-            
+
             if (this.lV_DataList.InvokeRequired)
             {
                 ListUpdate d = new ListUpdate(UpdateListView);
                 this.lV_DataList.Invoke(d);
             }
             else
-            {   
-                    DateTime cur = DateTime.Now; //获取系统时间
-                    DateTime start=Convert.ToDateTime("2015/01/01 00:00:00");
-                    long ticks=cur.Ticks-start.Ticks;
-                    if ((ticks / 10000) % 60000>50000)
-                    {//如果系统时间合适  则执行相应程序
-                        //根据pslconfigitems添加
-                        for (int i = 0; i < PslCalcuItems.Count; i++)              //为listview添加 items.Count行数据
-                        {
-                            PSLCalcuItem pslcalcuitem = PslCalcuItems[i];
-                            this.lV_DataList.Items[pslcalcuitem.index].Selected = true;
-                            this.lV_DataList.Items[pslcalcuitem.index].SubItems[19].Text = pslcalcuitem.fstarttime.ToString("yyyy-MM-dd HH:mm:ss");
-                            this.lV_DataList.Items[pslcalcuitem.index].SubItems[20].Text = pslcalcuitem.fendtime.ToString("yyyy-MM-dd HH:mm:ss");
-                            this.lV_DataList.Items[pslcalcuitem.index].SubItems[21].Text = pslcalcuitem.fnextstarttime.ToString("yyyy-MM-dd HH:mm:ss");
-                        }
+            {
+                DateTime cur = DateTime.Now; //获取系统时间
+                DateTime start = Convert.ToDateTime("2015/01/01 00:00:00");
+                long ticks = cur.Ticks - start.Ticks;
+                if ((ticks / 10000) % 60000 > 50000)
+                {//如果系统时间合适  则执行相应程序
+                 //根据pslconfigitems添加
+                    for (int i = 0; i < PslCalcuItems.Count; i++)              //为listview添加 items.Count行数据
+                    {
+                        PSLCalcuItem pslcalcuitem = PslCalcuItems[i];
+                        this.lV_DataList.Items[pslcalcuitem.index].Selected = true;
+                        this.lV_DataList.Items[pslcalcuitem.index].SubItems[19].Text = pslcalcuitem.fstarttime.ToString("yyyy-MM-dd HH:mm:ss");
+                        this.lV_DataList.Items[pslcalcuitem.index].SubItems[20].Text = pslcalcuitem.fendtime.ToString("yyyy-MM-dd HH:mm:ss");
+                        this.lV_DataList.Items[pslcalcuitem.index].SubItems[21].Text = pslcalcuitem.fnextstarttime.ToString("yyyy-MM-dd HH:mm:ss");
                     }
+                }
             }
         }
 
-        private void UpdateListViewRightNow() {
+        private void UpdateListViewRightNow()
+        {
             for (int i = 0; i < PslCalcuItems.Count; i++)              //为listview添加 items.Count行数据
             {
                 PSLCalcuItem pslcalcuitem = PslCalcuItems[i];
@@ -2118,7 +2144,7 @@ namespace PSLCalcu
             }
         }
 
-     
+
         //log自动管理程序
         private void logClear()
         {
@@ -2133,7 +2159,7 @@ namespace PSLCalcu
                     string[] logfilenames = logfiles[i].ToString().Split('.');                    //依次遍历每个log文件名，  
                     if (logfilenames.Length >= 3)
                     {
-                        DateTime logfiledate = DateTime.Parse(logfilenames[2].Replace("_","-"));
+                        DateTime logfiledate = DateTime.Parse(logfilenames[2].Replace("_", "-"));
                         if (logfiledate < DateTime.Now.AddDays(circleDays))
                         {
                             File.Delete(logpath + "\\" + logfiles[i]);
@@ -2176,15 +2202,15 @@ namespace PSLCalcu
             }
             for (int i = configcsv.firstDataRow; i < csvDataPlusTagId.Length; i++)      //拷贝数据行
             {
-                csvDataPlusTagId[i] = new string[configcsv.importdata[i].Length+1];
+                csvDataPlusTagId[i] = new string[configcsv.importdata[i].Length + 1];
                 string[] tagnames = configcsv.importdata[i][configcsv.foutputpsltagprefIndex].Split(';');
                 uint[] tagids = new uint[tagnames.Length];
                 for (int j = 0; j < tagnames.Length; j++)
                 {
                     tagids[j] = tagname2id[tagnames[j]];
                 }
-                Array.Copy(configcsv.importdata[i], 0, csvDataPlusTagId[i],0, configcsv.importdata[i].Length);
-                csvDataPlusTagId[i][configcsv.importdata[i].Length] = String.Join(";",tagids);
+                Array.Copy(configcsv.importdata[i], 0, csvDataPlusTagId[i], 0, configcsv.importdata[i].Length);
+                csvDataPlusTagId[i][configcsv.importdata[i].Length] = String.Join(";", tagids);
             }
 
             return csvDataPlusTagId;
@@ -2226,7 +2252,7 @@ namespace PSLCalcu
             }
         }
         #endregion
-        
+
         #region 调试模式相关
         //综合算法测试窗口
         private void 综合算法测试ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2236,7 +2262,7 @@ namespace PSLCalcu
                 string messageStr = String.Format("计算引擎还在运行！请先停止计算引擎，再进行参数设定！");
                 MessageBox.Show(messageStr, "计算引擎参数设置");
                 return;
-            } 
+            }
             PSLCalcuModuleTest calcutest = new PSLCalcuModuleTest();
             calcutest.Show();
 
@@ -2263,11 +2289,11 @@ namespace PSLCalcu
             DateTransTool datetrans = new DateTransTool();
             datetrans.Show();
         }
-        
+
         //计算模块测试菜单：这里选择菜单点击后执行哪一个测试程序
         private void testToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
         }
         //测试MMultiAnalogAvg
         private void mMultiAnalogAvgToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2326,7 +2352,7 @@ namespace PSLCalcu
                 //完成上面要求，应该怎么组织sql
             }
 
-        }   
+        }
         //测试mFOPC2Minute
         private void mFOPC2MinuteToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2348,9 +2374,9 @@ namespace PSLCalcu
 
             //1.2、用手动赋值法给定特殊数据            
             List<PValue>[] testdata = TestData_MFOPC2Minute.SimuData();
-            
-                input[0] = testdata[2];
-           
+
+            input[0] = testdata[2];
+
 
 
             //1.3、从csv数据文件读入数据
@@ -2431,7 +2457,7 @@ namespace PSLCalcu
             }
 
             //4、进行计算
-            Results results= MCondSpanLong.Calcu();
+            Results results = MCondSpanLong.Calcu();
 
             //5、检查计算结果
             for (int i = 0; i < 5; i++)
@@ -2539,7 +2565,7 @@ namespace PSLCalcu
 
         //测试超限统计MLimitStatistics
         //定义一个委托，用于委托信号发生函数
-        delegate double generator(double period, int min, int max, double current); 
+        delegate double generator(double period, int min, int max, double current);
         private void mToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //1、给计算模块准备输入数据。准备方法可以从下面的三种中选取一种方式
@@ -2632,7 +2658,7 @@ namespace PSLCalcu
                 //写入的时候，是pslname和timestamp相同，就更新，不同就写入新记录
                 //完成上面要求，应该怎么组织sql
             }
-        }        
+        }
         //测试分布统计算法MFDistribute12
         private void mFDistribute12ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2747,7 +2773,7 @@ namespace PSLCalcu
             //2、配置计算模块。1、选择要测试的计算模块。2、给入输入数据。3、给定输入参数calcuInfo.fparas。4、给定计算条件
             //MFDistribute22.inputData = input;       //输入数据 
             //MFDistribute22.calcuInfo = null;        //档次次计算信息（数据起始时间、数据截止时间、输出结果的数量、当次计算执行哪些算法“YYN”、当次计算需要参数）
-            
+
             MMultiDigitalSum.inputData = input;
             MMultiDigitalSum.calcuInfo = new CalcuInfo();
             MMultiDigitalSum.calcuInfo.fparas = "50,55";
@@ -2831,7 +2857,7 @@ namespace PSLCalcu
         {
             //1、给计算模块准备输入数据。准备方法可以从下面的三种中选取一种方式
             List<PValue>[] input = new List<PValue>[1];
-            input[0] = new List<PValue>();           
+            input[0] = new List<PValue>();
 
             //1.1、用虚拟数据发生器批量产生数据
             string startDate = "2016-01-01 12:10:00";
@@ -2841,7 +2867,7 @@ namespace PSLCalcu
             //input = simulateData(startDate, endDate, interval, generator);
 
             //1.2、用手动赋值法给定特殊数据            
-            input[0] = TestData_MDigitalSum.simuData1();           
+            input[0] = TestData_MDigitalSum.simuData1();
 
             //2、配置计算模块。1、选择要测试的计算模块。2、给入输入数据。3、给定输入参数calcuInfo.fparas。4、给定计算条件
             //MFDistribute22.inputData = input;       //输入数据 
@@ -2996,11 +3022,11 @@ namespace PSLCalcu
             //input = simulateData(startDate, endDate, interval, generator);
 
             //1.2、用手动赋值法给定特殊数据            
-            List<PValue>[] testdata=TestData_Index10.SimuData();
+            List<PValue>[] testdata = TestData_Index10.SimuData();
             for (int i = 0; i < input.Length; i++)
             {
                 input[i] = testdata[i];
-            }           
+            }
 
             //2、配置计算模块。1、选择要测试的计算模块。2、给入输入数据。3、给定输入参数calcuInfo.fparas。4、给定计算条件
             //MFDistribute22.inputData = input;       //输入数据 
@@ -3207,8 +3233,8 @@ namespace PSLCalcu
 
             //Mindex9测试，可以通过改变下面input数组的下标值，来输入不同数量的数值对排序进行测试。入股输入数值超过9个，计算会报错。
             List<PValue>[] input = new List<PValue>[1];
-             input[0] = new List<PValue>();
-           
+            input[0] = new List<PValue>();
+
 
             //1.1、用虚拟数据发生器批量产生数据
             string startDate = "2016-01-01 12:10:00";
@@ -3513,17 +3539,17 @@ namespace PSLCalcu
         private void testExpression()
         {
             //创建时间解析对象
-            ICondEvaluatable exp;                               
+            ICondEvaluatable exp;
             string CalcuStr = "({1}!({2}&{3}))";
-            exp = new CondExpression(CalcuStr); 
+            exp = new CondExpression(CalcuStr);
             //给入数据
-            List<PValue>[] CalcuValues=new List<PValue>[3];     
+            List<PValue>[] CalcuValues = new List<PValue>[3];
             CalcuValues[0] = TestData_MLimitStat.spanLogicData0();
             CalcuValues[1] = TestData_MLimitStat.spanLogicData1();
             CalcuValues[2] = TestData_MLimitStat.spanLogicData2();
             //解析并计算                  
             List<PValue> result = exp.Evaluate(CalcuValues);                      //根据解析结果进行计算
-           
+
         }
         #endregion
 
@@ -3532,13 +3558,13 @@ namespace PSLCalcu
         {
             this.testSpansFilter();
         }
-        private void testSpansFilter()       
+        private void testSpansFilter()
         {
             //给入数据
             List<PValue> input = new List<PValue>();
-            List <PValue>[] inputs=new List<PValue>[1];
+            List<PValue>[] inputs = new List<PValue>[1];
             input = TestData_MLimitStat.spanFilterData0();
-            inputs=new List<PValue>[1] { input };
+            inputs = new List<PValue>[1] { input };
             List<PValue> filterspan = new List<PValue>();
             filterspan = TestData_MLimitStat.spanFilterData1();
             SpanLogic.SpansFilter(ref inputs, filterspan);
@@ -3603,8 +3629,8 @@ namespace PSLCalcu
         {
             HistoryParallelCalcuEngine his = new HistoryParallelCalcuEngine();
 
-            List<PValue> input ;
-            DateTime startdate=DateTime.Parse("2016-01-01 12:00:00");
+            List<PValue> input;
+            DateTime startdate = DateTime.Parse("2016-01-01 12:00:00");
             DateTime endDate = DateTime.Parse("2016-01-01 13:00:00");
             List<PValue>[] results;
 
@@ -3613,7 +3639,7 @@ namespace PSLCalcu
             //——分割结果与原始值相同
             input = TestData_SpanPValue.simuData1();
             results = null;
-            results = his.SpanPValues4SpanFilter(input,startdate,endDate,60);
+            results = his.SpanPValues4SpanFilter(input, startdate, endDate, 60);
 
             //——原始值和要划分的时间段，恰好完全重合。但是缺少起始时刻的时间段。
             //——分割结果与原始值相同.缺少的时间段返回为空。
@@ -3643,7 +3669,7 @@ namespace PSLCalcu
         #region OPC接口测试
         //OPC接口测试
         private void oPCToolStripMenuItem_Click(object sender, EventArgs e)
-        {           
+        {
             //测试
             long ticks = DateTime.Parse("2018-01-30 20:00:00").Ticks;
             ticks = DateTime.Parse("2018-03-10 20:00:00").Ticks;
@@ -3680,12 +3706,12 @@ namespace PSLCalcu
             WebTagNameIdMapDAO.DeleteTags(tagids);
         }
         #endregion
-        
+
         private void generaltestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
-            List<PValue> temp=new List<PValue>();
-            temp.Add(new PValue(55,DateTime.Parse("2018-01-02"),DateTime.Parse("2018-01-02"),1));
+
+            List<PValue> temp = new List<PValue>();
+            temp.Add(new PValue(55, DateTime.Parse("2018-01-02"), DateTime.Parse("2018-01-02"), 1));
             temp.Add(new PValue(59, DateTime.Parse("2018-01-05"), DateTime.Parse("2018-01-07"), 1));
             temp.Add(new PValue(72, DateTime.Parse("2018-01-08"), DateTime.Parse("2018-01-09"), 1));
             temp.Add(new PValue(33, DateTime.Parse("2018-01-09"), DateTime.Parse("2018-01-12"), 1));
@@ -3697,9 +3723,9 @@ namespace PSLCalcu
 
             temp1.Add(null);
 
-            double[] LimitArea = new double[8]; 
+            double[] LimitArea = new double[8];
 
-            List<PValue> temp2=temp.Union(temp1).ToList();
+            List<PValue> temp2 = temp.Union(temp1).ToList();
             max = temp2.First(n => n.Value == temp2.Max(m => m.Value));
             int tempint = 10;
 
@@ -3710,6 +3736,6 @@ namespace PSLCalcu
             LogTest logtest = new LogTest();
             logtest.Show();
         }
-        
+
     }
 }
