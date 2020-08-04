@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?> 
-<config>
-  
+<config>  
   <common appmode="debug" password="wenjiug" interval_calculate="5" interval_display="5" log_validperiod="30">
   </common>   
   <rtdb type="TOM" connstring="server=127.0.0.1;port=921;username=admin;password=admin" maxrepeatonerror="10" waitsecondonerror="30">
   </rtdb>  
-  <rdb type="MySql" connstring="server=localhost;port=3306;user id=root;password=123qwe@#;database=sys;connect timeout=5">
+  <rdb type="MySql" connstring="server=localhost;port=3318;user id=root;password=mysql;database=sys;connect timeout=5">
   </rdb>  
   <rdbtable resulttagauto="1" resulttagincludeinterval="1" tag2idalwaysreset="1" iniTableIncludePsldata="1" constmaxnumber="10000">
   </rdbtable>

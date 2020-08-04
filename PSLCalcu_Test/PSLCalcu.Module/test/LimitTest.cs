@@ -8,11 +8,11 @@ using PSLCalcu.Module.Limit;
 
 namespace PSLCalcu.Module
 {
-    class LimitTest : BaseModule, IModule, IModuleExPara
+    class MDevLimit : BaseModule, IModule, IModuleExPara
     {
         #region 计算模块信息：
 
-        private string _moduleName = "LimitTest";
+        private string _moduleName = "MDevLimit";
         public string moduleName
         {
             get
@@ -20,7 +20,7 @@ namespace PSLCalcu.Module
                 return _moduleName;
             }
         }
-        private string _moduleDesc = "Limit建模测试";
+        private string _moduleDesc = "偏差型变量运行范围计算";
         public string moduleDesc
         {
             get
@@ -44,7 +44,7 @@ namespace PSLCalcu.Module
                 return _inputDescsCN;
             }
         }
-        private string _algorithms = "LimitTest";
+        private string _algorithms = "MDevLimit";
         public string algorithms
         {
             get

@@ -365,7 +365,12 @@ namespace PSLCalcu
             string tablename = "psl_mpvbase";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
-                                  "`PVBMin` varchar(45) DEFAULT NULL'",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                  "`PVBMin` varchar(45) DEFAULT NULL",
                                   "`PVBMinTime` varchar(45) DEFAULT NULL",
                                   "`PVBAvg` varchar(45) DEFAULT NULL",
                                   "`PVBMax` varchar(45) DEFAULT NULL",
@@ -403,12 +408,7 @@ namespace PSLCalcu
                                   "`PVBQa` varchar(45) DEFAULT NULL",
                                   "`PVBQb` varchar(45) DEFAULT NULL",
                                   "`PVBQc` varchar(45) DEFAULT NULL",
-                                  "`PVBStbTSLPV` varchar(45) DEFAULT NULL",
-                                  "`yearvalue` varchar(45) DEFAULT NULL",
-                                  "`monthvalue` varchar(45) DEFAULT NULL",
-                                  "`dayvalue` varchar(45) DEFAULT NULL",
-                                  "`hourvalue` varchar(45) DEFAULT NULL",
-                                  "`tagId` varchar(45) DEFAULT NULL"
+                                  "`PVBStbTSLPV` varchar(45) DEFAULT NULL"
                                 };
 
 
@@ -421,7 +421,7 @@ namespace PSLCalcu
             string tablename = "psl_algorithm";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
-                                  "`AlgorithmName` varchar(45) DEFAULT NULL'"
+                                  "`AlgorithmName` varchar(45) DEFAULT NULL"
                                 };
 
 
@@ -433,7 +433,7 @@ namespace PSLCalcu
             string tablename = "psl_columndata";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
-                                  "`columnName` varchar(45) DEFAULT NULL'"
+                                  "`columnName` varchar(45) DEFAULT NULL"
                                 };
 
 
@@ -445,86 +445,134 @@ namespace PSLCalcu
             string databasename = "psldb";
             string tablename = "psl_mdevlimit";
             string[] filedname ={
-                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
-                                  "`DevHHN` varchar(45) DEFAULT NULL",
-                                  "`DevHHT` varchar(45) DEFAULT NULL",
-                                  "`DevHHR` varchar(45) DEFAULT NULL",
-                                  "`DevHHTMax` varchar(45) DEFAULT NULL",
-                                  "`DevHHA` varchar(45) DEFAULT NULL",
-                                  "`DevHHET` varchar(45) DEFAULT NULL",
-                                  "`DevHN` varchar(45) DEFAULT NULL",
-                                  "`DevHT` varchar(45) DEFAULT NULL",
-                                  "`DevHR` varchar(45) DEFAULT NULL",
-                                  "`DevHTMax` varchar(45) DEFAULT NULL",
-                                  "`DevHA` varchar(45) DEFAULT NULL",
-                                  "`DevHET` varchar(45) DEFAULT NULL",
-                                  "`DevRPN` varchar(45) DEFAULT NULL",
-                                  "`DevRPT` varchar(45) DEFAULT NULL",
-                                  "`DevRPR` varchar(45) DEFAULT NULL",
-                                  "`DevRPTMax` varchar(45) DEFAULT NULL",
-                                  "`DevRPA` varchar(45) DEFAULT NULL",
-                                  "`DevRPET` varchar(45) DEFAULT NULL",
-                                  "`Dev0PN` varchar(45) DEFAULT NULL",
-                                  "`Dev0PT` varchar(45) DEFAULT NULL",
-                                  "`Dev0PR` varchar(45) DEFAULT NULL",
-                                  "`Dev0PTMax` varchar(45) DEFAULT NULL",
-                                  "`Dev0PA` varchar(45) DEFAULT NULL",
-                                  "`Dev0PET` varchar(45) DEFAULT NULL",
-                                  "`Dev0NN` varchar(45) DEFAULT NULL",
-                                  "`Dev0NT` varchar(45) DEFAULT NULL",
-                                  "`Dev0NR` varchar(45) DEFAULT NULL",
-                                  "`Dev0NTMax` varchar(45) DEFAULT NULL",
-                                  "`Dev0NA` varchar(45) DEFAULT NULL",
-                                  "`Dev0NET` varchar(45) DEFAULT NULL",
-                                  "`DevRNN` varchar(45) DEFAULT NULL",
-                                  "`DevRNT` varchar(45) DEFAULT NULL",
-                                  "`DevRNR` varchar(45) DEFAULT NULL",
-                                  "`DevRNTMax` varchar(45) DEFAULT NULL",
-                                  "`DevRNA` varchar(45) DEFAULT NULL",
-                                  "`DevRNET` varchar(45) DEFAULT NULL",
-                                  "`DevLN` varchar(45) DEFAULT NULL",
-                                  "`DevLT` varchar(45) DEFAULT NULL",
-                                  "`DevLR` varchar(45) DEFAULT NULL",
-                                  "`DevLTMax` varchar(45) DEFAULT NULL",
-                                  "`DevLA` varchar(45) DEFAULT NULL",
-                                  "`DevLET` varchar(45) DEFAULT NULL",
-                                  "`DevLLN` varchar(45) DEFAULT NULL",
-                                  "`DevLLT` varchar(45) DEFAULT NULL",
-                                  "`DevLLR` varchar(45) DEFAULT NULL",
-                                  "`DevLLTMax` varchar(45) DEFAULT NULL",
-                                  "`DevLLA` varchar(45) DEFAULT NULL",
-                                  "`DevLLET` varchar(45) DEFAULT NULL",
-                                  "`Dev0HT` varchar(45) DEFAULT NULL",
-                                  "`Dev0HTR` varchar(45) DEFAULT NULL",
-                                  "`Dev0HHT` varchar(45) DEFAULT NULL",
-                                  "`Dev0HHTR` varchar(45) DEFAULT NULL",
-                                  "`Dev0L` varchar(45) DEFAULT NULL",
-                                  "`Dev0LR` varchar(45) DEFAULT NULL",
-                                  "`Dev0LLT` varchar(45) DEFAULT NULL",
-                                  "`Dev0LLTR` varchar(45) DEFAULT NULL",
-                                  "`DevHHLLT` varchar(45) DEFAULT NULL",
-                                  "`DevHHLLTR` varchar(45) DEFAULT NULL",
-                                  "`DevHLHHLLT` varchar(45) DEFAULT NULL",
-                                  "`DevHLHHLLR` varchar(45) DEFAULT NULL",
-                                  "`DevRPRMHLT` varchar(45) DEFAULT NULL",
-                                  "`DevRPRMHLTR` varchar(45) DEFAULT NULL",
-                                  "`Dev0RPRMT` varchar(45) DEFAULT NULL",
-                                  "`Dev0RPRMTR` varchar(45) DEFAULT NULL",
-                                  "`Dev0RPRMTMax` varchar(45) DEFAULT NULL",
-                                  "`DevHLT` varchar(45) DEFAULT NULL",
-                                  "`DevHLTR` varchar(45) DEFAULT NULL",
-                                  "`DevHLTMax` varchar(45) DEFAULT NULL",
-                                  "`DevPT` varchar(45) DEFAULT NULL",
-                                  "`DevPTR` varchar(45) DEFAULT NULL",
-                                  "`DevPTRTMax` varchar(45) DEFAULT NULL",
-                                  "`DevNT` varchar(45) DEFAULT NULL",
-                                  "`DevNTR` varchar(45) DEFAULT NULL",
-                                  "`DevNTRTMax` varchar(45) DEFAULT NULL",
-                                  "`yearvalue` varchar(45) DEFAULT NULL",
-                                  "`monthvalue` varchar(45) DEFAULT NULL",
-                                  "`dayvalue` varchar(45) DEFAULT NULL",
-                                  "`hourvalue` varchar(45) DEFAULT NULL",
-                                  "`tagId` int(11) DEFAULT NULL"
+                                    "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                    "`tagId` int(11) DEFAULT NULL",
+                                    "`hourvalue` varchar(45) DEFAULT NULL",
+                                    "`dayvalue` varchar(45) DEFAULT NULL",
+                                    "`monthvalue` varchar(45) DEFAULT NULL",
+                                    "`yearvalue` varchar(45) DEFAULT NULL",
+                                    "`devhhn` varchar(45) DEFAULT NULL",
+                                    "`devhhtime` varchar(45) DEFAULT NULL",
+                                    "`devhhtimeend` varchar(45) DEFAULT NULL",
+                                    "`devhht` varchar(45) DEFAULT NULL",
+                                    "`devhhr` varchar(45) DEFAULT NULL",
+                                    "`devhhtmax` varchar(45) DEFAULT NULL",
+                                    "`devhhtmaxtime` varchar(45) DEFAULT NULL",
+                                    "`devhhtmaxtimeend` varchar(45) DEFAULT NULL",
+                                    "`devhha` varchar(45) DEFAULT NULL",
+                                    "`devhhet` varchar(45) DEFAULT NULL",
+                                    "`devhn` varchar(45) DEFAULT NULL",
+                                    "`devhtime` varchar(45) DEFAULT NULL",
+                                    "`devhtimeend` varchar(45) DEFAULT NULL",
+                                    "`devht` varchar(45) DEFAULT NULL",
+                                    "`devhr` varchar(45) DEFAULT NULL",
+                                    "`devhtmax` varchar(45) DEFAULT NULL",
+                                    "`devhtmaxtime` varchar(45) DEFAULT NULL",
+                                    "`devhtmaxtimeend` varchar(45) DEFAULT NULL",
+                                    "`devha` varchar(45) DEFAULT NULL",
+                                    "`devhet` varchar(45) DEFAULT NULL",
+                                    "`devrpn` varchar(45) DEFAULT NULL",
+                                    "`devrptime` varchar(45) DEFAULT NULL",
+                                    "`devrptimeend` varchar(45) DEFAULT NULL",
+                                    "`devrpt` varchar(45) DEFAULT NULL",
+                                    "`devrpr` varchar(45) DEFAULT NULL",
+                                    "`devrptmax` varchar(45) DEFAULT NULL",
+                                    "`devrptmaxtime` varchar(45) DEFAULT NULL",
+                                    "`devrptmaxtimeend` varchar(45) DEFAULT NULL",
+                                    "`devrpa` varchar(45) DEFAULT NULL",
+                                    "`devrpet` varchar(45) DEFAULT NULL",
+                                    "`dev0pn` varchar(45) DEFAULT NULL",
+                                    "`dev0ptime` varchar(45) DEFAULT NULL",
+                                    "`dev0ptimeend` varchar(45) DEFAULT NULL",
+                                    "`dev0pt` varchar(45) DEFAULT NULL",
+                                    "`dev0pr` varchar(45) DEFAULT NULL",
+                                    "`dev0ptmax` varchar(45) DEFAULT NULL",
+                                    "`dev0ptmaxtime` varchar(45) DEFAULT NULL",
+                                    "`dev0ptmaxtimeend` varchar(45) DEFAULT NULL",
+                                    "`dev0pa` varchar(45) DEFAULT NULL",
+                                    "`dev0pet` varchar(45) DEFAULT NULL",
+                                    "`dev0nn` varchar(45) DEFAULT NULL",
+                                    "`dev0ntime` varchar(45) DEFAULT NULL",
+                                    "`dev0ntimeend` varchar(45) DEFAULT NULL",
+                                    "`dev0nt` varchar(45) DEFAULT NULL",
+                                    "`dev0nr` varchar(45) DEFAULT NULL",
+                                    "`dev0ntmax` varchar(45) DEFAULT NULL",
+                                    "`dev0ntmaxtime` varchar(45) DEFAULT NULL",
+                                    "`dev0ntmaxtimeend` varchar(45) DEFAULT NULL",
+                                    "`dev0na` varchar(45) DEFAULT NULL",
+                                    "`dev0net` varchar(45) DEFAULT NULL",
+                                    "`devrnn` varchar(45) DEFAULT NULL",
+                                    "`devrntime` varchar(45) DEFAULT NULL",
+                                    "`devrntimeend` varchar(45) DEFAULT NULL",
+                                    "`devrnt` varchar(45) DEFAULT NULL",
+                                    "`devrnr` varchar(45) DEFAULT NULL",
+                                    "`devrntmax` varchar(45) DEFAULT NULL",
+                                    "`devrntmaxtime` varchar(45) DEFAULT NULL",
+                                    "`devrntmaxtimeend` varchar(45) DEFAULT NULL",
+                                    "`devrna` varchar(45) DEFAULT NULL",
+                                    "`devrnet` varchar(45) DEFAULT NULL",
+                                    "`devln` varchar(45) DEFAULT NULL",
+                                    "`devltime` varchar(45) DEFAULT NULL",
+                                    "`devltimeend` varchar(45) DEFAULT NULL",
+                                    "`devlt` varchar(45) DEFAULT NULL",
+                                    "`devlr` varchar(45) DEFAULT NULL",
+                                    "`devltmax` varchar(45) DEFAULT NULL",
+                                    "`devltmaxtime` varchar(45) DEFAULT NULL",
+                                    "`devltmaxtimeend` varchar(45) DEFAULT NULL",
+                                    "`devla` varchar(45) DEFAULT NULL",
+                                    "`devlet` varchar(45) DEFAULT NULL",
+                                    "`devlln` varchar(45) DEFAULT NULL",
+                                    "`devlltime` varchar(45) DEFAULT NULL",
+                                    "`devlltimeend` varchar(45) DEFAULT NULL",
+                                    "`devllt` varchar(45) DEFAULT NULL",
+                                    "`devllr` varchar(45) DEFAULT NULL",
+                                    "`devlltmax` varchar(45) DEFAULT NULL",
+                                    "`devlltmaxtime` varchar(45) DEFAULT NULL",
+                                    "`devlltmaxtimeend` varchar(45) DEFAULT NULL",
+                                    "`devlla` varchar(45) DEFAULT NULL",
+                                    "`devllet` varchar(45) DEFAULT NULL",
+                                    "`dev0ht` varchar(45) DEFAULT NULL",
+                                    "`dev0htr` varchar(45) DEFAULT NULL",
+                                    "`dev0hht` varchar(45) DEFAULT NULL",
+                                    "`dev0hhtr` varchar(45) DEFAULT NULL",
+                                    "`dev0l` varchar(45) DEFAULT NULL",
+                                    "`dev0lr` varchar(45) DEFAULT NULL",
+                                    "`dev0llt` varchar(45) DEFAULT NULL",
+                                    "`dev0lltr` varchar(45) DEFAULT NULL",
+                                    "`devhhllt` varchar(45) DEFAULT NULL",
+                                    "`devhhlltr` varchar(45) DEFAULT NULL",
+                                    "`devhlhhllt` varchar(45) DEFAULT NULL",
+                                    "`devhlhhllr` varchar(45) DEFAULT NULL",
+                                    "`devrprmhlt` varchar(45) DEFAULT NULL",
+                                    "`devrprmhltr` varchar(45) DEFAULT NULL",
+                                    "`dev0rprmttime` varchar(45) DEFAULT NULL",
+                                    "`dev0rprmttimeend` varchar(45) DEFAULT NULL",
+                                    "`dev0rprmt` varchar(45) DEFAULT NULL",
+                                    "`dev0rprmtr` varchar(45) DEFAULT NULL",
+                                    "`dev0rprmtmax` varchar(45) DEFAULT NULL",
+                                    "`dev0rprmtmaxtime` varchar(45) DEFAULT NULL",
+                                    "`dev0rprmtmaxtimeend` varchar(45) DEFAULT NULL",
+                                    "`devhlttime` varchar(45) DEFAULT NULL",
+                                    "`devhlttimeend` varchar(45) DEFAULT NULL",
+                                    "`devhlt` varchar(45) DEFAULT NULL",
+                                    "`devhltr` varchar(45) DEFAULT NULL",
+                                    "`devhltmax` varchar(45) DEFAULT NULL",
+                                    "`devhltmaxtime` varchar(45) DEFAULT NULL",
+                                    "`devhltmaxtimeend` varchar(45) DEFAULT NULL",
+                                    "`devpttime` varchar(45) DEFAULT NULL",
+                                    "`devpttimeend` varchar(45) DEFAULT NULL",
+                                    "`devpt` varchar(45) DEFAULT NULL",
+                                    "`devptr` varchar(45) DEFAULT NULL",
+                                    "`devptrtmax` varchar(45) DEFAULT NULL",
+                                    "`devptrtmaxtime` varchar(45) DEFAULT NULL",
+                                    "`devptrtmaxtimeend` varchar(45) DEFAULT NULL",
+                                    "`devnttime` varchar(45) DEFAULT NULL",
+                                    "`devnttimeend` varchar(45) DEFAULT NULL",
+                                    "`devnt` varchar(45) DEFAULT NULL",
+                                    "`devntr` varchar(45) DEFAULT NULL",
+                                    "`devntrtmax` varchar(45) DEFAULT NULL",
+                                    "`devntrtmaxtime` varchar(45) DEFAULT NULL",
+                                    "`devntrtmaxtimeend` varchar(45) DEFAULT NULL"
                                 };
 
 
@@ -537,8 +585,12 @@ namespace PSLCalcu
             string tablename = "psl_m2analogdiv";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
-                                  "`Div` varchar(45) DEFAULT NULL'",
-                                  "`DivAbs` varchar(45) DEFAULT NULL'"
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                  "`2AnalogDiv` varchar(45) DEFAULT NULL"
                                 };
 
 
@@ -550,6 +602,11 @@ namespace PSLCalcu
             string tablename = "psl_mdevlimitmulti";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
                                   "`DevHHNOrder` text",
                                   "`DevHHTOrder` text",
                                   "`DevHHROrder` text",
@@ -635,6 +692,11 @@ namespace PSLCalcu
             string tablename = "psl_mfdistribute22";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
                                   "`D22Avg` varchar(45) DEFAULT NULL",
                                   "`D22Sigama` varchar(45) DEFAULT NULL",
                                   "`D22k` varchar(45) DEFAULT NULL",
@@ -673,12 +735,7 @@ namespace PSLCalcu
                                   "`D22SS1314` varchar(45) DEFAULT NULL",
                                   "`D22SS1516` varchar(45) DEFAULT NULL",
                                   "`D22SS1718` varchar(45) DEFAULT NULL",
-                                  "`D22SS1920` varchar(45) DEFAULT NULL",
-                                  "`yearvalue` varchar(45) DEFAULT NULL",
-                                  "`monthvalue` varchar(45) DEFAULT NULL",
-                                  "`dayvalue` varchar(45) DEFAULT NULL",
-                                  "`hourvalue` varchar(45) DEFAULT NULL",
-                                  "`tagId` varchar(45) DEFAULT NULL"
+                                  "`D22SS1920` varchar(45) DEFAULT NULL"
                                 };
 
 
@@ -690,6 +747,11 @@ namespace PSLCalcu
             string tablename = "psl_mmultical";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
                                   "`MultiCalSum` varchar(45) DEFAULT NULL",
                                   "`MultiCalAbsSum` varchar(45) DEFAULT NULL",
                                   "`MultiCalMul` varchar(45) DEFAULT NULL",
@@ -707,6 +769,11 @@ namespace PSLCalcu
             string tablename = "psl_mmultipv";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
                                   "`MultiPVMin` text",
                                   "`MultiPVMinP` text",
                                   "`MultiPVAvg` text",
@@ -757,6 +824,11 @@ namespace PSLCalcu
             string tablename = "psl_mmultipvavgdistance";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
                                   "`MultiPVAvgDistanceMin` varchar(45) DEFAULT NULL",
                                   "`MultiPVAvgDistanceMinTime` varchar(45) DEFAULT NULL",
                                   "`MultiPVAvgDistanceMax` varchar(45) DEFAULT NULL",
@@ -778,6 +850,11 @@ namespace PSLCalcu
             string tablename = "psl_mmultipvavgdistance_detail";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
                                   "`pid` int(11) DEFAULT NULL",
                                   "`valueDate` varchar(45) DEFAULT NULL",
                                   "`valueAmount` varchar(45) DEFAULT NULL"
@@ -792,6 +869,11 @@ namespace PSLCalcu
             string tablename = "psl_mpvbasemulti";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
                                   "`PVBSymbolMin` varchar(45) DEFAULT NULL",
                                   "`PVBSymbolMax` varchar(45) DEFAULT NULL",
                                   "`PVBSymbolAvg` varchar(45) DEFAULT NULL",
@@ -853,15 +935,15 @@ namespace PSLCalcu
             string tablename = "psl_mpvoverrangeeva";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
                                   "`OverHRange` varchar(45) DEFAULT NULL",
                                   "`OverHFre` varchar(45) DEFAULT NULL",
                                   "`OverLRange` varchar(45) DEFAULT NULL",
-                                  "`OverLFre` varchar(45) DEFAULT NULL",
-                                  "`yearvalue` varchar(45) DEFAULT NULL",
-                                  "`monthvalue` varchar(45) DEFAULT NULL",
-                                  "`dayvalue` varchar(45) DEFAULT NULL",
-                                  "`hourvalue` varchar(45) DEFAULT NULL",
-                                  "`tagId` varchar(45) DEFAULT NULL"
+                                  "`OverLFre` varchar(45) DEFAULT NULL"
                                 };
 
 
@@ -873,6 +955,11 @@ namespace PSLCalcu
             string tablename = "psl_mpvscoreeva";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
                                   "`SftScoreMin` varchar(45) DEFAULT NULL",
                                   "`SftScoreMinT` varchar(45) DEFAULT NULL",
                                   "`SftScoreMax` varchar(45) DEFAULT NULL",
@@ -888,13 +975,8 @@ namespace PSLCalcu
                                   "`SftScoreLowTR` varchar(45) DEFAULT NULL",
                                   "`SftScoreLowST` varchar(45) DEFAULT NULL",
                                   "`SftScoreEva` varchar(45) DEFAULT NULL",
-                                  "`StartTime` varchar(45) DEFAULT NULL,
-                                  "`totalHour` varchar(45) DEFAULT NULL",
-                                  "`yearvalue` varchar(45) DEFAULT NULL",
-                                  "`monthvalue` varchar(45) DEFAULT NULL",
-                                  "`dayvalue` varchar(45) DEFAULT NULL",
-                                  "`hourvalue` varchar(45) DEFAULT NULL",
-                                  "`tagId` varchar(45) DEFAULT NULL"
+                                  "`StartTime` varchar(45) DEFAULT NULL",
+                                  "`totalHour` varchar(45) DEFAULT NULL"
                                 };
 
 
@@ -907,6 +989,11 @@ namespace PSLCalcu
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
                                   "`parentId` int(11) DEFAULT NULL",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
                                   "`PVDAvg` varchar(45) DEFAULT NULL",
                                   "`PVDMax` varchar(45) DEFAULT NULL",
                                   "`PVDMin` varchar(45) DEFAULT NULL",
@@ -924,11 +1011,11 @@ namespace PSLCalcu
             string tablename = "psl_mpvtyprange";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
-                                  "`yearvalue` varchar(45) DEFAULT NULL",
-                                  "`monthvalue` varchar(45) DEFAULT NULL",
-                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`tagId` int(11) DEFAULT NULL",
                                   "`hourvalue` varchar(45) DEFAULT NULL",
-                                  "`tagid` int(11) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
                                   "`PVDArea` varchar(45) DEFAULT NULL",
                                   "`PVMArea` varchar(45) DEFAULT NULL",
                                   "`PVDAvgClsDay` varchar(45) DEFAULT NULL",
@@ -972,11 +1059,11 @@ namespace PSLCalcu
             string tablename = "psl_mpvutnv";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
-                                  "`yearvalue` varchar(45) DEFAULT NULL",
-                                  "`monthvalue` varchar(45) DEFAULT NULL",
-                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`tagId` int(11) DEFAULT NULL",
                                   "`hourvalue` varchar(45) DEFAULT NULL",
-                                  "`tagId` int(11) DEFAULT NULL"
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL"
                                 };
 
 

@@ -72,3 +72,7 @@ D:\C# Project\JSYXX\PSLCalcu_Test\lib\PCCommon.pdb
 D:\C# Project\JSYXX\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.csprojResolveAssemblyReference.cache
 D:\C# Project\JSYXX\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.dll
 D:\C# Project\JSYXX\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.pdb
+D:\SM\PSLCalcu_Test\lib\PCCommon.dll
+D:\SM\PSLCalcu_Test\lib\PCCommon.pdb
+D:\SM\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.dll
+D:\SM\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.pdb

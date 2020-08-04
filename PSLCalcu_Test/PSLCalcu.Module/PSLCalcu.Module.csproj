@@ -93,8 +93,6 @@
     <Compile Include="Adv_Deviation\MDeviation2DS.cs" />
     <Compile Include="Adv_Deviation\MDeviationS.cs" />
     <Compile Include="Adv_Deviation\MDivBase.cs" />
-    <Compile Include="Adv_Deviation\MCurveAssess2DS%28新项目不再使用%29.cs" />
-    <Compile Include="Adv_Deviation\MCurveAssessS%28新项目不再使用%29.cs" />
     <Compile Include="Adv_Deviation\MLDivLimit.cs" />
     <Compile Include="Base_Guangfu\BWGPwrEff.cs" />
     <Compile Include="Base_Guangfu\CleanF.cs" />
@@ -106,7 +104,7 @@
     <Compile Include="Base_MultiInput\MMultiAnalogAvg.cs" />
     <Compile Include="Base_MultiInput\MMultiAnalogSum.cs" />
     <Compile Include="CalcuTemplate.cs" />
-    <Compile Include="Interface_RTDB\MOPC2Avg.cs" />
+    <Compile Include="Interface_RTDB\MReadPVOPC.cs" />
     <Compile Include="Interface_RTDB\MOPCSegmentFilter.cs" />
     <Compile Include="Adv_Deviation\MDeviation2DSpan.cs" />
     <Compile Include="Adv_Deviation\CurveConfig.cs" />

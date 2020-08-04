@@ -38,3 +38,8 @@ D:\C# Project\JSYXX\PSLCalcu_Test\lib\PSLCalcu.Module.pdb
 D:\C# Project\JSYXX\PSLCalcu_Test\PSLCalcu.Module\obj\Debug\PSLCalcu.Module.csprojResolveAssemblyReference.cache
 D:\C# Project\JSYXX\PSLCalcu_Test\PSLCalcu.Module\obj\Debug\PSLCalcu.Module.dll
 D:\C# Project\JSYXX\PSLCalcu_Test\PSLCalcu.Module\obj\Debug\PSLCalcu.Module.pdb
+D:\SM\PSLCalcu_Test\lib\PSLCalcu.Module.dll
+D:\SM\PSLCalcu_Test\lib\PSLCalcu.Module.pdb
+D:\SM\PSLCalcu_Test\PSLCalcu.Module\obj\Debug\PSLCalcu.Module.csprojResolveAssemblyReference.cache
+D:\SM\PSLCalcu_Test\PSLCalcu.Module\obj\Debug\PSLCalcu.Module.dll
+D:\SM\PSLCalcu_Test\PSLCalcu.Module\obj\Debug\PSLCalcu.Module.pdb

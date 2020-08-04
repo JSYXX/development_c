@@ -227,3 +227,33 @@ D:\C# Project\JSYXX\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.Setup.resources
 D:\C# Project\JSYXX\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.DataUniqeCheck.resources
 D:\C# Project\JSYXX\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.UpdateTagname.resources
 D:\C# Project\JSYXX\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.csproj.GenerateResource.Cache
+D:\SM\PSLCalcu_Test\lib\Accord.dll.config
+D:\SM\PSLCalcu_Test\lib\PSLCalcu.exe.config
+D:\SM\PSLCalcu_Test\lib\PSLCalcu.exe
+D:\SM\PSLCalcu_Test\lib\PSLCalcu.pdb
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.csprojResolveAssemblyReference.cache
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.AppRunForm.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.CheckCurve.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.DeleteConfig.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.DataDelete.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.DataGraph.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.DateTransTool.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.DateValue.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.DebugLogon.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.LogTest.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.HistoryCalcu.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.HistoryCalcuAuto.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.HistoryHelp.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.SearchHelp.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.ImportProgress.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.Properties.Resources.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.PSLCalcuModuleTest.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.ReadConstInfo2PSLData.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.ReadShiftInfo2PSLData.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.DataSearch.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.Setup.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.DataUniqeCheck.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.UpdateTagname.resources
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.csproj.GenerateResource.Cache
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.exe
+D:\SM\PSLCalcu_Test\PSLCalcu\obj\Debug\PSLCalcu.pdb

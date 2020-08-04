@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;   //使用正则表达式
 using PCCommon; //使用PValue
 using System.IO;
-using System.Linq;
-using Config;                      //使用list.orderby
+using System.Linq;                      //使用list.orderby
 
 
 namespace PSLCalcu.Module
@@ -227,7 +226,7 @@ namespace PSLCalcu.Module
                 int shiftNumber = int.Parse(calcuinfo.fparas); 
                 
                 //1、值次文件遍历
-                string csvFilePath=System.Environment.CurrentDirectory+"\\ShiftConfig\\"; 
+                string csvFilePath=System.Environment.CurrentDirectory+"\\ShiftConfig\\";
                 //string csvFileName = "shiftconfig.csv";
                 string[][] csvdata;
                 DirectoryInfo tagfolder = new DirectoryInfo(csvFilePath);
@@ -319,9 +318,9 @@ namespace PSLCalcu.Module
         public static List<PValue> Array2PValue(string[][] csvdata)
         {
             List<PValue> result = new List<PValue>();
-          if (csvdata.Length > 0)
+            if (csvdata.Length > 0)
             {
-            /*      //默认值次配置表第一行是标题行
+                //默认值次配置表第一行是标题行
                 //值次最后一行csv数据，也要读进来。因为每一行，都是完整的值此信息，都有起始时间和截止时间。
                 for (int i = 1; i < csvdata.Length; i++)
                 {
@@ -332,135 +331,8 @@ namespace PSLCalcu.Module
             else
             {
                 return null;
-            }*/
-             
-             string endyearvalues = "20271231";
-             //int endyear = int.Parse(endyearvalues);
-             DateTime startTime = DateTime.Parse(csvdata[1][1]);
-             //string timer = startTime.ToShortDateString().ToString();
-             //string[] timenames = timer.Split('/');
-             //int times = int.Parse(timenames[0] +"0"+ timenames[1] +"0"+ timenames[2]); ;
-             //string start=time.ToShortDateString().ToString();
-             //int valueStartTime = int.Parse(start);
-             //if (startYear < valueStartTime)startYear = int.Parse(csvdata[1][1]);
-             
-             DateTime dt = DateTime.ParseExact(endyearvalues, "yyyyMMdd", null);//把最后时间字符串转换成时间类型
-             TimeSpan interval1 = DateTime.Parse(csvdata[1][2]) - DateTime.Parse(csvdata[1][1]);//夜班上班时长
-
-             TimeSpan interval2 = DateTime.Parse(csvdata[2][2]) - DateTime.Parse(csvdata[2][1]);//白班上班时长
-
-             TimeSpan interval3 = DateTime.Parse(csvdata[3][2]) - DateTime.Parse(csvdata[3][1]); //中班上班时长
-
-             int shiftValues = 0;
-             for (int i = 1; i < csvdata.Length; i++)
-             {
-                 DateTime shiftTime = Convert.ToDateTime(csvdata[i][1]);
-
-                 if (shiftValues < int.Parse(shiftTime.DayOfYear.ToString()))
-                 {
-                     shiftValues = int.Parse(shiftTime.DayOfYear.ToString());
-                 }
-             }
-
-             while (startTime < dt)
-             {
-                 DateTime endTime1 = startTime + interval1;//夜班下班时间,又上白班上班时间
-                 DateTime endTime2 = endTime1 + interval2;//白班下班时间，又是中班上班时间
-                 DateTime endTime3 = endTime2 + interval3;//中班下班时间
-                 string days = startTime.DayOfYear.ToString();//获取天信息
-                 int number = int.Parse(days);
-                 int num = number % shiftValues;
-                 string item = num.ToString();
-                 if (shiftValues == 8)
-                 {
-                     switch (item)
-                     {
-                         case "1":
-                             result.Add(new PValue(double.Parse(csvdata[1][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[2][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[3][5]), endTime2, endTime3, 0));
-                             break;
-                         case "2":
-                             result.Add(new PValue(double.Parse(csvdata[4][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[5][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[6][5]), endTime2, endTime3, 0));
-                             break;
-                         case "3":
-                             result.Add(new PValue(double.Parse(csvdata[7][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[8][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[9][5]), endTime2, endTime3, 0));
-                             break;
-                         case "4":
-                             result.Add(new PValue(double.Parse(csvdata[10][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[11][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[12][5]), endTime2, endTime3, 0));
-                             break;
-                         case "5":
-                             result.Add(new PValue(double.Parse(csvdata[13][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[14][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[15][5]), endTime2, endTime3, 0));
-                             break;
-                         case "6":
-                             result.Add(new PValue(double.Parse(csvdata[16][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[17][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[18][5]), endTime2, endTime3, 0));
-                             break;
-                         case "7":
-                             result.Add(new PValue(double.Parse(csvdata[19][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[20][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[21][5]), endTime2, endTime3, 0));
-                             break;
-                         case "0":
-                             result.Add(new PValue(double.Parse(csvdata[22][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[23][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[24][5]), endTime2, endTime3, 0));
-                             break;
-
-                     }
-                 }
-                 else if (shiftValues == 5)
-                 {
-                     switch (item)
-                     {
-                         case "1":
-                             result.Add(new PValue(double.Parse(csvdata[1][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[2][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[3][5]), endTime2, endTime3, 0));
-
-                             break;
-                         case "2":
-                             result.Add(new PValue(double.Parse(csvdata[4][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[5][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[6][5]), endTime2, endTime3, 0));
-                             break;
-                         case "3":
-                             result.Add(new PValue(double.Parse(csvdata[7][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[8][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[9][5]), endTime2, endTime3, 0));
-                             break;
-                         case "4":
-                             result.Add(new PValue(double.Parse(csvdata[10][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[11][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[12][5]), endTime2, endTime3, 0));
-                             break;
-                         case "0":
-                             result.Add(new PValue(double.Parse(csvdata[13][5]), startTime, endTime1, 0));
-                             result.Add(new PValue(double.Parse(csvdata[14][5]), endTime1, endTime2, 0));
-                             result.Add(new PValue(double.Parse(csvdata[15][5]), endTime2, endTime3, 0));
-                             break;
-
-                     }
-                 }
-                 startTime = startTime.AddDays(1);
-             }
-             return result;
-             }
-             else
-            {
-                return null;
             }
         }
-       
         #endregion
     }
 }
