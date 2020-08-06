@@ -89,6 +89,7 @@
       <HintPath>..\lib\PSLCalcu.Module.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
@@ -106,12 +107,47 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlgorithmModel\CurveClass.cs" />
+    <Compile Include="AlgorithmModel\D22STimeClass.cs" />
+    <Compile Include="AlgorithmModel\M2AnalogDivMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MDevLimitClass.cs" />
+    <Compile Include="AlgorithmModel\MDevLimitMessageOutBadClass.cs" />
+    <Compile Include="AlgorithmModel\MDevLimitMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MDevLimitMultiMessageInClass.cs" />
+    <Compile Include="AlgorithmModel\MDevLimitMultiMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MFDistribute22MessageIn.cs" />
+    <Compile Include="AlgorithmModel\MFDistribute22MessageOut.cs" />
+    <Compile Include="AlgorithmModel\MIntegralMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MMultiCalMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MMultiPVAvgDistanceMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MMultiPVAvgMessageInClass.cs" />
+    <Compile Include="AlgorithmModel\MMultiPVMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MPVBaseMessageInBadClass.cs" />
+    <Compile Include="AlgorithmModel\MPVBaseMessageInClass.cs" />
+    <Compile Include="AlgorithmModel\MPVBaseMessageOutBadClass.cs" />
+    <Compile Include="AlgorithmModel\MPVBaseMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MPVBaseMultiMessageInClass.cs" />
+    <Compile Include="AlgorithmModel\MPVBaseMultiMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MPVOverRangeEvaMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MPVScoreEvaLongMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MPVScoreEvaShortMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MPVTypRangeClass.cs" />
+    <Compile Include="AlgorithmModel\MPVTypRangeMessageInClass.cs" />
+    <Compile Include="AlgorithmModel\MPVTypRangeMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MPVUTNVMessageInBadClass.cs" />
+    <Compile Include="AlgorithmModel\MPVUTNVMessageInClass.cs" />
+    <Compile Include="AlgorithmModel\MPVUTNVMessageOutClass.cs" />
+    <Compile Include="AlgorithmModel\MultiEffectMessageInClass.cs" />
+    <Compile Include="AlgorithmModel\MultiMessageInClass.cs" />
+    <Compile Include="AlgorithmModel\StartEndDateClass.cs" />
     <Compile Include="AppRunForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AppRunForm.designer.cs">
       <DependentUpon>AppRunForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BLL\AlgorithmBLL.cs" />
+    <Compile Include="DAL\AlgorithmDAL.cs" />
     <Compile Include="DAO\ConfigCSV.cs" />
     <Compile Include="DAO\DAOSupport.cs" />
     <Compile Include="DAO\OPCDAO.cs" />
@@ -181,6 +217,7 @@
       <DependentUpon>HistoryHelp.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\CsvFileReader.cs" />
+    <Compile Include="Helper\MysqlHelper.cs" />
     <Compile Include="Helper\TxtFileHelper.cs" />
     <Compile Include="FormHisCalcu\HistoryCalcu.cs">
       <SubType>Form</SubType>
