@@ -662,6 +662,9 @@ namespace PSLCalcu
             if (runflag) runflag = IniTable.createTable_pslmpvutnv();
             if (runflag) runflag = IniTable.createTable_pslmpvutnvdetail();
             if (runflag) runflag = IniTable.createTable_psltimedatal();
+            string sqlFilePath = AppDomain.CurrentDomain.BaseDirectory + "procedures.sql";
+            string MysqlConStr = System.Configuration.ConfigurationManager.AppSettings["Local"].ToString();
+            if (runflag) runflag = IniTable.ExecuteSqlFile(sqlFilePath, MysqlConStr);
             if (runflag && APPConfig.rdbtable_iniTableIncludePsldata == "1")
             {
                 if (APPConfig.psldata_startyear > 2000 && APPConfig.psldata_endyear > 2000 && APPConfig.psldata_endyear > APPConfig.psldata_startyear)
@@ -674,7 +677,6 @@ namespace PSLCalcu
                     MessageBox.Show("概化数据表psldata起始和截止年份设定错误，请检查配置文件！");
                 }
             }
-
             if (runflag)
             {
                 //初始化计算配置对象

@@ -409,6 +409,7 @@
     <Content Include="Resources\abb_logo.bmp" />
     <Content Include="Resources\config.gif" />
     <Content Include="Resources\exit.jpg" />
+    <Content Include="Resources\MysqlHelper\procedures.sql" />
     <Content Include="Resources\plant.ico" />
     <None Include="PSLCalcu_rdbset的三种配置方式.xlsm" />
     <None Include="Resources\start.bmp" />

@@ -8,6 +8,10 @@ using DBInterface.RDBInterface;         //使用关系数据库接口
 using System.Windows.Forms;             //使用messageBox
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using MySql.Data.MySqlClient;
+using System.Collections;
+
 namespace PSLCalcu
 {
     public class IniTable
@@ -1181,6 +1185,57 @@ namespace PSLCalcu
                 return false;
             }
         }
+        #endregion
+        #region 调用SQL文件
+
+
+        /// <summary> 
+        /// 执行Sql文件 
+        /// </summary> 
+        /// <param name="varFileName">sql文件</param> 
+        /// <param name="Conn">连接字符串</param> 
+        /// <returns></returns> 
+        public static bool ExecuteSqlFile(string varFileName, String Conn)
+        {
+            try
+            {
+                using (StreamReader reader = new StreamReader(varFileName, System.Text.Encoding.GetEncoding("utf-8")))
+                {
+                    MySqlCommand command;
+                    MySqlConnection Connection = new MySqlConnection(Conn);
+                    Connection.Open();
+                    try
+                    {
+                        string[] lineList = reader.ReadToEnd().Split(new string[] { "sqlSplit" }, StringSplitOptions.None);
+                        foreach (string item in lineList)
+                        {
+                            string sqlStr = item.TrimEnd(new char[] { '\r', '\n' }).TrimStart(new char[] { '\r', '\n' });
+                            command = new MySqlCommand(sqlStr, Connection);
+                            command.ExecuteNonQuery();
+                        }
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        Connection.Close();
+                    }
+
+                }
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 }
