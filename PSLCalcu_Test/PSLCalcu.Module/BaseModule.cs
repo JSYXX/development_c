@@ -26,24 +26,26 @@ namespace PSLCalcu.Module
         public DateTime Datetime { get; set; }
         public string Flag { get; set; }
         public string Status { get; set; }
-        public SpanSeries(DateTime datetime, string flag,string status)
+        public double TimeSpan { get; set; }
+        public SpanSeries(DateTime datetime, string flag, string status, double timeSpan = 0)
         {
             this.Datetime = datetime;
             this.Flag = flag;
             this.Status = status;
+            this.TimeSpan = timeSpan;
         }
     }
-    public abstract class  BaseModule
+    public abstract class BaseModule
     {
-       
-        public void Filter() 
+
+        public void Filter()
         {
-            
+
         }
-       
+
     }
 
-    public struct Results 
+    public struct Results
     {
         public List<PValue>[] results;
         public bool errorFlag;
@@ -53,13 +55,13 @@ namespace PSLCalcu.Module
         public bool fatalFlag;
         public string fatalInfo;
 
-        public Results(List<PValue>[] _results, bool _errorFlag, string _errorInfo, bool _warningFlag, string _warningInfo,bool _fatalFlag,string _fatalInfo) 
+        public Results(List<PValue>[] _results, bool _errorFlag, string _errorInfo, bool _warningFlag, string _warningInfo, bool _fatalFlag, string _fatalInfo)
         {
             this.results = _results;
             this.errorFlag = _errorFlag;
             this.errorInfo = _errorInfo;
             this.warningFlag = _warningFlag;
-            this.warningInfo=_warningInfo;
+            this.warningInfo = _warningInfo;
             this.fatalFlag = _fatalFlag;
             this.fatalInfo = _fatalInfo;
         }

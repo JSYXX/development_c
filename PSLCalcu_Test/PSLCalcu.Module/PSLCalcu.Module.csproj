@@ -101,6 +101,7 @@
     <Compile Include="Base_MultiInput\M2AnalogAvg.cs" />
     <Compile Include="Base_MultiInput\M2AnalogDiv.cs" />
     <Compile Include="Base_MultiInput\M2AnalogMul.cs" />
+    <Compile Include="Base_MultiInput\MMangSumAvg.cs" />
     <Compile Include="Base_MultiInput\MMultiAnalogAvg.cs" />
     <Compile Include="Base_MultiInput\MMultiAnalogSum.cs" />
     <Compile Include="CalcuTemplate.cs" />
