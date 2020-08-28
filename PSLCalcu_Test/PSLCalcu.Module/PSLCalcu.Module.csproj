@@ -163,7 +163,7 @@
     <Compile Include="Interface_RTDB\MRDFilter2One.cs" />
     <Compile Include="Interface_RTDB\MRDSegmentMaxMinAvg.cs" />
     <Compile Include="test\Limit.cs" />
-    <Compile Include="test\LimitTest.cs" />
+    <Compile Include="test\MDevLimit.cs" />
     <Compile Include="test\Model\D22STimeClass.cs" />
     <Compile Include="test\Model\MDevLimitClass.cs" />
     <Compile Include="test\Model\MDevLimitMessageOutBadClass.cs" />
