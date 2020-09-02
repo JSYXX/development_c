@@ -98,6 +98,7 @@
     <Compile Include="Base_Guangfu\CleanF.cs" />
     <Compile Include="Base_Guangfu\HLXLEFF.cs" />
     <Compile Include="Base_Guangfu\StaPwrEff.cs" />
+    <Compile Include="Base_MultiInput\KWHPVBase.cs" />
     <Compile Include="Base_MultiInput\M2AnalogAvg.cs" />
     <Compile Include="Base_MultiInput\M2AnalogDiv.cs" />
     <Compile Include="Base_MultiInput\M2AnalogMul.cs" />
