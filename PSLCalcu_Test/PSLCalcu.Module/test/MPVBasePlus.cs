@@ -164,8 +164,8 @@ namespace PSLCalcu.Module
                                     "PVBQa;" +
                                     "PVBQb;" +
                                     "PVBQc";
-      
-      
+
+
 
         public string outputDescs
         {
@@ -241,7 +241,7 @@ namespace PSLCalcu.Module
                                          "以二次函数拟合时的 a。x = a t2 + b t + c;" +
                                          "以二次函数拟合时的 b;" +
                                          "以二次函数拟合时的 c";
- 
+
         public string outputDescsCN
         {
             get
@@ -335,7 +335,7 @@ namespace PSLCalcu.Module
             int i;
 
             //0输出初始化：该算法如果没有有效输入值（inputs为null）或者输入值得有效值为null，给出的计算结果。值为0，计算标志位为StatusConst.InputIsNull
-            List<PValue>[] results = new List<PValue>[67];   
+            List<PValue>[] results = new List<PValue>[67];
             for (i = 0; i < results.Length; i++)
             {
                 results[i] = new List<PValue>();
@@ -361,12 +361,12 @@ namespace PSLCalcu.Module
                 //0.4、输入处理：过滤后结果。
                 //——如果去除了截止时刻点，过滤后长度小于1（计算要求至少有一个有效数据），则直接返回null
                 //——如果没取除截止时刻点，过滤后长度小于2（计算要求至少有一个有效数据和一个截止时刻值）
-                if (input.Count < 1) 
+                if (input.Count < 1)
                 {
                     _warningFlag = true;
                     _warningInfo = "对应时间段内的源数据状态位全部异常。";
                     return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
-                }  
+                }
 
                 //读取参数
 
@@ -381,7 +381,7 @@ namespace PSLCalcu.Module
                 b = double.Parse(paras[4]);
                 stbl = double.Parse(paras[5]);
                 nostbl = double.Parse(paras[6]);
-                mode= paras[7];
+                mode = paras[7];
                 if (paras.Length == 8)
                     mode = paras[7];   //如果设定了第4个参数，计算模式用第四个参数值。S表示短周期，L表示长周期                
                 else
@@ -411,41 +411,48 @@ namespace PSLCalcu.Module
                     //调用短周期算法数据是把每分钟的数据结果进行处理 小时级别时间数据运算
                     PSLCalcu.Module.MPVBaseMessageOutBadClass res = MPVBaseModule.shortMPVBase(valueList, N1, N2, N3, k, b, stbl, nostbl);
                     //组织结算结果
-                    if (null != res.PVBMin) {
+                    if (null != res.PVBMin)
+                    {
                         results[0] = new List<PValue>();
                         PValue PVBMin = new PValue(Double.Parse(res.PVBMin), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[0].Add(PVBMin);
                     }
-                    if (null != res.PVBMinTime) {
+                    if (null != res.PVBMinTime)
+                    {
                         results[1] = new List<PValue>();
                         DateTime time = Convert.ToDateTime(res.PVBMinTime);
                         double value = time.Ticks;
                         PValue PVBMinTime = new PValue(value, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[1].Add(PVBMinTime);
                     }
-                    if (null != res.PVBAvg) {
+                    if (null != res.PVBAvg)
+                    {
                         results[2] = new List<PValue>();
                         PValue PVBAvg = new PValue(Double.Parse(res.PVBAvg), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[2].Add(PVBAvg);
                     }
-                    if (null != res.PVBMax) {
+                    if (null != res.PVBMax)
+                    {
                         results[3] = new List<PValue>();
                         PValue PVBMax = new PValue(Double.Parse(res.PVBMax), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[3].Add(PVBMax);
                     }
-                    if (null != res.PVBMaxTime) {
+                    if (null != res.PVBMaxTime)
+                    {
                         results[4] = new List<PValue>();
                         DateTime time = Convert.ToDateTime(res.PVBMaxTime);
                         double value = time.Ticks;
                         PValue PVBMaxTime = new PValue(value, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[4].Add(PVBMaxTime);
                     }
-                    if (null != res.PVBDMax) {
+                    if (null != res.PVBDMax)
+                    {
                         results[5] = new List<PValue>();
                         PValue PVBDMax = new PValue(Double.Parse(res.PVBDMax), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[5].Add(PVBDMax);
                     }
-                    if (null != res.PVBSum) {
+                    if (null != res.PVBSum)
+                    {
                         results[6] = new List<PValue>();
                         PValue PVBSum = new PValue(Double.Parse(res.PVBSum), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[6].Add(PVBSum);
@@ -456,43 +463,51 @@ namespace PSLCalcu.Module
                         PValue PVBSumkb = new PValue(Double.Parse(res.PVBSumkb), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[7].Add(PVBSumkb);
                     }
-                    if (null != res.PVBLinek) {
+                    if (null != res.PVBLinek)
+                    {
                         results[8] = new List<PValue>();
                         PValue PVBLinek = new PValue(Double.Parse(res.PVBLinek), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[8].Add(PVBLinek);
                     }
-                    if (null != res.PVBLineb) {
+                    if (null != res.PVBLineb)
+                    {
                         results[9] = new List<PValue>();
                         PValue PVBLineb = new PValue(Double.Parse(res.PVBLineb), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[9].Add(PVBLineb);
                     }
-                    
-                    if (null != res.PVBSumPNR && res.PVBSumPNR.Contains("无穷大") == false) {
+
+                    if (null != res.PVBSumPNR && res.PVBSumPNR.Contains("无穷大") == false)
+                    {
                         results[10] = new List<PValue>();
                         PValue PVBSumPNR = new PValue(Double.Parse(res.PVBSumPNR), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[10].Add(PVBSumPNR);
                     }
-                    if (null != res.PVBAbsSum) {
+                    if (null != res.PVBAbsSum)
+                    {
                         results[11] = new List<PValue>();
                         PValue PVBAbsSum = new PValue(Double.Parse(res.PVBAbsSum), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[11].Add(PVBAbsSum);
                     }
-                    if (null != res.PVBStdev) {
+                    if (null != res.PVBStdev)
+                    {
                         results[12] = new List<PValue>();
                         PValue PVBStdev = new PValue(Double.Parse(res.PVBStdev), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[12].Add(PVBStdev);
                     }
-                    if (null != res.PVBVolatility) {
+                    if (null != res.PVBVolatility)
+                    {
                         results[13] = new List<PValue>();
                         PValue PVBVolatility = new PValue(Double.Parse(res.PVBVolatility), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[13].Add(PVBVolatility);
                     }
-                    if (null != res.PVBSDMax) {
+                    if (null != res.PVBSDMax)
+                    {
                         results[14] = new List<PValue>();
                         PValue PVBSDMax = new PValue(Double.Parse(res.PVBSDMax), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[14].Add(PVBSDMax);
                     }
-                    if (null != res.PVBSDMaxTime) {
+                    if (null != res.PVBSDMaxTime)
+                    {
                         results[15] = new List<PValue>();
                         results[16] = new List<PValue>();
                         DateTime startTime = Convert.ToDateTime(res.PVBSDMaxTime.startDate);
@@ -504,7 +519,8 @@ namespace PSLCalcu.Module
                         PValue PVBSDMaxTimeEnd = new PValue(endValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[16].Add(PVBSDMaxTimeEnd);
                     }
-                    if (null != res.PVBSDMaxTimeG) {
+                    if (null != res.PVBSDMaxTimeG)
+                    {
                         results[17] = new List<PValue>();
                         results[18] = new List<PValue>();
                         results[19] = new List<PValue>();
@@ -513,7 +529,8 @@ namespace PSLCalcu.Module
                         results[22] = new List<PValue>();
                         results[23] = new List<PValue>();
                         int count = res.PVBSDMaxTimeG.Count;
-                        for (int j = 0; j < count; j++) {
+                        for (int j = 0; j < count; j++)
+                        {
                             DateTime startTime = Convert.ToDateTime(res.PVBSDMaxTimeG[j].startDate);
                             double startValue = startTime.Ticks;
                             PValue PVBSDMaxTimeG = new PValue(startValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
@@ -530,19 +547,22 @@ namespace PSLCalcu.Module
                             results[21].Add(PVBSDMaxTimeGsV);
                             PValue PVBSDMaxTimeGeV = new PValue(res.PVBSDMaxTimeG[j].endValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                             results[22].Add(PVBSDMaxTimeGeV);
-                            if (res.PVBSDMaxTimeG[j].valueType.Contains("up")) {
+                            if (res.PVBSDMaxTimeG[j].valueType.Contains("up"))
+                            {
                                 String s = "117";//ASCII码十进制值:u 
                                 Double value = Double.Parse(s);
                                 PValue PVBSDMaxTimeGvT = new PValue(value, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                                 results[23].Add(PVBSDMaxTimeGvT);
                             }
-                            if (res.PVBSDMaxTimeG[j].valueType.Contains("down")) {
+                            if (res.PVBSDMaxTimeG[j].valueType.Contains("down"))
+                            {
                                 String s = "100";//ASCII码十进制值:d
                                 Double value = Double.Parse(s);
                                 PValue PVBSDMaxTimeGvT = new PValue(value, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                                 results[23].Add(PVBSDMaxTimeGvT);
                             }
-                            if (res.PVBSDMaxTimeG[j].valueType.Contains("translation")) {
+                            if (res.PVBSDMaxTimeG[j].valueType.Contains("translation"))
+                            {
                                 String s = "116";//ASCII码十进制值:t 
                                 Double value = Double.Parse(s);
                                 PValue PVBSDMaxTimeGvT = new PValue(value, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
@@ -550,47 +570,56 @@ namespace PSLCalcu.Module
                             }
                         }
                     }
-                    if (null != res.PVBSDMaxR) {
+                    if (null != res.PVBSDMaxR)
+                    {
                         results[24] = new List<PValue>();
                         PValue PVBSDMaxR = new PValue(Double.Parse(res.PVBSDMaxR), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[24].Add(PVBSDMaxR);
                     }
-                    if (null != res.PVBDN1Num) {
+                    if (null != res.PVBDN1Num)
+                    {
                         results[25] = new List<PValue>();
                         PValue PVBDN1Num = new PValue(Double.Parse(res.PVBDN1Num), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[25].Add(PVBDN1Num);
                     }
-                    if (null != res.PVBDN2Num) {
+                    if (null != res.PVBDN2Num)
+                    {
                         results[26] = new List<PValue>();
                         PValue PVBDN2Num = new PValue(Double.Parse(res.PVBDN2Num), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[26].Add(PVBDN2Num);
                     }
-                    if (null != res.PVBDN3Num) {
+                    if (null != res.PVBDN3Num)
+                    {
                         results[27] = new List<PValue>();
                         PValue PVBDN3Num = new PValue(Double.Parse(res.PVBDN3Num), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[27].Add(PVBDN3Num);
                     }
-                    if (null != res.PVBTNum) {
+                    if (null != res.PVBTNum)
+                    {
                         results[28] = new List<PValue>();
                         PValue PVBTNum = new PValue(Double.Parse(res.PVBTNum), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[28].Add(PVBTNum);
                     }
-                    if (null != res.PVBVMax) {
+                    if (null != res.PVBVMax)
+                    {
                         results[29] = new List<PValue>();
                         PValue PVBVMax = new PValue(Double.Parse(res.PVBVMax), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[29].Add(PVBVMax);
                     }
-                    if (null != res.PVBVMin) {
+                    if (null != res.PVBVMin)
+                    {
                         results[30] = new List<PValue>();
                         PValue PVBVMin = new PValue(Double.Parse(res.PVBVMin), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[30].Add(PVBVMin);
                     }
-                    if (null != res.PVBVAvg) {
+                    if (null != res.PVBVAvg)
+                    {
                         results[31] = new List<PValue>();
                         PValue PVBVAvg = new PValue(Double.Parse(res.PVBVAvg), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[31].Add(PVBVAvg);
                     }
-                    if (null != res.PVBStbT && res.PVBStbT.Count > 0) {
+                    if (null != res.PVBStbT && res.PVBStbT.Count > 0)
+                    {
                         results[32] = new List<PValue>();
                         results[33] = new List<PValue>();
                         results[34] = new List<PValue>();
@@ -599,7 +628,8 @@ namespace PSLCalcu.Module
                         results[37] = new List<PValue>();
                         results[38] = new List<PValue>();
                         int count = res.PVBStbT.Count;
-                        for (int j = 0; j < count; j++) {
+                        for (int j = 0; j < count; j++)
+                        {
                             DateTime startTime = Convert.ToDateTime(res.PVBStbT[j].startDate);
                             double startValue = startTime.Ticks;
                             PValue PVBStbT = new PValue(startValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
@@ -616,8 +646,10 @@ namespace PSLCalcu.Module
                             results[36].Add(PVBStbTsV);
                             PValue PVBStbTeV = new PValue(res.PVBStbT[j].endValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                             results[37].Add(PVBStbTeV);
-                            if (null != res.PVBStbT[j].valueType){
-                                if (res.PVBStbT[j].valueType.Contains("Stb")){
+                            if (null != res.PVBStbT[j].valueType)
+                            {
+                                if (res.PVBStbT[j].valueType.Contains("Stb"))
+                                {
                                     String s = "83";//ASCII码十进制值:83;控制字符:S 
                                     Double value = Double.Parse(s);
                                     PValue PVBStbTvT = new PValue(value, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
@@ -626,12 +658,14 @@ namespace PSLCalcu.Module
                             }
                         }
                     }
-                    if (null != res.PVBStbTR) {
+                    if (null != res.PVBStbTR)
+                    {
                         results[39] = new List<PValue>();
                         PValue PVBStbTR = new PValue(Double.Parse(res.PVBStbTR), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[39].Add(PVBStbTR);
                     }
-                    if (null != res.PVBNoStbT && res.PVBNoStbT.Count>0) {
+                    if (null != res.PVBNoStbT && res.PVBNoStbT.Count > 0)
+                    {
                         results[40] = new List<PValue>();
                         results[41] = new List<PValue>();
                         results[42] = new List<PValue>();
@@ -640,7 +674,8 @@ namespace PSLCalcu.Module
                         results[45] = new List<PValue>();
                         results[46] = new List<PValue>();
                         int count = res.PVBNoStbT.Count;
-                        for (int j = 0; j < count; j++) {
+                        for (int j = 0; j < count; j++)
+                        {
                             DateTime startTime = Convert.ToDateTime(res.PVBNoStbT[j].startDate);
                             double startValue = startTime.Ticks;
                             PValue PVBNoStbT = new PValue(startValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
@@ -657,7 +692,8 @@ namespace PSLCalcu.Module
                             results[44].Add(PVBNoStbTsV);
                             PValue PVBNoStbTeV = new PValue(res.PVBNoStbT[j].endValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                             results[45].Add(PVBNoStbTeV);
-                            if (res.PVBNoStbT[j].valueType.Contains("noStb")) {
+                            if (res.PVBNoStbT[j].valueType.Contains("noStb"))
+                            {
                                 String s = "110";//ASCII码十进制值:100;控制字符:n 
                                 Double value = Double.Parse(s);
                                 PValue PVBNoStbTvT = new PValue(value, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
@@ -665,12 +701,14 @@ namespace PSLCalcu.Module
                             }
                         }
                     }
-                    if (null != res.PVBNoStbTR) {
+                    if (null != res.PVBNoStbTR)
+                    {
                         results[47] = new List<PValue>();
                         PValue PVBNoStbTR = new PValue(Double.Parse(res.PVBNoStbTR), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[47].Add(PVBNoStbTR);
                     }
-                    if (null != res.PVBStbTSLT) {
+                    if (null != res.PVBStbTSLT)
+                    {
                         results[48] = new List<PValue>();
                         results[49] = new List<PValue>();
                         DateTime startTime = Convert.ToDateTime(res.PVBStbTSLT.startDate);
@@ -682,17 +720,20 @@ namespace PSLCalcu.Module
                         PValue PVBStbTSLTEnd = new PValue(endValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[49].Add(PVBStbTSLTEnd);
                     }
-                    if (null != res.PVBStbTSLPV) {
+                    if (null != res.PVBStbTSLPV)
+                    {
                         results[50] = new List<PValue>();
                         PValue PVBStbTSLPV = new PValue(Double.Parse(res.PVBStbTSLPV), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
-                            results[50].Add(PVBStbTSLPV);
-                       }
-                    if (null != res.PVBStbTSL) {
+                        results[50].Add(PVBStbTSLPV);
+                    }
+                    if (null != res.PVBStbTSL)
+                    {
                         results[51] = new List<PValue>();
                         PValue PVBStbTSL = new PValue(Double.Parse(res.PVBStbTSL), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[51].Add(PVBStbTSL);
                     }
-                    if (null != res.PVBNoStbTSLT) {
+                    if (null != res.PVBNoStbTSLT)
+                    {
                         results[52] = new List<PValue>();
                         results[53] = new List<PValue>();
                         DateTime startTime = Convert.ToDateTime(res.PVBNoStbTSLT.startDate);
@@ -704,12 +745,14 @@ namespace PSLCalcu.Module
                         PValue PVBNoStbTSLTEnd = new PValue(endValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[53].Add(PVBNoStbTSLTEnd);
                     }
-                    if (null != res.PVBNoStbTSL) {
+                    if (null != res.PVBNoStbTSL)
+                    {
                         results[54] = new List<PValue>();
                         PValue PVBNoStbTSL = new PValue(Double.Parse(res.PVBNoStbTSL), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[54].Add(PVBNoStbTSL);
                     }
-                    if (null != res.PVBUpTSLT.startDate) {
+                    if (null != res.PVBUpTSLT.startDate)
+                    {
                         results[55] = new List<PValue>();
                         results[56] = new List<PValue>();
                         DateTime startTime = Convert.ToDateTime(res.PVBUpTSLT.startDate);
@@ -721,12 +764,14 @@ namespace PSLCalcu.Module
                         PValue PVBUpTSLTEnd = new PValue(endValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[56].Add(PVBUpTSLTEnd);
                     }
-                    if (null != res.PVBUpTSL) {
+                    if (null != res.PVBUpTSL)
+                    {
                         results[57] = new List<PValue>();
                         PValue PVBUpTSL = new PValue(Double.Parse(res.PVBUpTSL), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[57].Add(PVBUpTSL);
                     }
-                    if (null != res.PVBDownTSLT) {
+                    if (null != res.PVBDownTSLT)
+                    {
                         results[58] = new List<PValue>();
                         results[59] = new List<PValue>();
                         DateTime startTime = Convert.ToDateTime(res.PVBDownTSLT.startDate);
@@ -738,37 +783,44 @@ namespace PSLCalcu.Module
                         PValue PVBDownTSLTEnd = new PValue(endValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[59].Add(PVBDownTSLTEnd);
                     }
-                    if (null != res.PVBDownTSL) {
+                    if (null != res.PVBDownTSL)
+                    {
                         results[60] = new List<PValue>();
                         PValue PVBDownTSL = new PValue(Double.Parse(res.PVBDownTSL), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[60].Add(PVBDownTSL);
                     }
-                    if (null != res.PVBPNum) {
+                    if (null != res.PVBPNum)
+                    {
                         results[61] = new List<PValue>();
                         PValue PVBPNum = new PValue(Double.Parse(res.PVBPNum), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[61].Add(PVBPNum);
                     }
-                    if (null != res.PVBQltR) {
+                    if (null != res.PVBQltR)
+                    {
                         results[62] = new List<PValue>();
                         PValue PVBQltR = new PValue(Double.Parse(res.PVBQltR), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[62].Add(PVBQltR);
                     }
-                    if (null != res.PVBStatus) {
+                    if (null != res.PVBStatus)
+                    {
                         results[63] = new List<PValue>();
                         PValue PVBStatus = new PValue(Double.Parse(res.PVBStatus), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[63].Add(PVBStatus);
                     }
-                    if (null != res.PVBQa) {
+                    if (null != res.PVBQa)
+                    {
                         results[64] = new List<PValue>();
                         PValue PVBQa = new PValue(Double.Parse(res.PVBQa), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[64].Add(PVBQa);
                     }
-                    if (null != res.PVBQb) {
+                    if (null != res.PVBQb)
+                    {
                         results[65] = new List<PValue>();
                         PValue PVBQb = new PValue(Double.Parse(res.PVBQb), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[65].Add(PVBQb);
                     }
-                    if (null != res.PVBQc) {
+                    if (null != res.PVBQc)
+                    {
                         results[66] = new List<PValue>();
                         PValue PVBQc = new PValue(Double.Parse(res.PVBQc), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[66].Add(PVBQc);
@@ -787,47 +839,50 @@ namespace PSLCalcu.Module
                     {
                         MPVBaseMessageOutClass v = new MPVBaseMessageOutClass();
                         v.id = j;
-                        if (null != inputs[0][j].Value){ v.PVBMin = inputs[0][j].Value; }
+                        if (null != inputs[0][j].Value) { v.PVBMin = inputs[0][j].Value; }
 
-                        if (null != inputs[1][j].Value){
-                        long PVBMinD = (long)inputs[1][j].Value;
-                        DateTime date = new DateTime(PVBMinD);
-                        v.PVBMinTime = date.ToString();
+                        if (null != inputs[1][j].Value)
+                        {
+                            long PVBMinD = (long)inputs[1][j].Value;
+                            DateTime date = new DateTime(PVBMinD);
+                            v.PVBMinTime = date.ToString();
                         }
-                        
-                        if (null != inputs[2][j].Value){ v.PVBAvg = inputs[2][j].Value; }
-                        
-                        if (null != inputs[3][j].Value){ v.PVBMax = inputs[3][j].Value; }
-                        
-                        if (null != inputs[4][j].Value){
+
+                        if (null != inputs[2][j].Value) { v.PVBAvg = inputs[2][j].Value; }
+
+                        if (null != inputs[3][j].Value) { v.PVBMax = inputs[3][j].Value; }
+
+                        if (null != inputs[4][j].Value)
+                        {
                             long PVBMaxd = (long)inputs[4][j].Value;
                             DateTime PVBMaxdate = new DateTime(PVBMaxd);
                             v.PVBMaxTime = PVBMaxdate.ToString();
-                        }                        
-                        
-                        if (null != inputs[5][j].Value){ v.PVBDMax = inputs[5][j].Value; }
-                        
-                        if (null != inputs[6][j].Value){ v.PVBSum  = inputs[6][j].Value; }
-                        
-                        if (null != inputs[7][j].Value){ v.PVBSumkb= inputs[7][j].Value; }
-                        
-                        if (null != inputs[8][j].Value){ v.PVBLinek= inputs[8][j].Value; }
-                        
-                        if (null != inputs[9][j].Value){ v.PVBLineb= inputs[9][j].Value; }
-                        
-                        if (null != inputs[10][j].Value){ v.PVBSumPNR = inputs[10][j].Value; }
-                        
-                        if (null != inputs[11][j].Value){ v.PVBAbsSum = inputs[11][j].Value; }
-                        
-                        if (null != inputs[12][j].Value){ v.PVBStdev  = inputs[12][j].Value; }
-                        
-                        if (null != inputs[13][j].Value){ v.PVBVolatility = inputs[13][j].Value; }
-                        
-                        if (null != inputs[14][j].Value){ v.PVBSDMax = inputs[14][j].Value; }
-                        
+                        }
+
+                        if (null != inputs[5][j].Value) { v.PVBDMax = inputs[5][j].Value; }
+
+                        if (null != inputs[6][j].Value) { v.PVBSum = inputs[6][j].Value; }
+
+                        if (null != inputs[7][j].Value) { v.PVBSumkb = inputs[7][j].Value; }
+
+                        if (null != inputs[8][j].Value) { v.PVBLinek = inputs[8][j].Value; }
+
+                        if (null != inputs[9][j].Value) { v.PVBLineb = inputs[9][j].Value; }
+
+                        if (null != inputs[10][j].Value) { v.PVBSumPNR = inputs[10][j].Value; }
+
+                        if (null != inputs[11][j].Value) { v.PVBAbsSum = inputs[11][j].Value; }
+
+                        if (null != inputs[12][j].Value) { v.PVBStdev = inputs[12][j].Value; }
+
+                        if (null != inputs[13][j].Value) { v.PVBVolatility = inputs[13][j].Value; }
+
+                        if (null != inputs[14][j].Value) { v.PVBSDMax = inputs[14][j].Value; }
+
                         //  PVBSDMaxTime 单次极差最大值发生时刻、退出时刻
                         //List<D22STimeClass> PVBSDMaxTime=new List<D22STimeClass>();
-                        if (null != inputs[15][j].Value){
+                        if (null != inputs[15][j].Value)
+                        {
                             D22STimeClass PVBSDMaxTime = new D22STimeClass();
                             v.PVBSDMaxTime = PVBSDMaxTime;
 
@@ -838,15 +893,18 @@ namespace PSLCalcu.Module
                             DateTime PVBSDMaxdateE = new DateTime(PSDMaxdateE);
                             PVBSDMaxTime.endDate = PVBSDMaxdateE.ToString();
                         }
-                        
+
                         //  PVBSDMaxTimeG	时间	极差时间组，所有波峰 - 谷的时间组
-                        if (null != inputs[17][j].Value){
-                            List<D22STimeClass> PVBSDMaxTimeG=new List<D22STimeClass>();
+                        if (null != inputs[17][j].Value)
+                        {
+                            List<D22STimeClass> PVBSDMaxTimeG = new List<D22STimeClass>();
                             v.PVBSDMaxTimeG = PVBSDMaxTimeG;
-                        
+
                             int MaxTimeGStartCount = inputs[17].Count;
-                            for (int TimeStart = 0; TimeStart < MaxTimeGStartCount; TimeStart++) {
-                                if (inputs[17][TimeStart].Timestamp == input[j].Timestamp && inputs[17][TimeStart].Endtime == input[j].Endtime && inputs[17][TimeStart].Status==0) {
+                            for (int TimeStart = 0; TimeStart < MaxTimeGStartCount; TimeStart++)
+                            {
+                                if (inputs[17][TimeStart].Timestamp == input[j].Timestamp && inputs[17][TimeStart].Endtime == input[j].Endtime && inputs[17][TimeStart].Status == 0)
+                                {
                                     D22STimeClass PVBSDMaxTimeGs = new D22STimeClass();
                                     long PSDMaxdateGs = (long)inputs[17][TimeStart].Value;
                                     DateTime MaxTimeGs = new DateTime(PSDMaxdateGs);
@@ -864,10 +922,12 @@ namespace PSLCalcu.Module
 
                                     PVBSDMaxTimeGs.endValue = inputs[22][TimeStart].Value;
 
-                                    if (inputs[23][TimeStart].Value.ToString() == "117"){
+                                    if (inputs[23][TimeStart].Value.ToString() == "117")
+                                    {
                                         PVBSDMaxTimeGs.valueType = "up";
                                     } //ASCII码十进制值:117;控制字符:u 
-                                    if (inputs[23][TimeStart].Value.ToString() == "100"){
+                                    if (inputs[23][TimeStart].Value.ToString() == "100")
+                                    {
                                         PVBSDMaxTimeGs.valueType = "down";
                                     }//ASCII码十进制值:100;控制字符:d 
                                     if (inputs[23][TimeStart].Value.ToString() == "116")
@@ -877,35 +937,38 @@ namespace PSLCalcu.Module
 
                                     PVBSDMaxTimeG.Add(PVBSDMaxTimeGs);
                                 }
-                                
+
                             }
                         }
-                       if (null != inputs[24][j].Value){ v.PVBSDMaxR = inputs[24][j].Value; }
+                        if (null != inputs[24][j].Value) { v.PVBSDMaxR = inputs[24][j].Value; }
 
-                       if (null != inputs[25][j].Value){ v.PVBDN1Num = Convert.ToInt32(inputs[25][j].Value); }
+                        if (null != inputs[25][j].Value) { v.PVBDN1Num = Convert.ToInt32(inputs[25][j].Value); }
 
-                       if (null != inputs[26][j].Value){ v.PVBDN2Num = Convert.ToInt32(inputs[26][j].Value); }
+                        if (null != inputs[26][j].Value) { v.PVBDN2Num = Convert.ToInt32(inputs[26][j].Value); }
 
-                       if (null != inputs[27][j].Value){ v.PVBDN3Num = Convert.ToInt32(inputs[27][j].Value); }
+                        if (null != inputs[27][j].Value) { v.PVBDN3Num = Convert.ToInt32(inputs[27][j].Value); }
 
-                       if (null != inputs[28][j].Value){ v.PVBTNum   = Convert.ToInt32(inputs[28][j].Value); }
+                        if (null != inputs[28][j].Value) { v.PVBTNum = Convert.ToInt32(inputs[28][j].Value); }
 
-                       if (null != inputs[29][j].Value){ v.PVBVMax   = inputs[29][j].Value; }
+                        if (null != inputs[29][j].Value) { v.PVBVMax = inputs[29][j].Value; }
 
-                       if (null != inputs[30][j].Value){ v.PVBVMin   = inputs[30][j].Value; }
+                        if (null != inputs[30][j].Value) { v.PVBVMin = inputs[30][j].Value; }
 
-                       if (null != inputs[31][j].Value){ v.PVBVAvg   = inputs[31][j].Value; }
+                        if (null != inputs[31][j].Value) { v.PVBVAvg = inputs[31][j].Value; }
 
-                       //  PVBStbT	时间:稳定时刻。。进稳定区时刻，出稳定区时刻
-                       if (null != inputs[32][j].Value){
-                           List<D22STimeClass> PVBStbT = new List<D22STimeClass>();
-                           v.PVBStbT = PVBStbT;
-                           int PVBStbTStartCount = inputs[32].Count;
-                           for (int TimeStart = 0; TimeStart < PVBStbTStartCount; TimeStart++) {
-                               if (inputs[32][TimeStart].Timestamp == input[j].Timestamp && inputs[32][TimeStart].Endtime == input[j].Endtime && inputs[32][TimeStart].Status==0) {
-                            
+                        //  PVBStbT	时间:稳定时刻。。进稳定区时刻，出稳定区时刻
+                        if (null != inputs[32][j].Value)
+                        {
+                            List<D22STimeClass> PVBStbT = new List<D22STimeClass>();
+                            v.PVBStbT = PVBStbT;
+                            int PVBStbTStartCount = inputs[32].Count;
+                            for (int TimeStart = 0; TimeStart < PVBStbTStartCount; TimeStart++)
+                            {
+                                if (inputs[32][TimeStart].Timestamp == input[j].Timestamp && inputs[32][TimeStart].Endtime == input[j].Endtime && inputs[32][TimeStart].Status == 0)
+                                {
+
                                     D22STimeClass PVBStbTs = new D22STimeClass();
-                            
+
                                     long PVBStbTdates = (long)inputs[32][TimeStart].Value;
                                     DateTime PVBStbTdate = new DateTime(PVBStbTdates);
                                     PVBStbTs.startDate = PVBStbTdate.ToString();
@@ -922,26 +985,30 @@ namespace PSLCalcu.Module
 
                                     PVBStbTs.endValue = inputs[37][TimeStart].Value;
                                     //ASCII码十进制值:100;控制字符:d 
-                                    if (null != inputs[38][j].Value && inputs[38][TimeStart].Value.ToString() == "83") { PVBStbTs.valueType = "Stb"; }else
-                                   {
-                                       PVBStbTs.valueType = "Err";
-                                   }
+                                    if (null != inputs[38][j].Value && inputs[38][TimeStart].Value.ToString() == "83") { PVBStbTs.valueType = "Stb"; }
+                                    else
+                                    {
+                                        PVBStbTs.valueType = "Err";
+                                    }
 
-                                    PVBStbT.Add(PVBStbTs);   
+                                    PVBStbT.Add(PVBStbTs);
                                 }
                             }
                         }
 
                         //PVBStbTR	%:稳定时间占比，稳定：|Δxi| ≤ StbL
-                        if (null != inputs[39][j].Value){ v.PVBStbTR = inputs[39][j].Value; }
+                        if (null != inputs[39][j].Value) { v.PVBStbTR = inputs[39][j].Value; }
 
                         //  PVBNoStbT	时间:不稳定时刻。进不稳定区时刻，出不稳定区时刻
-                        if (null != inputs[40][j].Value) {
+                        if (null != inputs[40][j].Value)
+                        {
                             List<D22STimeClass> PVBNoStbT = new List<D22STimeClass>();
                             v.PVBNoStbT = PVBNoStbT;
                             int PVBNoStbTStartCount = inputs[40].Count;
-                            for (int TimeStart = 0; TimeStart < PVBNoStbTStartCount; TimeStart++) {
-                                if (inputs[40][TimeStart].Timestamp == input[j].Timestamp && inputs[40][TimeStart].Endtime == input[j].Endtime && inputs[40][TimeStart].Status==0) {
+                            for (int TimeStart = 0; TimeStart < PVBNoStbTStartCount; TimeStart++)
+                            {
+                                if (inputs[40][TimeStart].Timestamp == input[j].Timestamp && inputs[40][TimeStart].Endtime == input[j].Endtime && inputs[40][TimeStart].Status == 0)
+                                {
                                     D22STimeClass PVBNoStbTS = new D22STimeClass();
                                     long PVBNoStbTdates = (long)inputs[40][TimeStart].Value;
                                     DateTime PVBNoStbTdate = new DateTime(PVBNoStbTdates);
@@ -968,9 +1035,10 @@ namespace PSLCalcu.Module
 
                         //  PVBNoStbTR  %:不稳定时间占比，稳定：|Δxi| ＞ NoStbL
                         if (null != inputs[47][j].Value) { v.PVBNoStbTR = inputs[47][j].Value; }
-                        
+
                         //  PVBStbTSLT 时间:最长连续稳定时刻。进稳定区时刻，出稳定区时刻
-                        if (null != inputs[48][j].Value) {
+                        if (null != inputs[48][j].Value)
+                        {
                             D22STimeClass PVBStbTSLT = new D22STimeClass();
                             v.PVBStbTSLT = PVBStbTSLT;
                             long PVBStbTSLTdates = (long)inputs[48][j].Value;
@@ -981,15 +1049,16 @@ namespace PSLCalcu.Module
                             DateTime PVBStbTSLTEnd = new DateTime(PVBStbTSLTdateE);
                             PVBStbTSLT.endDate = PVBStbTSLTEnd.ToString();
                         }
-                        
+
                         //PVBStbTSLPV 原单位:最长连续稳定时变量平均值
                         if (null != inputs[50][j].Value) { v.PVBStbTSLPV = inputs[50][j].Value; }
-                        
+
                         //  PVBStbTSL	时间:最长连续稳定时间长
-                        if (null != inputs[51][j].Value) { v.PVBStbTSL   = inputs[51][j].Value; }
-                        
+                        if (null != inputs[51][j].Value) { v.PVBStbTSL = inputs[51][j].Value; }
+
                         //  PVBNoStbTSLT	时间:最长连续不稳定时刻。进不稳定区时刻，出不稳定区时刻
-                        if (null != inputs[52][j].Value) {
+                        if (null != inputs[52][j].Value)
+                        {
                             D22STimeClass PVBNoStbTSLT = new D22STimeClass();
                             long PVBNoStbTSLTdates = (long)inputs[52][j].Value;
                             DateTime PVBNoStbTSLTdate = new DateTime(PVBNoStbTSLTdates);
@@ -1000,12 +1069,13 @@ namespace PSLCalcu.Module
                             PVBNoStbTSLT.endDate = PVBNoStbTSLTEnd.ToString();
                             v.PVBNoStbTSLT = PVBNoStbTSLT;
                         }
-                       
+
                         //  PVBNoStbTSL	时间:最长连续不稳定时间长
                         if (null != inputs[54][j].Value) { v.PVBNoStbTSL = inputs[54][j].Value; }
-                        
+
                         //  PVBUpTSLT	时间:最长连续上升时刻。进上升区时刻，出上升区时刻
-                        if (null != inputs[55][j].Value){
+                        if (null != inputs[55][j].Value)
+                        {
                             D22STimeClass PVBUpTSLT = new D22STimeClass();
                             v.PVBUpTSLT = PVBUpTSLT;
                             long PVBUpTSLTdates = (long)inputs[55][j].Value;
@@ -1016,12 +1086,13 @@ namespace PSLCalcu.Module
                             DateTime PVBUpTSLTEnd = new DateTime(PVBUpTSLTdateE);
                             PVBUpTSLT.endDate = PVBUpTSLTEnd.ToString();
                         }
-                        
+
                         //  PVBUpTSL	时间:最长连续上升时间。上升：Δxi ＞ 0
                         if (null != inputs[57][j].Value) { v.PVBUpTSL = inputs[57][j].Value; }
-                        
+
                         //  PVBDownTSLT	时间:最长连续下降时刻。进下降区时刻，出下降区时刻
-                        if (null != inputs[58][j].Value) {
+                        if (null != inputs[58][j].Value)
+                        {
                             D22STimeClass PVBDownTSLT = new D22STimeClass();
                             v.PVBDownTSLT = PVBDownTSLT;
                             long PVBDownTSLTdates = (long)inputs[58][j].Value;
@@ -1032,28 +1103,28 @@ namespace PSLCalcu.Module
                             DateTime PVBDownTSLTEnd = new DateTime(PVBDownTSLTdateE);
                             PVBDownTSLT.endDate = PVBDownTSLTEnd.ToString();
                         }
-                        
+
                         //  PVBDownTSL	时间:最长连续下降时间。下降：Δxi ＜ 0
-                        if (null != inputs[60][j].Value) { v.PVBDownTSL= inputs[60][j].Value; }
-                        
+                        if (null != inputs[60][j].Value) { v.PVBDownTSL = inputs[60][j].Value; }
+
                         //  PVBPNum	数据点数。读进来的数据点数
-                        if (null != inputs[61][j].Value) { v.PVBPNum   = inputs[61][j].Value; }
-                        
+                        if (null != inputs[61][j].Value) { v.PVBPNum = inputs[61][j].Value; }
+
                         //  PVBQltR	质量率 %。好质量点 / 总点数 x 100%
-                        if (null != inputs[62][j].Value) { v.PVBQltR   = inputs[62][j].Value; }
-                        
+                        if (null != inputs[62][j].Value) { v.PVBQltR = inputs[62][j].Value; }
+
                         //  PVBStatus	NA	计算故障标记。不用单独标签，系统里有对上面每个标签都有状态标记
                         if (null != inputs[63][j].Value) { v.PVBStatus = inputs[63][j].Value.ToString(); }
-                        
+
                         //  PVBQa	NA	以二次函数拟合时的 a。x = a t2 + b t + c
                         if (null != inputs[64][j].Value) { v.PVBQa = inputs[64][j].Value; }
-                        
+
                         //  PVBQb	NA	以二次函数拟合时的 b
                         if (null != inputs[65][j].Value) { v.PVBQb = inputs[65][j].Value; }
-                        
+
                         //  PVBQc	NA	以二次函数拟合时的 c
                         if (null != inputs[66][j].Value) { v.PVBQc = inputs[66][j].Value; }
-                        
+
                         longlist.Add(v);
                     }
                     #endregion
@@ -1062,32 +1133,37 @@ namespace PSLCalcu.Module
                     //调用长周期算法数据是把小时数据结果进行处理 天、月级别时间数据运算
                     MPVBaseMessageOutClass res = MPVBaseModule.longMPVBase(longlist, N1, N2, N3, k, b, stbl, nostbl);
                     //组织结算结果
-                    if (null != res.PVBMin) {
+                    if (null != res.PVBMin)
+                    {
                         results[0] = new List<PValue>();
                         PValue PVBMin = new PValue(res.PVBMin, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[0].Add(PVBMin);
                     }
-                    if (null != res.PVBMinTime) {
+                    if (null != res.PVBMinTime)
+                    {
                         results[1] = new List<PValue>();
                         DateTime time = Convert.ToDateTime(res.PVBMinTime);
                         double value = time.Ticks;
                         PValue PVBMinTime = new PValue(value, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[1].Add(PVBMinTime);
                     }
-                     
-                    if (null != res.PVBAvg) {
+
+                    if (null != res.PVBAvg)
+                    {
                         results[2] = new List<PValue>();
                         PValue PVBAvg = new PValue(res.PVBAvg, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[2].Add(PVBAvg);
                     }
 
-                    if (null != res.PVBMax) {
+                    if (null != res.PVBMax)
+                    {
                         results[3] = new List<PValue>();
                         PValue PVBMax = new PValue(res.PVBMax, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[3].Add(PVBMax);
                     }
-                     
-                    if (null != res.PVBMaxTime) {
+
+                    if (null != res.PVBMaxTime)
+                    {
                         results[4] = new List<PValue>();
                         DateTime maxTime = Convert.ToDateTime(res.PVBMaxTime);
                         double maxValue = maxTime.Ticks;
@@ -1095,67 +1171,78 @@ namespace PSLCalcu.Module
                         results[4].Add(PVBMaxTime);
                     }
 
-                    if (null != res.PVBDMax) {
+                    if (null != res.PVBDMax)
+                    {
                         results[5] = new List<PValue>();
                         PValue PVBDMax = new PValue(res.PVBDMax, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[5].Add(PVBDMax);
                     }
 
-                    if (null != res.PVBSum) {
+                    if (null != res.PVBSum)
+                    {
                         results[6] = new List<PValue>();
                         PValue PVBSum = new PValue(res.PVBSum, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[6].Add(PVBSum);
                     }
 
-                    if (null != res.PVBSumkb) {
+                    if (null != res.PVBSumkb)
+                    {
                         results[7] = new List<PValue>();
                         PValue PVBSumkb = new PValue(res.PVBSumkb, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[7].Add(PVBSumkb);
                     }
 
-                    if (null != res.PVBLinek) {
+                    if (null != res.PVBLinek)
+                    {
                         results[8] = new List<PValue>();
                         PValue PVBLinek = new PValue(res.PVBLinek, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[8].Add(PVBLinek);
                     }
 
-                    if (null != res.PVBLineb) {
+                    if (null != res.PVBLineb)
+                    {
                         results[9] = new List<PValue>();
                         PValue PVBLineb = new PValue(res.PVBLineb, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[9].Add(PVBLineb);
                     }
 
-                    if (null != res.PVBSumPNR) {
+                    if (null != res.PVBSumPNR)
+                    {
                         results[10] = new List<PValue>();
                         PValue PVBSumPNR = new PValue(res.PVBSumPNR, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[10].Add(PVBSumPNR);
                     }
 
-                    if (null != res.PVBAbsSum) {
+                    if (null != res.PVBAbsSum)
+                    {
                         results[11] = new List<PValue>();
                         PValue PVBAbsSum = new PValue(res.PVBAbsSum, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[11].Add(PVBAbsSum);
                     }
 
-                    if (null != res.PVBStdev) {
+                    if (null != res.PVBStdev)
+                    {
                         results[12] = new List<PValue>();
                         PValue PVBStdev = new PValue(res.PVBStdev, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[12].Add(PVBStdev);
                     }
 
-                    if (null != res.PVBVolatility) {
+                    if (null != res.PVBVolatility)
+                    {
                         results[13] = new List<PValue>();
                         PValue PVBVolatility = new PValue(res.PVBVolatility, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[13].Add(PVBVolatility);
                     }
 
-                    if (null != res.PVBSDMax) {
+                    if (null != res.PVBSDMax)
+                    {
                         results[14] = new List<PValue>();
                         PValue PVBSDMax = new PValue(res.PVBSDMax, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[14].Add(PVBSDMax);
                     }
 
-                    if (null != res.PVBSDMaxTime) {
+                    if (null != res.PVBSDMaxTime)
+                    {
                         results[15] = new List<PValue>();
                         results[16] = new List<PValue>();
                         DateTime startTime = Convert.ToDateTime(res.PVBSDMaxTime.startDate);
@@ -1168,7 +1255,8 @@ namespace PSLCalcu.Module
                         results[16].Add(PVBSDMaxTimeEnd);
                     }
 
-                    if (null != res.PVBSDMaxTimeG && res.PVBSDMaxTimeG.Count > 0) {
+                    if (null != res.PVBSDMaxTimeG && res.PVBSDMaxTimeG.Count > 0)
+                    {
                         results[17] = new List<PValue>();
                         results[18] = new List<PValue>();
                         results[19] = new List<PValue>();
@@ -1177,7 +1265,8 @@ namespace PSLCalcu.Module
                         results[22] = new List<PValue>();
                         results[23] = new List<PValue>();
                         int count = res.PVBSDMaxTimeG.Count;
-                        for (int j = 0; j < count; j++){
+                        for (int j = 0; j < count; j++)
+                        {
                             DateTime MaxstartTime = Convert.ToDateTime(res.PVBSDMaxTimeG[j].startDate);
                             double MaxstartValue = MaxstartTime.Ticks;
                             PValue PVBSDMaxTimeG = new PValue(MaxstartValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
@@ -1194,13 +1283,15 @@ namespace PSLCalcu.Module
                             results[21].Add(PVBSDMaxTimeGsV);
                             PValue PVBSDMaxTimeGeV = new PValue(res.PVBSDMaxTimeG[j].endValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                             results[22].Add(PVBSDMaxTimeGeV);
-                            if (null != res.PVBSDMaxTimeG[j].valueType && res.PVBSDMaxTimeG[j].valueType.Contains("up")) {
+                            if (null != res.PVBSDMaxTimeG[j].valueType && res.PVBSDMaxTimeG[j].valueType.Contains("up"))
+                            {
                                 String s = "117";//ASCII码十进制值:117;控制字符:u 
                                 Double typeValue = Double.Parse(s);
                                 PValue PVBSDMaxTimeGvT = new PValue(typeValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                                 results[23].Add(PVBSDMaxTimeGvT);
                             }
-                            if (null != res.PVBSDMaxTimeG[j].valueType && res.PVBSDMaxTimeG[j].valueType.Contains("down")) {
+                            if (null != res.PVBSDMaxTimeG[j].valueType && res.PVBSDMaxTimeG[j].valueType.Contains("down"))
+                            {
                                 String s = "100";//ASCII码十进制值:100;控制字符:d
                                 Double typeValue = Double.Parse(s);
                                 PValue PVBSDMaxTimeGvT = new PValue(typeValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
@@ -1216,55 +1307,64 @@ namespace PSLCalcu.Module
                         }
                     }
 
-                    if (null != res.PVBSDMaxR) {
+                    if (null != res.PVBSDMaxR)
+                    {
                         results[24] = new List<PValue>();
                         PValue PVBSDMaxR = new PValue(res.PVBSDMaxR, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[24].Add(PVBSDMaxR);
                     }
 
-                    if (null != res.PVBDN1Num) {
+                    if (null != res.PVBDN1Num)
+                    {
                         results[25] = new List<PValue>();
                         PValue PVBDN1Num = new PValue(res.PVBDN1Num, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[25].Add(PVBDN1Num);
                     }
 
-                    if (null != res.PVBDN2Num) {
+                    if (null != res.PVBDN2Num)
+                    {
                         results[26] = new List<PValue>();
                         PValue PVBDN2Num = new PValue(res.PVBDN2Num, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[26].Add(PVBDN2Num);
                     }
 
-                    if (null != res.PVBDN3Num) {
+                    if (null != res.PVBDN3Num)
+                    {
                         results[27] = new List<PValue>();
                         PValue PVBDN3Num = new PValue(res.PVBDN3Num, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[27].Add(PVBDN3Num);
                     }
 
-                    if (null != res.PVBTNum){
+                    if (null != res.PVBTNum)
+                    {
                         results[28] = new List<PValue>();
                         PValue PVBTNum = new PValue(res.PVBTNum, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[28].Add(PVBTNum);
                     }
 
-                    if (null != res.PVBVMax){
+                    if (null != res.PVBVMax)
+                    {
                         results[29] = new List<PValue>();
                         PValue PVBVMax = new PValue(res.PVBVMax, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[29].Add(PVBVMax);
                     }
 
-                    if (null != res.PVBVMin) {
+                    if (null != res.PVBVMin)
+                    {
                         results[30] = new List<PValue>();
                         PValue PVBVMin = new PValue(res.PVBVMin, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[30].Add(PVBVMin);
                     }
 
-                    if (null != res.PVBVAvg) {
+                    if (null != res.PVBVAvg)
+                    {
                         results[31] = new List<PValue>();
                         PValue PVBVAvg = new PValue(res.PVBVAvg, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[31].Add(PVBVAvg);
                     }
 
-                    if (null != res.PVBStbT && res.PVBStbT.Count > 0){
+                    if (null != res.PVBStbT && res.PVBStbT.Count > 0)
+                    {
                         results[32] = new List<PValue>();
                         results[33] = new List<PValue>();
                         results[34] = new List<PValue>();
@@ -1274,7 +1374,8 @@ namespace PSLCalcu.Module
                         results[38] = new List<PValue>();
 
                         int StbTcount = res.PVBStbT.Count;
-                        for (int j = 0; j < StbTcount; j++){
+                        for (int j = 0; j < StbTcount; j++)
+                        {
                             DateTime StbTstartTime = Convert.ToDateTime(res.PVBStbT[j].startDate);
                             double StbTstartValue = StbTstartTime.Ticks;
                             PValue PVBStbT = new PValue(StbTstartValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
@@ -1291,13 +1392,15 @@ namespace PSLCalcu.Module
                             results[36].Add(PVBStbTsV);
                             PValue PVBStbTeV = new PValue(res.PVBStbT[j].endValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                             results[37].Add(PVBStbTeV);
-                            if (null != res.PVBStbT[j].valueType && res.PVBStbT[j].valueType.Contains("Stb")) {
+                            if (null != res.PVBStbT[j].valueType && res.PVBStbT[j].valueType.Contains("Stb"))
+                            {
                                 String s = "83";//ASCII码十进制值:83;控制字符:S 
                                 Double StbTvTvalue = Double.Parse(s);
                                 PValue PVBStbTvT = new PValue(StbTvTvalue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                                 results[38].Add(PVBStbTvT);
                             }
-                            else {
+                            else
+                            {
                                 String Err = "69";//ASCII码十进制值:69;控制字符:E 
                                 Double StbTvTvalue = Double.Parse(Err);
                                 PValue PVBStbTvT = new PValue(StbTvTvalue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
@@ -1306,13 +1409,15 @@ namespace PSLCalcu.Module
                         }
                     }
 
-                    if (null != res.PVBStbTR) {
-                            results[39] = new List<PValue>();
-                            PValue PVBStbTR = new PValue(res.PVBStbTR, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
-                            results[39].Add(PVBStbTR);
+                    if (null != res.PVBStbTR)
+                    {
+                        results[39] = new List<PValue>();
+                        PValue PVBStbTR = new PValue(res.PVBStbTR, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
+                        results[39].Add(PVBStbTR);
                     }
 
-                    if (null != res.PVBNoStbT && res.PVBNoStbT.Count > 0) {
+                    if (null != res.PVBNoStbT && res.PVBNoStbT.Count > 0)
+                    {
                         results[40] = new List<PValue>();
                         results[41] = new List<PValue>();
                         results[42] = new List<PValue>();
@@ -1321,7 +1426,8 @@ namespace PSLCalcu.Module
                         results[45] = new List<PValue>();
                         results[46] = new List<PValue>();
                         int NoStbTcount = res.PVBNoStbT.Count;
-                        for (int j = 0; j < NoStbTcount; j++){
+                        for (int j = 0; j < NoStbTcount; j++)
+                        {
                             DateTime NoStbTstartTime = Convert.ToDateTime(res.PVBNoStbT[j].startDate);
                             double NoStbTstartValue = NoStbTstartTime.Ticks;
                             PValue PVBNoStbT = new PValue(NoStbTstartValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
@@ -1338,7 +1444,8 @@ namespace PSLCalcu.Module
                             results[44].Add(PVBNoStbTsV);
                             PValue PVBNoStbTeV = new PValue(res.PVBNoStbT[j].endValue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                             results[45].Add(PVBNoStbTeV);
-                            if (null != res.PVBNoStbT[j].valueType && res.PVBNoStbT[j].valueType.Contains("noStb")) {
+                            if (null != res.PVBNoStbT[j].valueType && res.PVBNoStbT[j].valueType.Contains("noStb"))
+                            {
                                 String s = "110";//ASCII码十进制值:110;控制字符:n 
                                 Double NoStbTvTvalue = Double.Parse(s);
                                 PValue PVBNoStbTvT = new PValue(NoStbTvTvalue, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
@@ -1347,13 +1454,15 @@ namespace PSLCalcu.Module
                         }
                     }
 
-                    if (null != res.PVBNoStbTR){
+                    if (null != res.PVBNoStbTR)
+                    {
                         results[47] = new List<PValue>();
                         PValue PVBNoStbTR = new PValue(res.PVBNoStbTR, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[47].Add(PVBNoStbTR);
                     }
 
-                    if (null != res.PVBStbTSLT) {
+                    if (null != res.PVBStbTSLT)
+                    {
                         results[48] = new List<PValue>();
                         results[49] = new List<PValue>();
                         DateTime StbTSLTstartTime = Convert.ToDateTime(res.PVBStbTSLT.startDate);
@@ -1366,7 +1475,8 @@ namespace PSLCalcu.Module
                         results[49].Add(PPVBStbTSLTEnd);
                     }
 
-                    if (null != res.PVBStbTSLPV){
+                    if (null != res.PVBStbTSLPV)
+                    {
                         results[50] = new List<PValue>();
                         PValue PVBStbTSLPV = new PValue(res.PVBStbTSLPV, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[50].Add(PVBStbTSLPV);
@@ -1375,7 +1485,8 @@ namespace PSLCalcu.Module
                         results[51].Add(PVBStbTSL);
                     }
 
-                    if (null != res.PVBNoStbTSLT){
+                    if (null != res.PVBNoStbTSLT)
+                    {
                         results[52] = new List<PValue>();
                         results[53] = new List<PValue>();
                         DateTime noStbStartTime = Convert.ToDateTime(res.PVBNoStbTSLT.startDate);
@@ -1388,13 +1499,15 @@ namespace PSLCalcu.Module
                         results[53].Add(PPVBNoStbTSLTEnd);
                     }
 
-                    if (null != res.PVBNoStbTSL){
+                    if (null != res.PVBNoStbTSL)
+                    {
                         results[54] = new List<PValue>();
                         PValue PVBNoStbTSL = new PValue(res.PVBNoStbTSL, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[54].Add(PVBNoStbTSL);
                     }
 
-                    if (null != res.PVBUpTSLT){
+                    if (null != res.PVBUpTSLT)
+                    {
                         results[55] = new List<PValue>();
                         results[56] = new List<PValue>();
                         DateTime UpStartTime = Convert.ToDateTime(res.PVBUpTSLT.startDate);
@@ -1407,13 +1520,15 @@ namespace PSLCalcu.Module
                         results[56].Add(PPVBUpTSLTEnd);
                     }
 
-                    if (null != res.PVBUpTSL){
+                    if (null != res.PVBUpTSL)
+                    {
                         results[57] = new List<PValue>();
                         PValue PVBUpTSL = new PValue(res.PVBUpTSL, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[57].Add(PVBUpTSL);
                     }
 
-                    if (null != res.PVBDownTSLT){
+                    if (null != res.PVBDownTSLT)
+                    {
                         results[58] = new List<PValue>();
                         results[59] = new List<PValue>();
                         DateTime downStartTime = Convert.ToDateTime(res.PVBDownTSLT.startDate);
@@ -1426,55 +1541,62 @@ namespace PSLCalcu.Module
                         results[59].Add(PPVBDownTSLTEnd);
                     }
 
-                    if (null != res.PVBDownTSL){
+                    if (null != res.PVBDownTSL)
+                    {
                         results[60] = new List<PValue>();
                         PValue PVBDownTSL = new PValue(res.PVBDownTSL, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[60].Add(PVBDownTSL);
                     }
 
-                    if (null != res.PVBPNum){
+                    if (null != res.PVBPNum)
+                    {
                         results[61] = new List<PValue>();
                         PValue PVBPNum = new PValue(res.PVBPNum, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[61].Add(PVBPNum);
                     }
 
-                    if (null != res.PVBQltR){
+                    if (null != res.PVBQltR)
+                    {
                         results[62] = new List<PValue>();
                         PValue PVBQltR = new PValue(res.PVBQltR, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[62].Add(PVBQltR);
-                    }         
-                            
-                    if (null != res.PVBStatus){
+                    }
+
+                    if (null != res.PVBStatus)
+                    {
                         results[63] = new List<PValue>();
                         PValue PVBStatus = new PValue(Double.Parse(res.PVBStatus), calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[63].Add(PVBStatus);
                     }
-                    if (null != res.PVBQa){
+                    if (null != res.PVBQa)
+                    {
                         results[64] = new List<PValue>();
                         PValue PVBQa = new PValue(res.PVBQa, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[64].Add(PVBQa);
                     }
-                    
-                    if (null != res.PVBQb){
+
+                    if (null != res.PVBQb)
+                    {
                         results[65] = new List<PValue>();
                         PValue PVBQb = new PValue(res.PVBQb, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[65].Add(PVBQb);
-                     }
-                    
-                    if (null != res.PVBQc){
+                    }
+
+                    if (null != res.PVBQc)
+                    {
                         results[66] = new List<PValue>();
                         PValue PVBQc = new PValue(res.PVBQc, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[66].Add(PVBQc);
-                    }         
-                 #endregion           
+                    }
+                    #endregion
                 }
-                    
-                
-                 return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
 
 
-                    
-                
+                return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+
+
+
+
             }
             catch (Exception ex)
             {
@@ -1490,9 +1612,9 @@ namespace PSLCalcu.Module
                 _fatalFlag = true;
                 _fatalInfo = ex.ToString();
                 return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
-            }    
+            }
         }
-       
+
     }
 
 
@@ -1513,304 +1635,307 @@ namespace PSLCalcu.Module
         public static MPVBaseMessageOutClass longMPVBase(List<MPVBaseMessageOutClass> valueList, double N1, double N2, double N3, double k, double b, double stbL, double noStbL)
         {
             MPVBaseMessageOutClass returnClass = new MPVBaseMessageOutClass();
-            double minValue = valueList[0].PVBMin;
-            double maxValue = valueList[0].PVBMax;
-            string minPVBTime = valueList[0].PVBMinTime;
-            string maxPVBTime = valueList[0].PVBMaxTime;
-            double avgSumPVB = 0;
-            double sumPVB = 0;
-            double PVBSumkb = 0;
-            double lineKSum = 0;
-            double lineBSum = 0;
-            double SumPNRPVB = 0;
-            double AbsSumPVB = 0;
-            double maxStdevPVB = valueList[0].PVBStdev;
-            double maxPVBVolatility = 0;
-
-            int sumPVBTNum = 0;
-            double VMaxPVB = valueList[0].PVBVMax;
-            double VMinPVB = valueList[0].PVBVMin;
-            double sumPVBVAvg = 0;
-            double sumPVBStbTR = 0;
-            double sumPVBNoStbTR = 0;
-            //double StbTSLPVB = valueList[0].PVBStbTSL;
-            //double sumPVBStbTSLR = 0;
-            //double NoStbTSLPVB = valueList[0].PVBNoStbTSL;
-            //double sumPVBNoStbTSLR = 0;
-            double UpTSLPVB = valueList[0].PVBUpTSL;
-            double sumPVBUpTSLR = 0;
-            double DownTSLPVB = valueList[0].PVBDownTSL;
-            double sumPVBDownTSLR = 0;
-            double sumPVBPNum = 0;
-            double sumPVBQltR = 0;
-            double sumPVBQa = 0;
-            double sumPVBQb = 0;
-            double sumPVBQc = 0;
-            foreach (MPVBaseMessageOutClass item in valueList)
+            if (valueList.Count > 0)
             {
-                sumPVBQa += item.PVBQa;
-                sumPVBQb += item.PVBQb;
-                sumPVBQc += item.PVBQc;
-                if (minValue > item.PVBMin)
-                {
-                    minValue = item.PVBMin;
-                    minPVBTime = item.PVBMinTime;
-                }
-                if (maxValue < item.PVBMax)
-                {
-                    maxValue = item.PVBMax;
-                    maxPVBTime = item.PVBMaxTime;
-                }
-                if (maxStdevPVB < item.PVBStdev)
-                {
-                    maxStdevPVB = item.PVBStdev;
-                }
+                double minValue = valueList[0].PVBMin;
+                double maxValue = valueList[0].PVBMax;
+                string minPVBTime = valueList[0].PVBMinTime;
+                string maxPVBTime = valueList[0].PVBMaxTime;
+                double avgSumPVB = 0;
+                double sumPVB = 0;
+                double PVBSumkb = 0;
+                double lineKSum = 0;
+                double lineBSum = 0;
+                double SumPNRPVB = 0;
+                double AbsSumPVB = 0;
+                double maxStdevPVB = valueList[0].PVBStdev;
+                double maxPVBVolatility = 0;
 
-                if (VMaxPVB < item.PVBVMax)
+                int sumPVBTNum = 0;
+                double VMaxPVB = valueList[0].PVBVMax;
+                double VMinPVB = valueList[0].PVBVMin;
+                double sumPVBVAvg = 0;
+                double sumPVBStbTR = 0;
+                double sumPVBNoStbTR = 0;
+                //double StbTSLPVB = valueList[0].PVBStbTSL;
+                //double sumPVBStbTSLR = 0;
+                //double NoStbTSLPVB = valueList[0].PVBNoStbTSL;
+                //double sumPVBNoStbTSLR = 0;
+                double UpTSLPVB = valueList[0].PVBUpTSL;
+                double sumPVBUpTSLR = 0;
+                double DownTSLPVB = valueList[0].PVBDownTSL;
+                double sumPVBDownTSLR = 0;
+                double sumPVBPNum = 0;
+                double sumPVBQltR = 0;
+                double sumPVBQa = 0;
+                double sumPVBQb = 0;
+                double sumPVBQc = 0;
+                foreach (MPVBaseMessageOutClass item in valueList)
                 {
-                    VMaxPVB = item.PVBVMax;
-                }
-                if (VMinPVB > item.PVBVMin)
-                {
-                    VMinPVB = item.PVBVMin;
-                }
-                //if (StbTSLPVB < item.PVBStbTSL)
-                //{
-                //    StbTSLPVB = item.PVBStbTSL;
-                //}
-                //if (NoStbTSLPVB < item.PVBNoStbTSL)
-                //{
-                //    NoStbTSLPVB = item.PVBNoStbTSL;
-                //}
-                if (UpTSLPVB < item.PVBUpTSL)
-                {
-                    UpTSLPVB = item.PVBUpTSL;
-                }
-                if (DownTSLPVB < item.PVBDownTSL)
-                {
-                    DownTSLPVB = item.PVBDownTSL;
-                }
-                avgSumPVB += item.PVBAvg;
-                sumPVB += item.PVBSum;
-                PVBSumkb += item.PVBSumkb;
-                lineKSum += item.PVBLinek;
-                lineBSum += item.PVBLineb;
-                SumPNRPVB += item.PVBSumPNR;
-                AbsSumPVB += item.PVBAbsSum;
-                maxPVBVolatility += item.PVBVolatility;
-                sumPVBTNum += item.PVBTNum;
-                sumPVBVAvg += item.PVBVAvg;
-                sumPVBStbTR += item.PVBStbTR;
-                sumPVBNoStbTR += item.PVBNoStbTR;
-                //sumPVBStbTSLR += item.PVBStbTSLR;
-                //sumPVBNoStbTSLR += item.PVBNoStbTSLR;
-                sumPVBUpTSLR += item.PVBUpTSLR;
-                sumPVBDownTSLR += item.PVBDownTSLR;
-                sumPVBPNum += item.PVBPNum;
-                sumPVBQltR += item.PVBQltR;
-
-            }
-
-            List<D22STimeClass> PVBSDMaxList = new List<D22STimeClass>();
-            PVBSDMaxList.AddRange(valueList[0].PVBSDMaxTimeG);
-            List<D22STimeClass> PVBStbTList = new List<D22STimeClass>();
-            PVBStbTList.AddRange(valueList[0].PVBStbT);
-            List<D22STimeClass> PVBNoStbTList = new List<D22STimeClass>();
-            PVBNoStbTList.AddRange(valueList[0].PVBNoStbT);
-            for (int i = 1; i < valueList.Count(); i++)
-            {
-                List<D22STimeClass> newSDlist = new List<D22STimeClass>();
-                if (PVBSDMaxList.Count != 0 && valueList[i].PVBSDMaxTimeG.Count != 0)
-                {
-                    newSDlist = AlgorithmHelper.GetD22STimeListSD(PVBSDMaxList[PVBSDMaxList.Count() - 1], valueList[i].PVBSDMaxTimeG[0]);
-                    PVBSDMaxList.RemoveAt(PVBSDMaxList.Count() - 1);
-                }
-                PVBSDMaxList.AddRange(newSDlist);
-                for (int l = 1; l < valueList[i].PVBSDMaxTimeG.Count(); l++)
-                {
-                    PVBSDMaxList.Add(valueList[i].PVBSDMaxTimeG[l]);
-                }
-
-                List<D22STimeClass> newStblist = new List<D22STimeClass>();
-                if (PVBStbTList.Count != 0 && valueList[i].PVBStbT.Count != 0)
-                {
-                    newStblist = AlgorithmHelper.GetD22STimeListStb(PVBStbTList[PVBStbTList.Count() - 1], valueList[i].PVBStbT[0], stbL, noStbL);
-                    PVBStbTList.RemoveAt(PVBStbTList.Count() - 1);
-                }
-                PVBStbTList.AddRange(newStblist);
-                for (int l = 1; l < valueList[i].PVBStbT.Count(); l++)
-                {
-                    PVBStbTList.Add(valueList[i].PVBStbT[l]);
-                }
-
-                List<D22STimeClass> newNoStblist = new List<D22STimeClass>();
-                if (PVBNoStbTList.Count != 0 && valueList[i].PVBNoStbT.Count != 0)
-                {
-                    newNoStblist = AlgorithmHelper.GetD22STimeListStb(PVBNoStbTList[PVBNoStbTList.Count() - 1], valueList[i].PVBNoStbT[0], stbL, noStbL);
-                    PVBNoStbTList.RemoveAt(PVBNoStbTList.Count() - 1);
-                }
-                PVBNoStbTList.AddRange(newNoStblist);
-                for (int l = 1; l < valueList[i].PVBNoStbT.Count(); l++)
-                {
-                    PVBNoStbTList.Add(valueList[i].PVBNoStbT[l]);
-                }
-
-
-            }
-
-            double SDMaxPVB = PVBSDMaxList[0].valueAmount;
-            int sumPVBDN1Num = 0;
-            int sumPVBDN2Num = 0;
-            int sumPVBDN3Num = 0;
-            foreach (D22STimeClass item in PVBSDMaxList)
-            {
-                if (SDMaxPVB < item.valueAmount)
-                {
-                    SDMaxPVB = item.valueAmount;
-                    returnClass.PVBSDMaxTime = item;
-                }
-                if (item.valueAmount > N1)
-                {
-                    sumPVBDN1Num += 1;
-                }
-                if (item.valueAmount > N2)
-                {
-                    sumPVBDN2Num += 1;
-                }
-                if (item.valueAmount > N3)
-                {
-                    sumPVBDN3Num += 1;
-                }
-            }
-
-            returnClass.PVBMin = Math.Round(minValue, 3);
-            returnClass.PVBMinTime = minPVBTime;
-            returnClass.PVBAvg = Math.Round((avgSumPVB / (double)(valueList.Count())), 3);
-            returnClass.PVBMax = Math.Round(maxValue, 3);
-            returnClass.PVBMaxTime = maxPVBTime;
-            returnClass.PVBDMax = Math.Round((maxValue - minValue), 3);
-            returnClass.PVBSum = Math.Round(sumPVB, 3);
-            returnClass.PVBSumkb = Math.Round(PVBSumkb, 3);
-            returnClass.PVBLinek = Math.Round((lineKSum / (double)(valueList.Count())), 3);
-            returnClass.PVBLineb = Math.Round((lineBSum / (double)(valueList.Count())), 3);
-            returnClass.PVBQa = Math.Round((sumPVBQa / (double)(valueList.Count())), 3);
-            returnClass.PVBQb = Math.Round((sumPVBQb / (double)(valueList.Count())), 3);
-            returnClass.PVBQc = Math.Round((sumPVBQc / (double)(valueList.Count())), 3);
-            returnClass.PVBSumPNR = Math.Round((SumPNRPVB / (double)(valueList.Count())), 3);
-            returnClass.PVBAbsSum = Math.Round(AbsSumPVB, 3);
-            returnClass.PVBStdev = Math.Round((maxStdevPVB * 0.75), 3);
-            returnClass.PVBVolatility = Math.Round((maxPVBVolatility / (double)(valueList.Count())), 3);
-            returnClass.PVBSDMaxTimeG = PVBSDMaxList;
-
-
-
-            returnClass.PVBSDMax = Math.Round(SDMaxPVB, 3);
-            returnClass.PVBSDMaxR = Math.Round((SDMaxPVB / (maxValue - minValue)), 5) * 100;
-            returnClass.PVBDN1Num = sumPVBDN1Num;
-            returnClass.PVBDN2Num = sumPVBDN2Num;
-            returnClass.PVBDN3Num = sumPVBDN3Num;
-            returnClass.PVBTNum = sumPVBTNum;
-            returnClass.PVBVMax = Math.Round(VMaxPVB, 3);
-            returnClass.PVBVMin = Math.Round(VMinPVB, 3);
-            returnClass.PVBVAvg = Math.Round((sumPVBVAvg / (double)(valueList.Count())), 3);
-
-
-
-            returnClass.PVBStbT = PVBStbTList;
-            returnClass.PVBStbTR = Math.Round((sumPVBStbTR / (double)(valueList.Count())), 3);
-            returnClass.PVBNoStbT = PVBNoStbTList;
-            returnClass.PVBNoStbTR = Math.Round((sumPVBNoStbTR / (double)(valueList.Count())), 3);
-
-            if (PVBStbTList.Count > 0)
-            {
-                D22STimeClass PVBStbTSLT = new D22STimeClass();
-                double PVBStbTSL = PVBStbTList[0].valueCount;
-                double PVBStbTSLPV = PVBStbTList[0].valueAmount;
-                PVBStbTSLT = PVBStbTList[0];
-                foreach (D22STimeClass item in PVBStbTList)
-                {
-                    if (PVBStbTSL < item.valueCount)
+                    sumPVBQa += item.PVBQa;
+                    sumPVBQb += item.PVBQb;
+                    sumPVBQc += item.PVBQc;
+                    if (minValue > item.PVBMin)
                     {
-                        PVBStbTSL = item.valueCount;
-                        PVBStbTSLPV = item.valueAmount;
-                        PVBStbTSLT = item;
+                        minValue = item.PVBMin;
+                        minPVBTime = item.PVBMinTime;
+                    }
+                    if (maxValue < item.PVBMax)
+                    {
+                        maxValue = item.PVBMax;
+                        maxPVBTime = item.PVBMaxTime;
+                    }
+                    if (maxStdevPVB < item.PVBStdev)
+                    {
+                        maxStdevPVB = item.PVBStdev;
+                    }
+
+                    if (VMaxPVB < item.PVBVMax)
+                    {
+                        VMaxPVB = item.PVBVMax;
+                    }
+                    if (VMinPVB > item.PVBVMin)
+                    {
+                        VMinPVB = item.PVBVMin;
+                    }
+                    //if (StbTSLPVB < item.PVBStbTSL)
+                    //{
+                    //    StbTSLPVB = item.PVBStbTSL;
+                    //}
+                    //if (NoStbTSLPVB < item.PVBNoStbTSL)
+                    //{
+                    //    NoStbTSLPVB = item.PVBNoStbTSL;
+                    //}
+                    if (UpTSLPVB < item.PVBUpTSL)
+                    {
+                        UpTSLPVB = item.PVBUpTSL;
+                    }
+                    if (DownTSLPVB < item.PVBDownTSL)
+                    {
+                        DownTSLPVB = item.PVBDownTSL;
+                    }
+                    avgSumPVB += item.PVBAvg;
+                    sumPVB += item.PVBSum;
+                    PVBSumkb += item.PVBSumkb;
+                    lineKSum += item.PVBLinek;
+                    lineBSum += item.PVBLineb;
+                    SumPNRPVB += item.PVBSumPNR;
+                    AbsSumPVB += item.PVBAbsSum;
+                    maxPVBVolatility += item.PVBVolatility;
+                    sumPVBTNum += item.PVBTNum;
+                    sumPVBVAvg += item.PVBVAvg;
+                    sumPVBStbTR += item.PVBStbTR;
+                    sumPVBNoStbTR += item.PVBNoStbTR;
+                    //sumPVBStbTSLR += item.PVBStbTSLR;
+                    //sumPVBNoStbTSLR += item.PVBNoStbTSLR;
+                    sumPVBUpTSLR += item.PVBUpTSLR;
+                    sumPVBDownTSLR += item.PVBDownTSLR;
+                    sumPVBPNum += item.PVBPNum;
+                    sumPVBQltR += item.PVBQltR;
+
+                }
+
+                List<D22STimeClass> PVBSDMaxList = new List<D22STimeClass>();
+                PVBSDMaxList.AddRange(valueList[0].PVBSDMaxTimeG);
+                List<D22STimeClass> PVBStbTList = new List<D22STimeClass>();
+                PVBStbTList.AddRange(valueList[0].PVBStbT);
+                List<D22STimeClass> PVBNoStbTList = new List<D22STimeClass>();
+                PVBNoStbTList.AddRange(valueList[0].PVBNoStbT);
+                for (int i = 1; i < valueList.Count(); i++)
+                {
+                    List<D22STimeClass> newSDlist = new List<D22STimeClass>();
+                    if (PVBSDMaxList.Count != 0 && valueList[i].PVBSDMaxTimeG.Count != 0)
+                    {
+                        newSDlist = AlgorithmHelper.GetD22STimeListSD(PVBSDMaxList[PVBSDMaxList.Count() - 1], valueList[i].PVBSDMaxTimeG[0]);
+                        PVBSDMaxList.RemoveAt(PVBSDMaxList.Count() - 1);
+                    }
+                    PVBSDMaxList.AddRange(newSDlist);
+                    for (int l = 1; l < valueList[i].PVBSDMaxTimeG.Count(); l++)
+                    {
+                        PVBSDMaxList.Add(valueList[i].PVBSDMaxTimeG[l]);
+                    }
+
+                    List<D22STimeClass> newStblist = new List<D22STimeClass>();
+                    if (PVBStbTList.Count != 0 && valueList[i].PVBStbT.Count != 0)
+                    {
+                        newStblist = AlgorithmHelper.GetD22STimeListStb(PVBStbTList[PVBStbTList.Count() - 1], valueList[i].PVBStbT[0], stbL, noStbL);
+                        PVBStbTList.RemoveAt(PVBStbTList.Count() - 1);
+                    }
+                    PVBStbTList.AddRange(newStblist);
+                    for (int l = 1; l < valueList[i].PVBStbT.Count(); l++)
+                    {
+                        PVBStbTList.Add(valueList[i].PVBStbT[l]);
+                    }
+
+                    List<D22STimeClass> newNoStblist = new List<D22STimeClass>();
+                    if (PVBNoStbTList.Count != 0 && valueList[i].PVBNoStbT.Count != 0)
+                    {
+                        newNoStblist = AlgorithmHelper.GetD22STimeListStb(PVBNoStbTList[PVBNoStbTList.Count() - 1], valueList[i].PVBNoStbT[0], stbL, noStbL);
+                        PVBNoStbTList.RemoveAt(PVBNoStbTList.Count() - 1);
+                    }
+                    PVBNoStbTList.AddRange(newNoStblist);
+                    for (int l = 1; l < valueList[i].PVBNoStbT.Count(); l++)
+                    {
+                        PVBNoStbTList.Add(valueList[i].PVBNoStbT[l]);
+                    }
+
+
+                }
+
+                double SDMaxPVB = PVBSDMaxList[0].valueAmount;
+                int sumPVBDN1Num = 0;
+                int sumPVBDN2Num = 0;
+                int sumPVBDN3Num = 0;
+                foreach (D22STimeClass item in PVBSDMaxList)
+                {
+                    if (SDMaxPVB < item.valueAmount)
+                    {
+                        SDMaxPVB = item.valueAmount;
+                        returnClass.PVBSDMaxTime = item;
+                    }
+                    if (item.valueAmount > N1)
+                    {
+                        sumPVBDN1Num += 1;
+                    }
+                    if (item.valueAmount > N2)
+                    {
+                        sumPVBDN2Num += 1;
+                    }
+                    if (item.valueAmount > N3)
+                    {
+                        sumPVBDN3Num += 1;
                     }
                 }
-                returnClass.PVBStbTSLT = PVBStbTSLT;
-                returnClass.PVBStbTSLPV = Math.Round(PVBStbTSLPV / PVBStbTSL, 3);
-                returnClass.PVBStbTSL = PVBStbTSL;
-            }
-            if (PVBNoStbTList.Count > 0)
-            {
-                D22STimeClass PVBNoStbTSLT = new D22STimeClass();
-                double PVBNoStbTSL = 0;
-                PVBNoStbTSLT = PVBNoStbTList[0];
-                foreach (D22STimeClass item in PVBNoStbTList)
-                {
-                    if (PVBNoStbTSL < item.valueCount)
-                    {
-                        PVBNoStbTSL = item.valueCount;
-                        PVBNoStbTSLT = item;
-                    }
-                }
-                returnClass.PVBNoStbTSLT = PVBNoStbTSLT;
-                returnClass.PVBNoStbTSL = PVBNoStbTSL;
-            }
-            //returnClass.PVBStbTSL = StbTSLPVB;
-            //returnClass.PVBStbTSLR = Math.Round((sumPVBStbTSLR / (double)(valueList.Count())), 3);
-            //returnClass.PVBNoStbTSL = NoStbTSLPVB;
-            //returnClass.PVBNoStbTSLR = Math.Round((sumPVBNoStbTSLR / (double)(valueList.Count())), 3);
 
-            D22STimeClass PVBUpTSLT = new D22STimeClass();
-            D22STimeClass PVBDownTSLT = new D22STimeClass();
-            double PVBUpTSL = 0;
-            double PVBDownTSL = 0;
-            foreach (D22STimeClass item in PVBSDMaxList)
-            {
-                if (item.valueType.Equals("up"))
+                returnClass.PVBMin = Math.Round(minValue, 3);
+                returnClass.PVBMinTime = minPVBTime;
+                returnClass.PVBAvg = Math.Round((avgSumPVB / (double)(valueList.Count())), 3);
+                returnClass.PVBMax = Math.Round(maxValue, 3);
+                returnClass.PVBMaxTime = maxPVBTime;
+                returnClass.PVBDMax = Math.Round((maxValue - minValue), 3);
+                returnClass.PVBSum = Math.Round(sumPVB, 3);
+                returnClass.PVBSumkb = Math.Round(PVBSumkb, 3);
+                returnClass.PVBLinek = Math.Round((lineKSum / (double)(valueList.Count())), 3);
+                returnClass.PVBLineb = Math.Round((lineBSum / (double)(valueList.Count())), 3);
+                returnClass.PVBQa = Math.Round((sumPVBQa / (double)(valueList.Count())), 3);
+                returnClass.PVBQb = Math.Round((sumPVBQb / (double)(valueList.Count())), 3);
+                returnClass.PVBQc = Math.Round((sumPVBQc / (double)(valueList.Count())), 3);
+                returnClass.PVBSumPNR = Math.Round((SumPNRPVB / (double)(valueList.Count())), 3);
+                returnClass.PVBAbsSum = Math.Round(AbsSumPVB, 3);
+                returnClass.PVBStdev = Math.Round((maxStdevPVB * 0.75), 3);
+                returnClass.PVBVolatility = Math.Round((maxPVBVolatility / (double)(valueList.Count())), 3);
+                returnClass.PVBSDMaxTimeG = PVBSDMaxList;
+
+
+
+                returnClass.PVBSDMax = Math.Round(SDMaxPVB, 3);
+                returnClass.PVBSDMaxR = Math.Round((SDMaxPVB / (maxValue - minValue)), 5) * 100;
+                returnClass.PVBDN1Num = sumPVBDN1Num;
+                returnClass.PVBDN2Num = sumPVBDN2Num;
+                returnClass.PVBDN3Num = sumPVBDN3Num;
+                returnClass.PVBTNum = sumPVBTNum;
+                returnClass.PVBVMax = Math.Round(VMaxPVB, 3);
+                returnClass.PVBVMin = Math.Round(VMinPVB, 3);
+                returnClass.PVBVAvg = Math.Round((sumPVBVAvg / (double)(valueList.Count())), 3);
+
+
+
+                returnClass.PVBStbT = PVBStbTList;
+                returnClass.PVBStbTR = Math.Round((sumPVBStbTR / (double)(valueList.Count())), 3);
+                returnClass.PVBNoStbT = PVBNoStbTList;
+                returnClass.PVBNoStbTR = Math.Round((sumPVBNoStbTR / (double)(valueList.Count())), 3);
+
+                if (PVBStbTList.Count > 0)
                 {
-                    PVBUpTSL = item.valueCount;
-                    break;
+                    D22STimeClass PVBStbTSLT = new D22STimeClass();
+                    double PVBStbTSL = PVBStbTList[0].valueCount;
+                    double PVBStbTSLPV = PVBStbTList[0].valueAmount;
+                    PVBStbTSLT = PVBStbTList[0];
+                    foreach (D22STimeClass item in PVBStbTList)
+                    {
+                        if (PVBStbTSL < item.valueCount)
+                        {
+                            PVBStbTSL = item.valueCount;
+                            PVBStbTSLPV = item.valueAmount;
+                            PVBStbTSLT = item;
+                        }
+                    }
+                    returnClass.PVBStbTSLT = PVBStbTSLT;
+                    returnClass.PVBStbTSLPV = Math.Round(PVBStbTSLPV / PVBStbTSL, 3);
+                    returnClass.PVBStbTSL = PVBStbTSL;
                 }
-            }
-            foreach (D22STimeClass item in PVBSDMaxList)
-            {
-                if (item.valueType.Equals("down"))
+                if (PVBNoStbTList.Count > 0)
                 {
-                    PVBDownTSL = item.valueCount;
-                    break;
+                    D22STimeClass PVBNoStbTSLT = new D22STimeClass();
+                    double PVBNoStbTSL = 0;
+                    PVBNoStbTSLT = PVBNoStbTList[0];
+                    foreach (D22STimeClass item in PVBNoStbTList)
+                    {
+                        if (PVBNoStbTSL < item.valueCount)
+                        {
+                            PVBNoStbTSL = item.valueCount;
+                            PVBNoStbTSLT = item;
+                        }
+                    }
+                    returnClass.PVBNoStbTSLT = PVBNoStbTSLT;
+                    returnClass.PVBNoStbTSL = PVBNoStbTSL;
                 }
-            }
-            foreach (D22STimeClass item in PVBSDMaxList)
-            {
-                if (item.valueType.Equals("up"))
+                //returnClass.PVBStbTSL = StbTSLPVB;
+                //returnClass.PVBStbTSLR = Math.Round((sumPVBStbTSLR / (double)(valueList.Count())), 3);
+                //returnClass.PVBNoStbTSL = NoStbTSLPVB;
+                //returnClass.PVBNoStbTSLR = Math.Round((sumPVBNoStbTSLR / (double)(valueList.Count())), 3);
+
+                D22STimeClass PVBUpTSLT = new D22STimeClass();
+                D22STimeClass PVBDownTSLT = new D22STimeClass();
+                double PVBUpTSL = 0;
+                double PVBDownTSL = 0;
+                foreach (D22STimeClass item in PVBSDMaxList)
                 {
-                    if (PVBUpTSL < item.valueCount)
+                    if (item.valueType.Equals("up"))
                     {
                         PVBUpTSL = item.valueCount;
-                        PVBUpTSLT = item;
+                        break;
                     }
                 }
-                else if (item.valueType.Equals("down"))
+                foreach (D22STimeClass item in PVBSDMaxList)
                 {
-                    if (PVBDownTSL < item.valueCount)
+                    if (item.valueType.Equals("down"))
                     {
                         PVBDownTSL = item.valueCount;
-                        PVBDownTSLT = item;
+                        break;
                     }
                 }
-            }
-            returnClass.PVBUpTSLT = PVBUpTSLT;
-            returnClass.PVBUpTSL = PVBUpTSL;
-            returnClass.PVBDownTSLT = PVBDownTSLT;
-            returnClass.PVBDownTSL = PVBDownTSL;
+                foreach (D22STimeClass item in PVBSDMaxList)
+                {
+                    if (item.valueType.Equals("up"))
+                    {
+                        if (PVBUpTSL < item.valueCount)
+                        {
+                            PVBUpTSL = item.valueCount;
+                            PVBUpTSLT = item;
+                        }
+                    }
+                    else if (item.valueType.Equals("down"))
+                    {
+                        if (PVBDownTSL < item.valueCount)
+                        {
+                            PVBDownTSL = item.valueCount;
+                            PVBDownTSLT = item;
+                        }
+                    }
+                }
+                returnClass.PVBUpTSLT = PVBUpTSLT;
+                returnClass.PVBUpTSL = PVBUpTSL;
+                returnClass.PVBDownTSLT = PVBDownTSLT;
+                returnClass.PVBDownTSL = PVBDownTSL;
 
-            //returnClass.PVBUpTSL = UpTSLPVB;
-            //returnClass.PVBUpTSLR = Math.Round((sumPVBUpTSLR / (double)(valueList.Count())), 3);
-            //returnClass.PVBDownTSL = DownTSLPVB;
-            //returnClass.PVBDownTSLR = Math.Round((sumPVBDownTSLR / (double)(valueList.Count())), 3);
-            returnClass.PVBPNum = sumPVBPNum;
-            returnClass.PVBQltR = Math.Round((sumPVBQltR / (double)(valueList.Count())), 3);
+                //returnClass.PVBUpTSL = UpTSLPVB;
+                //returnClass.PVBUpTSLR = Math.Round((sumPVBUpTSLR / (double)(valueList.Count())), 3);
+                //returnClass.PVBDownTSL = DownTSLPVB;
+                //returnClass.PVBDownTSLR = Math.Round((sumPVBDownTSLR / (double)(valueList.Count())), 3);
+                returnClass.PVBPNum = sumPVBPNum;
+                returnClass.PVBQltR = Math.Round((sumPVBQltR / (double)(valueList.Count())), 3);
+            }
             return returnClass;
         }
         #endregion
@@ -2923,4 +3048,3 @@ namespace PSLCalcu.Module
 
     }
 }
-                   
