@@ -17,6 +17,7 @@ using System.Timers;                    //使用定时器
 using System.Text.RegularExpressions;   //使用正则表达式
 using System.IO;
 using log4net;
+using Globalspace;
 
 //运行时，如果使用RTDbHelper或DbHelper，出现初始化方面的错误，则一般是xml配置文件有错。
 //因为RTDbHelper和DbHelper的数据库类型，是由字符串转枚举，这个过程有可能失败，但是这里没有办法添加异常处理机制。后续看如何解决这个问题。
@@ -69,6 +70,8 @@ namespace PSLCalcu
         private static bool calcurunningflag = false;
         private static long calstatus = 0;
         private string[] IntervalType = { "second", "minute", "hour", "day", "week", "month", "year" };
+
+
 
 
         #region 主界面初始化与载入
@@ -1901,6 +1904,9 @@ namespace PSLCalcu
                 logHelper.Info("读取概化计算标签字典...");
                 Dictionary<string, System.UInt32> TagName2Id = PSLTagNameIdMapDAO.ReadMap();   //标签名称跟id映射关系
                 Dictionary<string, bool> TagName2Flag = PSLTagNameIdMapDAO.ReadFlagMap();
+
+                //加载新版算法名
+                global.caculateFunction = PSLTagNameIdMapDAO.ReadCaculateFunction();
                 if (PSLTagNameIdMapDAO.ErrorFlag)
                 {
                     string strMsg = String.Format("读取概化计算标签字典！" + Environment.NewLine +

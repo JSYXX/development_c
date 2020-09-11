@@ -88,23 +88,23 @@ namespace PSLCalcu
                 //2、向psltagnames添加配置的计算结果表标签。计算结果标签放在importdata[i][foutputpsltagprefIndex]中
                 int sum = 0;
                 int columnfoutputpsltagprefIndex = configcsv.foutputpsltagprefIndex;
-               
+
                 for (int i = configcsv.firstDataRow; i < configcsv.importdata.Length; i++)
                 {
                     string[] plstagstemp = Regex.Split(configcsv.importdata[i][columnfoutputpsltagprefIndex], ";|；");    //如果有;|；|，|,则表示多个标签
                     foreach (string psltag in plstagstemp)
                     {
-                        
+
                         if (psltagnamesDic.ContainsKey(psltag))
                         {
-                           
+
                             sum += 1;
-                            string messageStr = String.Format("第{0}行的计算结果标签{1}，与{2}中的第{3}行计算的计算结果标签重名，请检查！", i - configcsv.firstDataRow + 1, psltag, psltagnamesDic[psltag], -configcsv.firstDataRow+psltagCalcuIndexDic[psltag]);
+                            string messageStr = String.Format("第{0}行的计算结果标签{1}，与{2}中的第{3}行计算的计算结果标签重名，请检查！", i - configcsv.firstDataRow + 1, psltag, psltagnamesDic[psltag], -configcsv.firstDataRow + psltagCalcuIndexDic[psltag]);
                             logHelper.Error(messageStr);
                         }
                         else
                         {
-                           
+
                             psltagnamesDic.Add(psltag.Trim(), "CSV计算配置表");
                             psltagCalcuIndexDic.Add(psltag.Trim(), i + 1);
                         }
@@ -178,8 +178,8 @@ namespace PSLCalcu
                 int columnsourcedbtype = configcsv.sourcetagdbIndex;
                 for (int i = configcsv.firstDataRow; i < configcsv.importdata.Length; i++)
                 {
-                    
-                    if ( configcsv.importdata[i][columnsourcedbtype] == "rdb" || configcsv.importdata[i][columnsourcedbtype] == "rdbset")
+
+                    if (configcsv.importdata[i][columnsourcedbtype] == "rdb" || configcsv.importdata[i][columnsourcedbtype] == "rdbset")
                     {
                         configcsv.importdata[i][columnsourceplsnames] = configcsv.importdata[i][columnsourceplsnames].ToUpper();    //将概化型源标签全部转为大写
                         string[] condpsltagsArray = Regex.Split(configcsv.importdata[i][columnsourceplsnames], ";|；");
@@ -262,7 +262,7 @@ namespace PSLCalcu
                 {
                     outputtagnamelist.Add(psltagitem.psltagname, 0);     //由于前面已经检查了计算结果标签和库中已经有的标签不重复。这里直接添加即可。
                 }//此时，psltagmap包含所有已经存在的标签
-               
+
                 //3、依顺序检查条件标签
                 int sum = 0;
                 int columncondplsnames = configcsv.fcondpslnamesIndex;
@@ -306,7 +306,7 @@ namespace PSLCalcu
             }
         }
         public static BackgroundWorker worker;      //给generateMap，用于更新进度条界面
-        public static int MAX_NUMBER_CONSTTAG=APPConfig.rdbtable_constmaxnumber;
+        public static int MAX_NUMBER_CONSTTAG = APPConfig.rdbtable_constmaxnumber;
         //抽取概化标签名称和id映射表：reassign=1为重新建立标签序号映射；reassign=0为添加标签 
         public static bool generateMap(ConfigCSV configcsv, bool reassign)
         {
@@ -326,7 +326,7 @@ namespace PSLCalcu
                 //根据psltagname生成映射表
                 //去掉名称重复的标签名:在ConfigCSV.checkPSLNameUnique()中已经检查过计算结果标签唯一性。这里可以保证计算结果标签都是唯一的。                
                 //string[] trimpslnames = psltagnames.Distinct().ToArray();
-                        
+
 
                 //1、如果reassign=1、清空表数据
                 if (reassign)
@@ -367,7 +367,7 @@ namespace PSLCalcu
                 int columncalcuitemindex = configcsv.calcuitemindex;                        //计算项序号
                 int columnfoutputpsltagprefIndex = configcsv.foutputpsltagprefIndex;        //标签名
                 int columnfoutputpsltagdescIndex = configcsv.foutputpsltagdescIndex;        //标签描述
-                int columnsouredbIndex=configcsv.sourcetagdbIndex;                          //标签源类型
+                int columnsouredbIndex = configcsv.sourcetagdbIndex;                          //标签源类型
                 int columnfmodulename = configcsv.fmodulenameIndex;                         //计算项名称
                 int columnforderIndex = configcsv.forderIndex;                              //计算项组序号
                 int columnfgroupIndex = configcsv.fgroupIndex;                              //计算项组号
@@ -455,7 +455,7 @@ namespace PSLCalcu
                     foreach (string contag in consttagnames)
                     {
                         writecount = writecount + 1;
-                        values = values + String.Format("('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'),", 
+                        values = values + String.Format("('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}'),",
                                                     pointid4const,                  //点id号
                                                     consttagflag[contag],           //点是否保存
                                                     contag,                         //点名
@@ -530,7 +530,7 @@ namespace PSLCalcu
             try
             {
                 DbHelper dbhelper = new DbHelper();
-                
+
                 //1、将所有标签汇集到psltagname,将所有计算结果描述汇集到psltagdesc
                 List<string> psltagnames = new List<string>();
                 Dictionary<string, string> psltagdesc = new Dictionary<string, string>();
@@ -548,11 +548,11 @@ namespace PSLCalcu
                         psltagnames.Add(psltagstemp[j].Trim().ToUpper());
                         try
                         {
-                            psltagdesc.Add(psltagstemp[j].Trim().ToUpper(), psltagsdesctemp[j].Trim());                            
+                            psltagdesc.Add(psltagstemp[j].Trim().ToUpper(), psltagsdesctemp[j].Trim());
                         }
                         catch
                         {
-                            psltagdesc.Add(psltagstemp[j].Trim().ToUpper(), "");                            
+                            psltagdesc.Add(psltagstemp[j].Trim().ToUpper(), "");
                         }
                     }
                 }
@@ -573,7 +573,7 @@ namespace PSLCalcu
                     if (writecount % 100 == 0 || psltag == psltagnames[psltagnames.Count - 1])//凑够100个标签，写入一次；或直到最后一个标签才写入一次。
                     {
                         idStr = "(" + idStr.Substring(1, idStr.Length - 1) + ")";
-                        
+
                         //批量写入数据                       
                         sqlStr = String.Format("use psldb;update psltagnameidmap set psltagdesc = case psltagid {0} end where psltagid in {1}", valuesStr, idStr);
                         dbhelper.ExecuteNonQuery(sqlStr);
@@ -583,7 +583,7 @@ namespace PSLCalcu
                         valuesStr = "";
                         idStr = "";
                     }
-                   
+
                 }
                 return true;
 
@@ -604,18 +604,18 @@ namespace PSLCalcu
         }
         //更新概化标签名称和id映射表中的标签名称：前提id不变
         public static bool UpdateTagname(string[] tagids, string[] tagnames)
-        { 
+        {
             ErrorFlag = false;
             string sqlStr = "";
             try
             {
                 DbHelper dbhelper = new DbHelper();
                 string valuesStr = "";
-                for (int i = 0; i < tagids.Length;i++ )
+                for (int i = 0; i < tagids.Length; i++)
                 {
                     valuesStr = valuesStr + String.Format(" when {0} then '{1}'", tagids[i], tagnames[i]);    //组织字段的实际值字符串。
                 }
-                string psltagidStr=String.Join(",",tagids);
+                string psltagidStr = String.Join(",", tagids);
                 /*语句实例
                 use psldb;
                 update psltagnameidmap 
@@ -653,15 +653,15 @@ namespace PSLCalcu
             try
             {
                 DbHelper dbhelper = new DbHelper();
-                sqlStr = String.Format("use psldb;select * from psltagnameidmap ");                
-                IDataReader reader = dbhelper.ExecuteReader(sqlStr);                
-                List<PSLTagNameIdMapItem> psltagitems = IDataReader2PSLTagNameIdMapItem(reader);                
+                sqlStr = String.Format("use psldb;select * from psltagnameidmap ");
+                IDataReader reader = dbhelper.ExecuteReader(sqlStr);
+                List<PSLTagNameIdMapItem> psltagitems = IDataReader2PSLTagNameIdMapItem(reader);
                 reader.Close();
 
                 Dictionary<string, System.UInt32> psltagmap = new Dictionary<string, System.UInt32>();
                 foreach (PSLTagNameIdMapItem psltagitem in psltagitems)
-                {                    
-                    psltagmap.Add(psltagitem.psltagname, psltagitem.psltagid);                    
+                {
+                    psltagmap.Add(psltagitem.psltagname, psltagitem.psltagid);
                 }
 
                 return psltagmap;
@@ -715,26 +715,48 @@ namespace PSLCalcu
                 return null;
             }
         }
+        public static List<string> ReadCaculateFunction()
+        {
+            ErrorFlag = false;
+            string sqlStr = "";
+            try
+            {
+                List<string> caculateFunctions = new List<string>();
+                string functions = System.Configuration.ConfigurationManager.AppSettings["Local"].ToString();
+                caculateFunctions = functions.Split(';').ToList();
+                return caculateFunctions;
+            }
+            catch (Exception ex)
+            {
+                ErrorFlag = true;
+                string messageStr;
+                messageStr = String.Format("DAO层PSLTagNameIdMapDAO.ReadCaculateFunction()错误：读取新算法名称是出错---------->");
+                logHelper.Error(messageStr);
+                messageStr = String.Format("错误信息：{0}", ex.ToString());
+                logHelper.Error(messageStr);
+                return null;
+            }
+        }
         //删除概化标签
         public static bool DeleteTags(uint[] tagids)
         {
             /*
                 Delete * from tablename where tagid in('value1','value2'...)
-            */ 
+            */
             ErrorFlag = false;
             string sqlStr = "";
             try
             {
                 DbHelper dbhelper = new DbHelper();
-                
+
                 //获取要删除的字符串id
                 string psltagidStr = "";
                 for (int i = 0; i < tagids.Length; i++)
                 {
-                    psltagidStr = psltagidStr+"'" + tagids[i].ToString() + "'" + ",";
+                    psltagidStr = psltagidStr + "'" + tagids[i].ToString() + "'" + ",";
                 }
                 psltagidStr = psltagidStr.Substring(0, psltagidStr.Length - 1);
-                    
+
                 //批量删除数据                       
                 sqlStr = String.Format("use psldb;delete from psltagnameidmap where psltagid in ({0})", psltagidStr);
                 dbhelper.ExecuteNonQuery(sqlStr);

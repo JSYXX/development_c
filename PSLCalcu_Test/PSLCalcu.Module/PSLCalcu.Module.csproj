@@ -59,11 +59,16 @@
       <HintPath>..\lib\MathNet.Numerics.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DBInterface\DBHelper\ExternalDll\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="PCCommon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\PCCommon.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -105,7 +110,11 @@
     <Compile Include="Base_MultiInput\MMangSumAvg.cs" />
     <Compile Include="Base_MultiInput\MMultiAnalogAvg.cs" />
     <Compile Include="Base_MultiInput\MMultiAnalogSum.cs" />
+    <Compile Include="BLL\AlgorithmBLL.cs" />
     <Compile Include="CalcuTemplate.cs" />
+    <Compile Include="DAL\AlgorithmDAL.cs" />
+    <Compile Include="Helper\AlgorithmHelper.cs" />
+    <Compile Include="Helper\MysqlHelper.cs" />
     <Compile Include="Interface_RTDB\MReadPVOPC.cs" />
     <Compile Include="Interface_RTDB\MOPCSegmentFilter.cs" />
     <Compile Include="Adv_Deviation\MDeviation2DSpan.cs" />
@@ -163,21 +172,8 @@
     <Compile Include="Base\MWeightSumAvg.cs" />
     <Compile Include="Interface_RTDB\MRDFilter2One.cs" />
     <Compile Include="Interface_RTDB\MRDSegmentMaxMinAvg.cs" />
-    <Compile Include="test\Limit.cs" />
-    <Compile Include="test\MDevLimit.cs" />
-    <Compile Include="test\Model\D22STimeClass.cs" />
-    <Compile Include="test\Model\MDevLimitClass.cs" />
-    <Compile Include="test\Model\MDevLimitMessageOutBadClass.cs" />
-    <Compile Include="test\Model\MDevLimitMessageOutClass.cs" />
-    <Compile Include="test\Model\MDevLimitMultiMessageInClass.cs" />
-    <Compile Include="test\Model\MPVBaseMessageInBadClass.cs" />
-    <Compile Include="test\Model\MPVBaseMessageInClass.cs" />
-    <Compile Include="test\Model\MPVBaseMessageOutBadClass.cs" />
-    <Compile Include="test\Model\MPVBaseMultiMessageInClass.cs" />
-    <Compile Include="test\Model\MultiEffectMessageInClass.cs" />
-    <Compile Include="test\Model\MultiMessageInClass.cs" />
-    <Compile Include="test\MPVBasePlus.cs" />
-    <Compile Include="test\Util\AlgorithmHelper.cs" />
+    <Compile Include="NewCaculate\MPVBaseCaculate.cs" />
+    <Compile Include="New_Base_Caculate\MPVBaseShort.cs" />
     <Content Include="Interface_RTDB\关于读取实时数据周期的选择问题.txt" />
     <Compile Include="NewBase\BaseCalcu.cs" />
     <Compile Include="NewBase\MAddMul.cs" />
