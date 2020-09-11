@@ -1,5 +1,4 @@
 ﻿using Config;
-using Globalspace;
 using PCCommon;
 using PSLCalcu.Module;
 using System;
@@ -465,7 +464,7 @@ namespace PSLCalcu
                     if (results != null)    //Calcu.ErrorFlag为false的情况下，读取结果也有可能为空。比如读取值次的算法。每小时运行一次。但是大部分情况下，都没有值次信息更新
                     {
                         //新版算法直接跳入更新计算项下次计算时间
-                        if (global.caculateFunction.Contains(pslcalcuitem.fmodulename))
+                        if (APPConfig.caculateFunction.Contains(pslcalcuitem.fmodulename))
                         {
                             goto NEXTCalcu;
                         }

@@ -1,5 +1,4 @@
 D:\C# Project\JSYXX\PSLCalcu_Test\Globalspace\bin\Debug\Globalspace.dll
 D:\C# Project\JSYXX\PSLCalcu_Test\Globalspace\bin\Debug\Globalspace.pdb
-D:\C# Project\JSYXX\PSLCalcu_Test\Globalspace\obj\Debug\Globalspace.csprojResolveAssemblyReference.cache
 D:\C# Project\JSYXX\PSLCalcu_Test\Globalspace\obj\Debug\Globalspace.dll
 D:\C# Project\JSYXX\PSLCalcu_Test\Globalspace\obj\Debug\Globalspace.pdb

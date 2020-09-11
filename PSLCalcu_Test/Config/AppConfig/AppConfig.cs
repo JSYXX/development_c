@@ -1,5 +1,6 @@
 using System;
 using System.Collections;   //使用hashtable
+using System.Collections.Generic;
 using System.Windows.Forms; //使用messagebox
 
 namespace Config
@@ -11,7 +12,7 @@ namespace Config
     /// 如果在config文件中（Config\\AppConfig.xml）没有找到对应的项，程序会发生“SQLHelper的类型初始值设定项发生异常的问题”
     /// </summary>
     public static class APPConfig
-    {   
+    {
         #region APP全局参数。作为全局参数，目前直接在Config内定义，未放入到xml配置当中去
         public static string DLLNAME_CALCUMODULE = "PSLCalcu.Module.dll";                   //计算模块所在dll名称
         public static string NAMESPACE_CALCUMODULE = "PSLCalcu.Module";                     //计算模块所在命名空间名称
@@ -36,7 +37,7 @@ namespace Config
         public static int realcalcu_recordsavenumber { get; set; }                          //时间统计功能每多少条记录写入一次
         public static int realcalcu_maxreadrtdb { get; set; }                               //计算引擎读接口从实时数据库一次读取的最大数据量。经测试，golden和pgim均为200000w条。        
         #endregion
-        
+
         #region historycalcu 历史计算引擎相关配置
         public static int historycalcu_period4RTD { get; set; }                             //历史计算引擎，实时数据并发计算的并发周期。单位是秒
         public static int historycalcu_period4PSL { get; set; }                             //历史计算引擎，概化数据并发计算的并发周期。单位是月
@@ -70,6 +71,8 @@ namespace Config
 
         private static string _fileName;
 
+        public static List<string> caculateFunction { get; set; }
+
         static APPConfig()
         {
             try
@@ -77,7 +80,7 @@ namespace Config
                 XmlFileHelper xmlfilehelper = new XmlFileHelper();
 
                 //_fileName = gcsl.AppG.GetAppPath() + CONFIG_FILE;                     //不再使用gcsl封装，改为系统函数
-                _fileName =System.Environment.CurrentDirectory+ CONFIG_FILE;
+                _fileName = System.Environment.CurrentDirectory + CONFIG_FILE;
                 //Console.WriteLine(_fileName);
                 //通用配置信息
                 //IntervalCalculate = int.Parse(xmlfilehelper.GetXmlAttribute(_fileName, "/config/common", "interval_calculate").Value) * 1000;
@@ -95,11 +98,11 @@ namespace Config
                 realcalcu_maxreadrtdb = int.Parse(xmlfilehelper.GetXmlAttribute(_fileName, "/config/realcalcu", "maxreadrtdb").Value);
                 realcalcu_recordcalcutime = xmlfilehelper.GetXmlAttribute(_fileName, "/config/realcalcu", "recordcalcutime").Value;
                 realcalcu_recordsavenumber = int.Parse(xmlfilehelper.GetXmlAttribute(_fileName, "/config/realcalcu", "recordsavenumber").Value);
-                
+
                 //历史计算引擎相关配置
                 historycalcu_period4RTD = int.Parse(xmlfilehelper.GetXmlAttribute(_fileName, "/config/historycalcu", "historycalcu_period4RTD").Value);
                 historycalcu_period4PSL = int.Parse(xmlfilehelper.GetXmlAttribute(_fileName, "/config/historycalcu", "historycalcu_period4PSL").Value);
-                
+
                 //实时数据库配置信息            
                 rtdb_Type = xmlfilehelper.GetXmlAttribute(_fileName, "/config/rtdb", "type").Value;
                 rtdb_connString = xmlfilehelper.GetXmlAttribute(_fileName, "/config/rtdb", "connstring").Value;
@@ -110,7 +113,7 @@ namespace Config
                 rdb_Type = xmlfilehelper.GetXmlAttribute(_fileName, "/config/rdb", "type").Value;
                 rdb_connString = xmlfilehelper.GetXmlAttribute(_fileName, "/config/rdb", "connstring").Value;
                 //Console.WriteLine(rdb_connString);
-                
+
                 //关系库数据表设置
                 rdbtable_resulttagauto = xmlfilehelper.GetXmlAttribute(_fileName, "/config/rdbtable", "resulttagauto").Value;
                 rdbtable_resulttagincludeinterval = xmlfilehelper.GetXmlAttribute(_fileName, "/config/rdbtable", "resulttagincludeinterval").Value;
@@ -123,15 +126,15 @@ namespace Config
                 psldata_endyear = int.Parse(xmlfilehelper.GetXmlAttribute(_fileName, "/config/psldata", "endyear").Value);
                 psldata_intervalmonth = int.Parse(xmlfilehelper.GetXmlAttribute(_fileName, "/config/psldata", "intervalmonth").Value);
             }
-            catch(Exception e) 
+            catch (Exception e)
             {
-                string messageStr = String.Format(e.Message+"{0}！", CONFIG_FILE);
+                string messageStr = String.Format(e.Message + "{0}！", CONFIG_FILE);
                 MessageBox.Show(messageStr, "读入计算引擎xml文件");
             }
-            
+
         }
 
-        public  static void SaveConfig(string node, string property, string value) 
+        public static void SaveConfig(string node, string property, string value)
         {
             //参数说明  node:节点  property：属性  value：值
             //示例
@@ -144,10 +147,10 @@ namespace Config
 
             XmlFileHelper xmlfilehelper = new XmlFileHelper();
             Hashtable nodeproperty = new Hashtable();
-            nodeproperty.Add(property,value);
+            nodeproperty.Add(property, value);
             xmlfilehelper.UpdateNode(_fileName, node, nodeproperty, nodeproperty);
 
         }
-        
+
     }
 }

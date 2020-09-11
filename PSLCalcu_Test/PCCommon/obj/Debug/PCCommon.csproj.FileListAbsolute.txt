@@ -67,12 +67,11 @@ D:\SM\备份\C#修改版本\PSLCalcu_Test\lib\PCCommon.pdb
 D:\SM\备份\C#修改版本\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.csprojResolveAssemblyReference.cache
 D:\SM\备份\C#修改版本\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.dll
 D:\SM\备份\C#修改版本\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.pdb
-D:\C# Project\JSYXX\PSLCalcu_Test\lib\PCCommon.dll
-D:\C# Project\JSYXX\PSLCalcu_Test\lib\PCCommon.pdb
-D:\C# Project\JSYXX\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.csprojResolveAssemblyReference.cache
-D:\C# Project\JSYXX\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.dll
-D:\C# Project\JSYXX\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.pdb
 D:\SM\PSLCalcu_Test\lib\PCCommon.dll
 D:\SM\PSLCalcu_Test\lib\PCCommon.pdb
 D:\SM\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.dll
 D:\SM\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.pdb
+D:\C# Project\JSYXX\PSLCalcu_Test\lib\PCCommon.dll
+D:\C# Project\JSYXX\PSLCalcu_Test\lib\PCCommon.pdb
+D:\C# Project\JSYXX\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.dll
+D:\C# Project\JSYXX\PSLCalcu_Test\PCCommon\obj\Debug\PCCommon.pdb

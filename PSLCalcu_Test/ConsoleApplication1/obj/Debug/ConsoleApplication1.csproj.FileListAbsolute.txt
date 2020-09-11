@@ -34,3 +34,6 @@ D:\c#\PSLCalcu_Test\ConsoleApplication1\bin\Debug\PSLCalcu.exe
 D:\c#\PSLCalcu_Test\ConsoleApplication1\bin\Debug\ZedGraph.dll
 D:\c#\PSLCalcu_Test\ConsoleApplication1\bin\Debug\PSLCalcu.pdb
 D:\c#\PSLCalcu_Test\ConsoleApplication1\bin\Debug\ZedGraph.xml
+D:\C# Project\JSYXX\PSLCalcu_Test\ConsoleApplication1\obj\Debug\ConsoleApplication1.csprojResolveAssemblyReference.cache
+D:\C# Project\JSYXX\PSLCalcu_Test\ConsoleApplication1\obj\Debug\ConsoleApplication1.exe
+D:\C# Project\JSYXX\PSLCalcu_Test\ConsoleApplication1\obj\Debug\ConsoleApplication1.pdb

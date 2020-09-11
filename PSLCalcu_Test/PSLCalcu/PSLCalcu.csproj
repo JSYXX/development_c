@@ -399,10 +399,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Globalspace\Globalspace.csproj">
-      <Project>{3c0ac9de-0108-443f-8c6e-45ebd9ab888e}</Project>
-      <Name>Globalspace</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PCCommon\PCCommon.csproj">
       <Project>{b553aaf8-d36a-49e5-936f-f03e4015a227}</Project>
       <Name>PCCommon</Name>

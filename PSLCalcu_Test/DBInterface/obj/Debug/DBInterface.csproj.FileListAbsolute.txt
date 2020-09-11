@@ -40,13 +40,13 @@ D:\SM\备份\C#修改版本\PSLCalcu_Test\lib\DBInterface.pdb
 D:\SM\备份\C#修改版本\PSLCalcu_Test\DBInterface\obj\Debug\DBInterface.csprojResolveAssemblyReference.cache
 D:\SM\备份\C#修改版本\PSLCalcu_Test\DBInterface\obj\Debug\DBInterface.dll
 D:\SM\备份\C#修改版本\PSLCalcu_Test\DBInterface\obj\Debug\DBInterface.pdb
-D:\C# Project\JSYXX\PSLCalcu_Test\lib\DBInterface.dll
-D:\C# Project\JSYXX\PSLCalcu_Test\lib\DBInterface.pdb
-D:\C# Project\JSYXX\PSLCalcu_Test\DBInterface\obj\Debug\DBInterface.csprojResolveAssemblyReference.cache
-D:\C# Project\JSYXX\PSLCalcu_Test\DBInterface\obj\Debug\DBInterface.dll
-D:\C# Project\JSYXX\PSLCalcu_Test\DBInterface\obj\Debug\DBInterface.pdb
 D:\SM\PSLCalcu_Test\lib\DBInterface.dll
 D:\SM\PSLCalcu_Test\lib\DBInterface.pdb
 D:\SM\PSLCalcu_Test\DBInterface\obj\Debug\DBInterface.csprojResolveAssemblyReference.cache
 D:\SM\PSLCalcu_Test\DBInterface\obj\Debug\DBInterface.dll
 D:\SM\PSLCalcu_Test\DBInterface\obj\Debug\DBInterface.pdb
+D:\C# Project\JSYXX\PSLCalcu_Test\lib\DBInterface.dll
+D:\C# Project\JSYXX\PSLCalcu_Test\lib\DBInterface.pdb
+D:\C# Project\JSYXX\PSLCalcu_Test\DBInterface\obj\Debug\DBInterface.csprojResolveAssemblyReference.cache
+D:\C# Project\JSYXX\PSLCalcu_Test\DBInterface\obj\Debug\DBInterface.dll
+D:\C# Project\JSYXX\PSLCalcu_Test\DBInterface\obj\Debug\DBInterface.pdb
