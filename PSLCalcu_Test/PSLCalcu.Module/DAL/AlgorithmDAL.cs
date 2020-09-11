@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace PSLCalcu.Module.DAL
 {
-    public class AlgorithmDAL
+    public static class AlgorithmDAL
     {
-        public bool updateMPVBase(int id, MPVBaseMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
+        public static bool updateMPVBase(int id, MPVBaseMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        public bool updateLongMPVBase(int id, MPVBaseMessageOutClass newClass, string type, string year, string month, string day, string hour)
+        public static bool updateLongMPVBase(int id, MPVBaseMessageOutClass newClass, string type, string year, string month, string day, string hour)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        public bool insertLongMPVBase(MPVBaseMessageOutClass newClass, string type, string year, string month, string day, string hour)
+        public static bool insertLongMPVBase(MPVBaseMessageOutClass newClass, string type, string year, string month, string day, string hour)
         {
             try
             {
@@ -213,7 +213,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        public bool insertMPVBase(MPVBaseMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
+        public static bool insertMPVBase(MPVBaseMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
         {
             try
             {
@@ -282,7 +282,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        private bool insertTimeValue(List<D22STimeClass> value, int aid, int pid, string columnName)
+        private static bool insertTimeValue(List<D22STimeClass> value, int aid, int pid, string columnName)
         {
             try
             {
@@ -306,7 +306,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        private int getColumnID(string columnName)
+        private static int getColumnID(string columnName)
         {
             try
             {
@@ -326,7 +326,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        public bool insertMDevLimit(MDevLimitMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
+        public static bool insertMDevLimit(MDevLimitMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
         {
             try
             {
@@ -454,7 +454,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        public bool updateMDevLimit(int id, MDevLimitMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
+        public static bool updateMDevLimit(int id, MDevLimitMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
         {
             try
             {
@@ -579,7 +579,7 @@ namespace PSLCalcu.Module.DAL
             }
         }
 
-        public bool updateLongMDevLimit(int id, MDevLimitMessageOutClass newClass, string type, string year, string month, string day, string hour)
+        public static bool updateLongMDevLimit(int id, MDevLimitMessageOutClass newClass, string type, string year, string month, string day, string hour)
         {
             try
             {
@@ -703,7 +703,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        public bool insertLongMDevLimit(MDevLimitMessageOutClass newClass, string type, string year, string month, string day, string hour)
+        public static bool insertLongMDevLimit(MDevLimitMessageOutClass newClass, string type, string year, string month, string day, string hour)
         {
             try
             {
@@ -831,7 +831,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        private bool deleteTime(int pid)
+        private static bool deleteTime(int pid)
         {
             try
             {
@@ -854,7 +854,7 @@ namespace PSLCalcu.Module.DAL
             }
 
         }
-        public DataTable isHaveData(string sql)
+        public static DataTable isHaveData(string sql)
         {
             try
             {
@@ -876,7 +876,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        private int getAID(string type)
+        private static int getAID(string type)
         {
             try
             {

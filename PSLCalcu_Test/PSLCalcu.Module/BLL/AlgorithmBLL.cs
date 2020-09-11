@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace PSLCalcu.Module.BLL
 {
-    public class AlgorithmBLL
+    public static class AlgorithmBLL
     {
-        DAL.AlgorithmDAL a_dal = new DAL.AlgorithmDAL();
-        public bool insertMPVBase(MPVBaseMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
+        public static bool insertMPVBase(MPVBaseMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
         {
             try
             {
@@ -19,11 +18,11 @@ namespace PSLCalcu.Module.BLL
                 DataTable dt = isHaveData(year, month, day, hour, type, "psl_mpvbase");
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    isok = a_dal.updateMPVBase(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
+                    isok = DAL.AlgorithmDAL.updateMPVBase(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
                 }
                 else
                 {
-                    isok = a_dal.insertMPVBase(newClass, type, year, month, day, hour);
+                    isok = DAL.AlgorithmDAL.insertMPVBase(newClass, type, year, month, day, hour);
                 }
                 return isok;
             }
@@ -32,7 +31,7 @@ namespace PSLCalcu.Module.BLL
                 throw;
             }
         }
-        public bool insertLongMPVBase(MPVBaseMessageOutClass newClass, string type, string year, string month, string day, string hour)
+        public static bool insertLongMPVBase(MPVBaseMessageOutClass newClass, string type, string year, string month, string day, string hour)
         {
             try
             {
@@ -40,11 +39,11 @@ namespace PSLCalcu.Module.BLL
                 DataTable dt = isHaveData(year, month, day, hour, type, "psl_mpvbase");
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    isok = a_dal.updateLongMPVBase(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
+                    isok = DAL.AlgorithmDAL.updateLongMPVBase(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
                 }
                 else
                 {
-                    isok = a_dal.insertLongMPVBase(newClass, type, year, month, day, hour);
+                    isok = DAL.AlgorithmDAL.insertLongMPVBase(newClass, type, year, month, day, hour);
                 }
                 return isok;
             }
@@ -54,7 +53,7 @@ namespace PSLCalcu.Module.BLL
             }
         }
 
-        private DataTable isHaveData(string year, string month, string day, string hour, string type, string tableName)
+        private static DataTable isHaveData(string year, string month, string day, string hour, string type, string tableName)
         {
             try
             {
@@ -91,7 +90,7 @@ namespace PSLCalcu.Module.BLL
                         }
                     }
                     sqlStr += ";";
-                    dt = a_dal.isHaveData(sqlStr);
+                    dt = DAL.AlgorithmDAL.isHaveData(sqlStr);
                 }
                 return dt;
             }
@@ -100,7 +99,7 @@ namespace PSLCalcu.Module.BLL
                 throw ex;
             }
         }
-        public bool insertLongMDevLimit(MDevLimitMessageOutClass newClass, string type, string year, string month, string day, string hour)
+        public static bool insertLongMDevLimit(MDevLimitMessageOutClass newClass, string type, string year, string month, string day, string hour)
         {
             try
             {
@@ -108,11 +107,11 @@ namespace PSLCalcu.Module.BLL
                 DataTable dt = isHaveData(year, month, day, hour, type, "psl_mdevlimit");
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    isok = a_dal.updateLongMDevLimit(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
+                    isok = DAL.AlgorithmDAL.updateLongMDevLimit(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
                 }
                 else
                 {
-                    isok = a_dal.insertLongMDevLimit(newClass, type, year, month, day, hour);
+                    isok = DAL.AlgorithmDAL.insertLongMDevLimit(newClass, type, year, month, day, hour);
                 }
                 return isok;
             }
@@ -122,7 +121,7 @@ namespace PSLCalcu.Module.BLL
             }
         }
 
-        public bool insertMDevLimit(MDevLimitMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
+        public static bool insertMDevLimit(MDevLimitMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
         {
             try
             {
@@ -130,11 +129,11 @@ namespace PSLCalcu.Module.BLL
                 DataTable dt = isHaveData(year, month, day, hour, type, "psl_mdevlimit");
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    isok = a_dal.updateMDevLimit(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
+                    isok = DAL.AlgorithmDAL.updateMDevLimit(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
                 }
                 else
                 {
-                    isok = a_dal.insertMDevLimit(newClass, type, year, month, day, hour);
+                    isok = DAL.AlgorithmDAL.insertMDevLimit(newClass, type, year, month, day, hour);
                 }
                 return isok;
             }

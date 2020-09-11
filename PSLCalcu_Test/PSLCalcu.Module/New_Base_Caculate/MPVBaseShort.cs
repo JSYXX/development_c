@@ -372,7 +372,8 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 b = double.Parse(paras[4]);
                 stbl = double.Parse(paras[5]);
                 nostbl = double.Parse(paras[6]);
-
+                //tagId
+                string type = paras[7];
 
                 #region 短周期计算
 
@@ -386,13 +387,31 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 //
                 //调用短周期算法数据是把每分钟的数据结果进行处理 小时级别时间数据运算
                 MPVBaseMessageOutBadClass res = MPVBaseCaculate.shortMPVBase(valueList, N1, N2, N3, k, b, stbl, nostbl);
-               
+                string year = string.Empty;
+                string month = string.Empty;
+                string day = string.Empty;
+                string hour = string.Empty;
+                DateTime dt = Convert.ToDateTime(valueList[valueList.Count - 1].valueDate);
+                year = dt.Year.ToString();
+                month = dt.Month.ToString();
+                day = dt.Day.ToString();
+                hour = dt.Hour.ToString();
+                bool isok = BLL.AlgorithmBLL.insertMPVBase(res, type, year, month, day, hour);
+                if (isok)
+                {
+                    return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                }
+                else
+                {
+                    _fatalFlag = true;
+                    _fatalInfo = "MPVBase短周期数据录入数据库是失败";
+                    return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                }
 
-                return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
 
                 #endregion
 
-                
+
 
 
 
