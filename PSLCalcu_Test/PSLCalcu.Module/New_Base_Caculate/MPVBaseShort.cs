@@ -396,6 +396,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 month = dt.Month.ToString();
                 day = dt.Day.ToString();
                 hour = dt.Hour.ToString();
+                //计算结果存入数据库
                 bool isok = BLL.AlgorithmBLL.insertMPVBase(res, type, year, month, day, hour);
                 if (isok)
                 {

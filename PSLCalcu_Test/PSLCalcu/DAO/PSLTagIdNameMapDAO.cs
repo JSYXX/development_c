@@ -722,7 +722,7 @@ namespace PSLCalcu
             try
             {
                 List<string> caculateFunctions = new List<string>();
-                string functions = System.Configuration.ConfigurationManager.AppSettings["Local"].ToString();
+                string functions = System.Configuration.ConfigurationManager.AppSettings["NewCaculate"].ToString();
                 caculateFunctions = functions.Split(';').ToList();
                 return caculateFunctions;
             }
