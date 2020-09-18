@@ -198,14 +198,8 @@ namespace PSLCalcu.Module.Base_MultiInput
             bool _fatalFlag = false;
             string _fatalInfo = "";
 
-            int i;
 
             List<PValue>[] results = new List<PValue>[2];
-            for (i = 0; i < results.Length; i++)
-            {
-                results[i] = new List<PValue>();
-                results[i].Add(new PValue(0, calcuinfo.fstarttime, calcuinfo.fendtime, (long)StatusConst.InputIsNull));
-            }
             try
             {
                 //0、输入
@@ -215,48 +209,87 @@ namespace PSLCalcu.Module.Base_MultiInput
                 {
                     return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
                 }
-                //0.2、输入处理：数据数量必须大于等于2，不然无法求差值。
-                if (inputs.Length < 2)
-                {
-                    _errorFlag = true;
-                    _errorInfo = "数据数量必须大于等于2";
-                    return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
-                }
+
 
 
                 //处理参数
-                double k;
-                double b;
                 string[] paras = calcuinfo.fparas.Split(';');
-                k = float.Parse(paras[0]);
-                b = float.Parse(paras[1]);
-
+                string mode = string.Empty;
+                if (paras.Length == 3)
+                    mode = paras[2];   //如果设定了第8个参数，计算模式用第个参数值。S表示短周期，L表示长周期                
+                else
+                    mode = "S";
 
 
 
 
                 //声明返回参数
-                List<PValue> result = new List<PValue>();
-                //声明精确端差值，模糊端差值
-                double vagueDifference, accurateDifference = 0;
-
-                accurateDifference = (inputs[inputs.Length - 1][0].Value - inputs[0][0].Value) * k + b;
-                //判断第0分钟和第59分钟是否有数据，若任意一个没有数据，精确端差值返回0
-                if (inputs[0][0].Endtime.Minute != 0 || inputs[inputs.Length - 1][0].Endtime.Minute != 59)
+                //List<PValue> result = new List<PValue>();
+                if (mode == "S")
                 {
-                    vagueDifference = 0;
+
+
+                    for (int i = 0; i < results.Length; i++)
+                    {
+                        results[i] = new List<PValue>();
+                        results[i].Add(new PValue(0, calcuinfo.fstarttime, calcuinfo.fendtime, (long)StatusConst.InputIsNull));
+                    }
+                    //0.2、输入处理：数据数量必须大于等于2，不然无法求差值。
+                    if (inputs.Length < 2)
+                    {
+                        _errorFlag = true;
+                        _errorInfo = "数据数量必须大于等于2";
+                        return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                    }
+                    //处理参数
+                    double k;
+                    double b;
+                    k = float.Parse(paras[0]);
+                    b = float.Parse(paras[1]);
+                    //声明精确端差值，模糊端差值
+                    double vagueDifference, accurateDifference = 0;
+
+                    accurateDifference = (inputs[inputs.Length - 1][0].Value - inputs[0][0].Value) * k + b;
+                    //判断第0分钟和第59分钟是否有数据，若任意一个没有数据，精确端差值返回0
+                    if (inputs[0][0].Endtime.Minute != 0 || inputs[inputs.Length - 1][0].Endtime.Minute != 59)
+                    {
+                        vagueDifference = 0;
+                    }
+                    else
+                    {
+                        vagueDifference = accurateDifference;
+                    }
+                    results[0] = new List<PValue>();
+                    results[0].Add(new PValue(vagueDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                    results[1] = new List<PValue>();
+                    results[1].Add(new PValue(accurateDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+
                 }
                 else
                 {
-                    vagueDifference = accurateDifference;
+                    for (int i = 0; i < results.Length; i++)
+                    {
+                        results[i] = new List<PValue>();
+                        results[i].Add(new PValue(0, calcuinfo.fstarttime, calcuinfo.fendtime, (long)StatusConst.InputIsNull));
+                    }
+                    double sumVagueDifference = 0;
+                    double sumAccurateDifference = 0;
+
+                    List<PValue> vagueDifferenceList = inputs[0];
+                    List<PValue> accurateDifferenceList = inputs[1];
+
+                    sumVagueDifference = vagueDifferenceList.Sum(a => Math.Abs(a.Value));
+                    sumAccurateDifference = accurateDifferenceList.Sum(a => Math.Abs(a.Value));
+
+                    results[0] = new List<PValue>();
+                    results[0].Add(new PValue(sumVagueDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                    results[1] = new List<PValue>();
+                    results[1].Add(new PValue(sumAccurateDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+
+
                 }
-                results[0] = new List<PValue>();
-                results[0].Add(new PValue(vagueDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                results[1] = new List<PValue>();
-                results[1].Add(new PValue(accurateDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
 
                 return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
-
             }
             catch (Exception ex)
             {
