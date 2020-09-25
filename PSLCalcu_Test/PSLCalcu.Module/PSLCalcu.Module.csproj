@@ -114,6 +114,7 @@
     <Compile Include="CalcuTemplate.cs" />
     <Compile Include="DAL\AlgorithmDAL.cs" />
     <Compile Include="Helper\AlgorithmHelper.cs" />
+    <Compile Include="Helper\DatatableToEntity.cs" />
     <Compile Include="Helper\MysqlHelper.cs" />
     <Compile Include="Interface_RTDB\MReadPVOPC.cs" />
     <Compile Include="Interface_RTDB\MOPCSegmentFilter.cs" />
@@ -174,7 +175,9 @@
     <Compile Include="Interface_RTDB\MRDSegmentMaxMinAvg.cs" />
     <Compile Include="NewCaculate\MDevLimitCaculate.cs" />
     <Compile Include="NewCaculate\MPVBaseCaculate.cs" />
+    <Compile Include="New_Base_Caculate\MDevLimitLong.cs" />
     <Compile Include="New_Base_Caculate\MDevLimitShort.cs" />
+    <Compile Include="New_Base_Caculate\MPVBaseLong.cs" />
     <Compile Include="New_Base_Caculate\MPVBaseShort.cs" />
     <Content Include="Interface_RTDB\关于读取实时数据周期的选择问题.txt" />
     <Compile Include="NewBase\BaseCalcu.cs" />

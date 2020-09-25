@@ -72,6 +72,8 @@ namespace Config
         private static string _fileName;
 
         public static List<string> caculateFunction { get; set; }
+        public static List<string> caculateLongFunction { get; set; }
+
 
         static APPConfig()
         {

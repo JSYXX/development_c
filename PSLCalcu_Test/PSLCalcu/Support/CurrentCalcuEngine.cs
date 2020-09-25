@@ -3,6 +3,7 @@ using PCCommon;
 using PSLCalcu.Module;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -77,36 +78,46 @@ namespace PSLCalcu
                     //string[] sourcetagname = Regex.Split(pslcalcuitem.sourcetagname.Replace("^", "\\"), ";|；");             //对PGIM标签进行特别处理。标签中的^在程序变量中全部替回\。(对于pgim，pslcalcuitem中路径均用^表示。)
                     string[] sourcetagname = Regex.Split(pslcalcuitem.sourcetagname, ";|；");                                  //对PGIM标签的特别处理，放到PGIMHelper层。
                     List<PValue>[] inputs = new List<PValue>[sourcetagname.Length];                                            //参与计算标签的历史数据，数据格式List<PValue>
+                    DataSet newInputs = new DataSet();//新版长周期算法取短周期算法的数据
                     if (pslcalcuitem.sourcetagdb == "rtdb")
                     {
+
                         //实时库实时数据读取
-                        for (int i = 0; i < sourcetagname.Length; i++)
+                        //新版长周期算法去短周期数据
+                        if (APPConfig.caculateLongFunction.Contains(pslcalcuitem.fmodulename))
                         {
-                            inputs[i] = RTDBDAO.ReadData(sourcetagname[i], pslcalcuitem.fstarttime, pslcalcuitem.fendtime);        //获取历史数据
-                                                                                                                                   //读取时DAO层发生错误
-                            if (null == inputs[i])
+                            goto CURRENTCalcu;
+                        }
+                        else
+                        {
+                            for (int i = 0; i < sourcetagname.Length; i++)
                             {
-                                Interlocked.Increment(ref errorCount); //错误计数+1
-                                                                       //记录LOG
-                                string errInfo;
-                                errInfo = string.Format("计算引擎错误{0}：读取实时数据错误，RTDBDAO层出错!", errorCount) + Environment.NewLine;
-                                errInfo += string.Format("——计算模块的名称是：{0}-{1}，计算起始时间是：{2}，计算结束时间是：{3}。", pslcalcuitem.fid, pslcalcuitem.fmodulename, pslcalcuitem.fstarttime.ToString(), pslcalcuitem.fendtime.ToString());
-                                logHelper.Fatal(errInfo);
-                                inputs[i] = null;
-                                goto CURRENTCalcu;
-                            }
-                            //读取某一个数据为空。实时数据读取如果为空，则应该是在该时间之前没有任何数据导致的，这个应该报错，一般用户可以得知情况，去检查标签点。
-                            //还有一种情况是，实时数据读取不为空，但全部是非好质量点，这样情况应该在内部报警。
-                            else if (inputs[i].Count == 0) //多个源数据标签，如果有一个标签读取的数据为空，则跳过当前标签，去循环读取下一个标签
-                            {
-                                Interlocked.Increment(ref errorCount); //错误计数+1
-                                                                       //记录LOG
-                                string errInfo;
-                                errInfo = string.Format("计算引擎错误{0}：读取实时数据为空，第{1}个标签对应时间段内没有实时数据!", errorCount.ToString(), i.ToString()) + Environment.NewLine;
-                                errInfo += string.Format("——计算模块的名称是：{0}-{1}，计算起始时间是：{2}，计算结束时间是：{3}。", pslcalcuitem.fid, pslcalcuitem.fmodulename, pslcalcuitem.fstarttime.ToString(), pslcalcuitem.fendtime.ToString());
-                                logHelper.Error(errInfo);
-                            }
-                        }//end for
+                                inputs[i] = RTDBDAO.ReadData(sourcetagname[i], pslcalcuitem.fstarttime, pslcalcuitem.fendtime);        //获取历史数据
+                                                                                                                                       //读取时DAO层发生错误
+                                if (null == inputs[i])
+                                {
+                                    Interlocked.Increment(ref errorCount); //错误计数+1
+                                                                           //记录LOG
+                                    string errInfo;
+                                    errInfo = string.Format("计算引擎错误{0}：读取实时数据错误，RTDBDAO层出错!", errorCount) + Environment.NewLine;
+                                    errInfo += string.Format("——计算模块的名称是：{0}-{1}，计算起始时间是：{2}，计算结束时间是：{3}。", pslcalcuitem.fid, pslcalcuitem.fmodulename, pslcalcuitem.fstarttime.ToString(), pslcalcuitem.fendtime.ToString());
+                                    logHelper.Fatal(errInfo);
+                                    inputs[i] = null;
+                                    goto CURRENTCalcu;
+                                }
+                                //读取某一个数据为空。实时数据读取如果为空，则应该是在该时间之前没有任何数据导致的，这个应该报错，一般用户可以得知情况，去检查标签点。
+                                //还有一种情况是，实时数据读取不为空，但全部是非好质量点，这样情况应该在内部报警。
+                                else if (inputs[i].Count == 0) //多个源数据标签，如果有一个标签读取的数据为空，则跳过当前标签，去循环读取下一个标签
+                                {
+                                    Interlocked.Increment(ref errorCount); //错误计数+1
+                                                                           //记录LOG
+                                    string errInfo;
+                                    errInfo = string.Format("计算引擎错误{0}：读取实时数据为空，第{1}个标签对应时间段内没有实时数据!", errorCount.ToString(), i.ToString()) + Environment.NewLine;
+                                    errInfo += string.Format("——计算模块的名称是：{0}-{1}，计算起始时间是：{2}，计算结束时间是：{3}。", pslcalcuitem.fid, pslcalcuitem.fmodulename, pslcalcuitem.fstarttime.ToString(), pslcalcuitem.fendtime.ToString());
+                                    logHelper.Error(errInfo);
+                                }
+                            }//end for
+                        }
                     }//end实时数据库读取
                     else if (pslcalcuitem.sourcetagdb == "opc")
                     {
@@ -399,7 +410,16 @@ namespace PSLCalcu
                     //1、这里需要判断Calcu是否为空，如果为空，要写log
                     //2、调用时也要做try处理                   
                     timerecord.BeforeCalcu = DateTime.Now;
-                    inputData.SetValue(null, inputs);            //将输入数据给入算法
+                    if (APPConfig.caculateLongFunction.Contains(pslcalcuitem.fmodulename))
+                    {
+                        inputData.SetValue(null, newInputs);            //将输入数据给入算法
+
+                    }
+                    else
+                    {
+                        inputData.SetValue(null, inputs);            //将输入数据给入算法
+                    }
+
                     calcuInfo.SetValue(null, new CalcuInfo(pslcalcuitem.sourcetagname,
                                                             pslcalcuitem.fsourtagids,
                                                             pslcalcuitem.fsourtagflags,

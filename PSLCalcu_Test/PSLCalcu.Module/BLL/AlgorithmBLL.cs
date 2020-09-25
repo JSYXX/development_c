@@ -10,6 +10,51 @@ namespace PSLCalcu.Module.BLL
 {
     public static class AlgorithmBLL
     {
+        public static DataSet getShortData(string tableName, string tagid, string year, string month, string day)
+        {
+            try
+            {
+                DataSet dt = getSData(tableName, tagid, year, month, day);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static DataSet getSData(string tableName, string tagid, string year, string month, string day)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                string sqlstr = "select * from " + tableName + "where `tagId`=" + tagid + " and `yearvalue`=\"" + year + "\"";
+                if (!string.IsNullOrWhiteSpace(month))
+                {
+                    sqlstr += " and `monthvalue`=\"" + month + "\"";
+                }
+                if (!string.IsNullOrWhiteSpace(day))
+                {
+                    sqlstr += " and `day`=\"" + day + "\"";
+                }
+                sqlstr += ";";
+                DataTable dt = DAL.AlgorithmDAL.getData(sqlstr);
+                string pidList = string.Empty;
+                foreach (DataRow item in dt.Rows)
+                {
+                    pidList += item["id"].ToString() + ",";
+                }
+                pidList = pidList.Substring(0, pidList.Length - 1);
+                string sqlChildStr = "select a.*,(select b.`columnName` from psl_columndata as b where a.AlgorithmId=b.id) as columnName from psl_timedata as a where a.`parentid` in (" + pidList + ")";
+                DataTable dtTime = DAL.AlgorithmDAL.getData(sqlChildStr);
+                ds.Tables.Add(dt);
+                ds.Tables.Add(dtTime);
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static bool insertMPVBase(MPVBaseMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
         {
             try

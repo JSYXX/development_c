@@ -1906,6 +1906,8 @@ namespace PSLCalcu
 
                 //加载新版算法名
                 APPConfig.caculateFunction = PSLTagNameIdMapDAO.ReadCaculateFunction();
+                //加载新版长周期算法名称
+                APPConfig.caculateLongFunction = PSLTagNameIdMapDAO.ReadLongCaculateFunction();
                 if (PSLTagNameIdMapDAO.ErrorFlag)
                 {
                     string strMsg = String.Format("读取概化计算标签字典！" + Environment.NewLine +

@@ -887,5 +887,28 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
+
+        public static DataTable getData(string sqlStr)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                string errmsg = string.Empty;
+                MySqlParameter[] parames = { };
+                dt = MysqlHelper.getDataTableOfSQL(sqlStr, CommandType.Text, parames, ref errmsg);
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    return dt;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
