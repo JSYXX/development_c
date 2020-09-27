@@ -72,7 +72,7 @@ namespace PSLCalcu.Module
                 return _algorithmsflag;
             }
         }
-        private string _moduleParaExample = "D;1;1;1;0";// 注意：如果计算模块需要参数，则该属性必须有值，不能为空。检查程序依据此属性是否为空来决定是否对配置项进行正则检查
+        private string _moduleParaExample = "D;1;1;1;0;S";// 注意：如果计算模块需要参数，则该属性必须有值，不能为空。检查程序依据此属性是否为空来决定是否对配置项进行正则检查
         public string moduleParaExample
         {
             get
@@ -88,7 +88,7 @@ namespace PSLCalcu.Module
                 return _moduleParaDesc;
             }
         }
-        private Regex _moduleParaRegex = new Regex(@"^([DS]){1}(;[+]?\d+){2}(;[+-]?\d+(\.\d+)?){1}(;[+-]?\d+(\.\d+)?){1}$"); 
+        private Regex _moduleParaRegex = new Regex(@"^([DS]){1}(;[+]?\d+){2}(;[+-]?\d+(\.\d+)?){1}(;[+-]?\d+(\.\d+)?){1}(;){0,1}([SD]){0,1}$"); 
         public Regex moduleParaRegex
         {
             get
@@ -112,7 +112,7 @@ namespace PSLCalcu.Module
                 return _outputDescs;
             }
         }
-        private string _outputDescsCN = "期望值(单值);偏差(单值);偏差比(单值);得分(单值)";
+        private string _outputDescsCN = "期望值(单值);偏差(单值);偏差比(单值);得分(单值);加权得分(单值)";
         public string outputDescsCN
         {
             get
@@ -276,16 +276,25 @@ namespace PSLCalcu.Module
                 StatusConst invalidflag = StatusConst.Normal;   //参考指标值是否超越偏差曲线x范围，当次指标考核计算是否有效
 
                 //2、根据参数获取期望曲线、记分曲线
+                string calcuMode;   //计算方式选择
                 string[] para = calcuinfo.fparas.Split(new char[] { ';' });
                 string readMethod = para[0];        //第一个参数是获取曲线的方式，D为动态，S为静态。动态方式，每次计算均读取CSV。静态方式，只读取一次CSV。
                 int opxid = int.Parse(para[1]);     //第二个参数是期望曲线序号
                 int scoreid = int.Parse(para[2]);   //第三个参数是得分曲线序号
                 double k = double.Parse(para[3]);
-                double b = double.Parse(para[4]);
+                double b = double.Parse(para[4]);   
+                if (para.Length == 6){
+                    calcuMode = para[5];            //如果设定了第5个参数，计算模式用二维计分。D表示二维计分，s表示一维计分 
+                }
+                else
+                    calcuMode = "S";                //如果没设定第5个参数，计算模式为一维计分
 
                 Curve1D opxCurve;    //期望值
                 Curve1D scoreCurve;  //计分值
+                Curve2D scoreCurve2D;
+
                 string strTemp = CurveConfig.Instance.OPXCurvesReadStatus;  //这行这条语句是为了下面在使用CurveConfig.GetXXXCurve时保证Instance已被初始化。20181109调试发现该问题。
+                string strTemp2D = CurveConfig.Instance.ScoreCurves2DReadStatus; 
 
                 try
                 { 
@@ -293,10 +302,13 @@ namespace PSLCalcu.Module
                     {
                         //第一个参数为S时，静态读取期望曲线和积分曲线表
                         opxCurve = CurveConfig.GetOPXCurve(opxid, calcuinfo.fstarttime);
+
+                        scoreCurve2D = CurveConfig.GetScoreCurve2D(scoreid, calcuinfo.fstarttime);
+                        
                         scoreCurve = CurveConfig.GetScoreCurve(scoreid, calcuinfo.fstarttime);
                     }
                     else
-                    {
+                   {
                         //——20181031，因动态方式读取曲线，速度太慢，不在采用。
                         //——转而采用在静态方式下读取带生效时间的配置曲线。这样在增加配置曲线时，仅需要暂停计算引擎后重启，即可载入新的配置曲线，并继续进行计算。
                         //第一个参数为D时，动态读取期望曲线和积分曲线表
@@ -305,7 +317,7 @@ namespace PSLCalcu.Module
                         _errorFlag = true;
                         _errorInfo = "参数配置为D，动态读取配置曲线功能已经取消，请使用静态读取方式。";
                         return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo); 
-                    }
+                   }
                 }
                 catch (Exception ex)
                 {
@@ -321,12 +333,26 @@ namespace PSLCalcu.Module
                     _errorInfo = String.Format("期望曲线为空，对应的期望曲线：{0}-{1}获取错误！", opxid, calcuinfo.fstarttime.ToString("yyyy-MM-dd HH:mm:ss"));
                     return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
                 }
-                if (scoreCurve == null)
+                if (calcuMode == "D")
                 {
-                    _errorFlag = true;
-                    _errorInfo = String.Format("得分曲线为空，对应的得分曲线：{0}-{1}获取错误！", scoreid, calcuinfo.fstarttime.ToString("yyyy-MM-dd HH:mm:ss"));
-                    return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                    if (scoreCurve2D == null)
+                    {
+                        _errorFlag = true;
+                        _errorInfo = String.Format("得分曲线为空，对应的得分曲线：{0}-{1}获取错误！", scoreid, calcuinfo.fstarttime.ToString("yyyy-MM-dd HH:mm:ss"));
+                        return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                    }
                 }
+                if (calcuMode == "S")
+                {
+                    if (scoreCurve == null)
+                    {
+                        _errorFlag = true;
+                        _errorInfo = String.Format("得分曲线为空，对应的得分曲线：{0}-{1}获取错误！", scoreid, calcuinfo.fstarttime.ToString("yyyy-MM-dd HH:mm:ss"));
+                        return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                    }
+                }
+
+                
 
                 //3、计算偏差
                 PValue sp, err, errrate, score,wscore;           //期望值、偏差、偏差比、得分
@@ -386,7 +412,25 @@ namespace PSLCalcu.Module
                     errrate.Value = err.Value / sp.Value * 100;
                 //得分：查记分曲线
                 //——偏差超过限度时，直接返回得分边界值。但是得分不像偏差曲线的x越界，要置invalidflag
+                if (calcuMode == "S")
                 score.Value = scoreCurve.Fx(err.Value);
+                else
+                {
+                    //参考值Y（对应表的第一列配置）
+                    if (refdata.Value < scoreCurve2D.YLowerLimit)
+                    {
+                        refdata.Value = scoreCurve2D.YLowerLimit;
+                        invalidflag = StatusConst.OutOfValid4Bias;
+                    }
+                    else if (refdata.Value > scoreCurve2D.YUpperLimit)
+                    {
+                        refdata.Value = scoreCurve2D.YUpperLimit;
+                        invalidflag = StatusConst.OutOfValid4Bias;
+                    }
+                    score.Value = scoreCurve2D.Fx(err.Value, refdata.Value); //虽然一律要算期望值，但是超限后按边界算期望，所有计算结果标志位都会被置位
+                
+                }
+
                 wscore.Value = k * score.Value + b;
                 //4、组织输出                
                 for (i = 0; i < 4; i++)

@@ -103,6 +103,15 @@ namespace PSLCalcu.Module
             }
             
         }//endFX
+
+        public double YLowerLimit { get; set; }
+
+        public double YUpperLimit { get; set; }
+
+        internal double Fx(double p1, double p2)
+        {
+            throw new NotImplementedException();
+        }
     }
     //二维期望曲线
     public class Curve2D
@@ -293,6 +302,11 @@ namespace PSLCalcu.Module
                 x = (y - y1) / (y2 - y1) * (x2 - x1) + x1;
             return x;
         }
+
+        internal double Fx(double p)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class CurveConfig
@@ -302,7 +316,8 @@ namespace PSLCalcu.Module
         //期望曲线和记分曲线都是一维曲线，因此，每个文件中包含多条曲线
         const string DEV1DCURVE_FILE = "BiasCurve_1D";      //一维偏差曲线前缀
         const string DEV2DCURVE_FILE = "BiasCurve_2D";      //二维偏差曲线前缀
-        const string SCORECURVE_FILE = "ScoreCurve";        //一维计分曲线前缀               
+        const string SCORECURVE_FILE = "ScoreCurve";        //一维计分曲线前缀
+        const string SCORE2DCURVE_FILE = "ScoreCurve_2D";        
 
         //注意二维曲线存放在统一目录CurveConfig下，一个文件是一条曲线，因此要遍历目录
         private string _filePath;
@@ -323,11 +338,13 @@ namespace PSLCalcu.Module
         public List<PSLCalcu.Module.Curve1D> OPXCurves { get; set; }        //CurveConfig的静态实例Instance下的期望曲线列表
         public List<PSLCalcu.Module.Curve2D> OPXCurves2D { get; set; }      //CurveConfig的静态实例Instance下的二维期望曲线列表
         public List<PSLCalcu.Module.Curve1D> ScoreCurves { get; set; }      //CurveConfig的静态实例Instance下的得分曲线列表 
+        public List<PSLCalcu.Module.Curve2D> ScoreCurves2D { get; set; }
 
         //读取状态
         public string OPXCurvesReadStatus = "";             //用于记录Load1DConfig中的执行情况
         public string OPXCurves2DReadStatus = "";           //用于记录Load2DConfig中的执行情况
         public string ScoreCurvesReadStatus = "";           //用于记录Load1DConfig中的执行情况
+        public string ScoreCurves2DReadStatus = "";  
 
         //**************用静态方式获得偏差曲线和得分曲线**********************************
         //——在每次运行计算引擎，第一次使用Curveconfig时进行初始化。之后就不再读取数据
@@ -361,6 +378,15 @@ namespace PSLCalcu.Module
             _readstatus = Load1DConfig(_filePath, _fileNamePre, DateTime.Now, ref curvescore);
             this.ScoreCurvesReadStatus = String.Format("得分曲线读取状态：{0}", _readstatus);
             this.ScoreCurves = curvescore;
+
+            //读取得分期望曲线
+            _filePath = Environment.CurrentDirectory + "\\" + ConfigPath + "\\";
+            _fileNamePre = SCORE2DCURVE_FILE;
+            List<Curve2D> curvescore2D = new List<Curve2D>(); ;
+
+            _readstatus = Load2DConfig(_filePath, _fileNamePre, DateTime.Now, ref curvescore2D);
+            this.ScoreCurves2DReadStatus = String.Format("二维得分曲线读取状态：{0}", _readstatus);
+            this.ScoreCurves2D = curvescore2D;
         }
 
         //***************静态方式下，获取相应Index和有效起始时间的曲线
@@ -426,6 +452,28 @@ namespace PSLCalcu.Module
                 }
             }
             catch(Exception ex)
+            {
+                return null;
+            }
+        }
+        public static Curve2D GetScoreCurve2D(int Index, DateTime calcuDatetime)
+        {
+            try
+            {
+                Curve2D scorecurve2d = new Curve2D();
+                List<Curve2D> scorecurves2d = _instance.ScoreCurves2D.FindAll(delegate(Curve2D a) { return a.Index == Index && a.validDate <= calcuDatetime; });
+                if (scorecurves2d != null && scorecurves2d.Count != 0)
+                {
+                    scorecurve2d = scorecurves2d.OrderByDescending(a => a.validDate).First();
+                    //scorecurve2d = scorecurves2d[scorecurves2d.Count - 1];
+                    return scorecurve2d;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
             {
                 return null;
             }
@@ -722,24 +770,49 @@ namespace PSLCalcu.Module
                 try
                 {
                     readStatus = readStatus + Environment.NewLine + String.Format("——解析文件名{0}！", files[i].Name);
-                    string[] fields = new string[6];
-                    //文件名称必须由6部分构成，如BiasCurve_2D_CurveName_2_2018-01-01_0200.csv
-                    fields = files[i].Name.Split('_');                    
-                    string curvetype = fields[0].ToUpper();       //曲线类型
-                    string curvedime = fields[1].ToUpper();       //曲线维度
-                    string curvename = fields[2];                 //曲线名称
-                    int curveindex = int.Parse(fields[3]);        //曲线序号
-                    DateTime filedate = DateTime.Parse(fields[4] + " " + fields[5].Substring(0, 2) + ":" + fields[5].Substring(2, 2));    //曲线时间
-                    string filetype = fields[5].Split('.')[1].ToUpper();  //文件类型
-
-                    if (filetype == "CSV" &&                                        //必须是CSV文件
-                        (curvetype + "_" + curvedime) == filepre.ToUpper()          //文件名前缀必须是filepre，这里是BiasCurve_2D
-                        )
-                        //filedate < readdate)                                      //必须比当前读取时间早
+                     if (filepre.ToUpper() == "BIASCURVE_2D")
                     {
-                        filenames.Add(files[i].Name);
-                        findflag =true;
+                        string[] fields = new string[6];
+                        //文件名称必须由6部分构成，如BiasCurve_2D_CurveName_2_2018-01-01_0200.csv
+                        fields = files[i].Name.Split('_');                    
+                        string curvetype = fields[0].ToUpper();       //曲线类型
+                        string curvedime = fields[1].ToUpper();       //曲线维度
+                        string curvename = fields[2];                 //曲线名称
+                        int curveindex = int.Parse(fields[3]);        //曲线序号
+                        DateTime filedate = DateTime.Parse(fields[4] + " " + fields[5].Substring(0, 2) + ":" + fields[5].Substring(2, 2));    //曲线时间
+                        string filetype = fields[5].Split('.')[1].ToUpper();  //文件类型
+
+                        if (filetype == "CSV" &&                                        //必须是CSV文件
+                            (curvetype + "_" + curvedime) == filepre.ToUpper()          //文件名前缀必须是filepre，这里是BiasCurve_2D
+                            )
+                            //filedate < readdate)                                      //必须比当前读取时间早
+                        {
+                            filenames.Add(files[i].Name);
+                            findflag =true;
+                        }
                     }
+                    else if (filepre.ToUpper() == "SCORECURVE_2D")
+                    {
+                        string[] fields = new string[6];
+                        //文件名称必须由6部分构成，如BiasCurve_2D_CurveName_2_2018-01-01_0200.csv
+                        fields = files[i].Name.Split('_');                    
+                        string curvetype = fields[0].ToUpper();       //曲线类型
+                        string curvedime = fields[1].ToUpper();       //曲线维度
+                        string curvename = fields[2];                 //曲线名称
+                        int curveindex = int.Parse(fields[3]);        //曲线序号
+                        DateTime filedate = DateTime.Parse(fields[4] + " " + fields[5].Substring(0, 2) + ":" + fields[5].Substring(2, 2));    //曲线时间
+                        string filetype = fields[5].Split('.')[1].ToUpper();  //文件类型
+
+                        if (filetype == "CSV" &&                                        //必须是CSV文件
+                            (curvetype + "_" + curvedime) == filepre.ToUpper()          //文件名前缀必须是filepre，这里是BiasCurve_2D
+                            )
+                            //filedate < readdate)                                      //必须比当前读取时间早
+                        {
+                            filenames.Add(files[i].Name);
+                            findflag =true;
+                        }
+                    }
+
                 }
                 catch (Exception ex)
                 {
