@@ -48,6 +48,7 @@
     <Compile Include="ISnapIn.cs" />
     <Compile Include="NewCaculateCommand\CurveClass.cs" />
     <Compile Include="NewCaculateCommand\D22STimeClass.cs" />
+    <Compile Include="NewCaculateCommand\IndependentVariableClass.cs" />
     <Compile Include="NewCaculateCommand\MDevLimitClass.cs" />
     <Compile Include="NewCaculateCommand\MDevLimitMessageOutBadClass.cs" />
     <Compile Include="NewCaculateCommand\MDevLimitMessageOutClass.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="NewCaculateCommand\MultiEffectMessageInClass.cs" />
     <Compile Include="NewCaculateCommand\MultiMessageInClass.cs" />
     <Compile Include="NewCaculateCommand\StartEndDateClass.cs" />
+    <Compile Include="NewCaculateCommand\XFClass.cs" />
     <Compile Include="PCModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PValue.cs" />

@@ -175,6 +175,7 @@
     <Compile Include="Interface_RTDB\MRDSegmentMaxMinAvg.cs" />
     <Compile Include="NewCaculate\MDevLimitCaculate.cs" />
     <Compile Include="NewCaculate\MPVBaseCaculate.cs" />
+    <Compile Include="NewCaculate\MultipleRegressionAlgorithmCaculate.cs" />
     <Compile Include="New_Base_Caculate\MDevLimitLong.cs" />
     <Compile Include="New_Base_Caculate\MDevLimitShort.cs" />
     <Compile Include="New_Base_Caculate\MPVBaseLong.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="NewBase\MLinearRegression.cs" />
     <Compile Include="NewBase\MPVBase.cs" />
     <Compile Include="NewBase\MSpecOutline.cs" />
+    <Compile Include="New_Base_Caculate\MultipleRegressionAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interface_RTDB\MAnalogReadCurrent.cs" />
     <Compile Include="StatusConst.cs" />
