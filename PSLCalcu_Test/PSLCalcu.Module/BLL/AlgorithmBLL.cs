@@ -187,5 +187,27 @@ namespace PSLCalcu.Module.BLL
                 throw;
             }
         }
+
+        public static bool insertMDeviationS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                bool isok = false;
+                DataTable dt = isHaveData(year, month, day, hour, type, "psl_mdeviations");
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    isok = DAL.AlgorithmDAL.updateMDeviationS(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
+                }
+                else
+                {
+                    isok = DAL.AlgorithmDAL.insertMDeviationS(newClass, type, year, month, day, hour);
+                }
+                return isok;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

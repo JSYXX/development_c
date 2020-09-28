@@ -831,6 +831,53 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
+        public static bool insertMDeviationS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("spV", newClass.sp.ToString()),
+                new MySqlParameter("errV", newClass.err.ToString()),
+                new MySqlParameter("errrateV", newClass.errrate.ToString()),
+                new MySqlParameter("scoreV", newClass.score.ToString()),
+                new MySqlParameter("wscoreV", newClass.wscore.ToString()),
+                new MySqlParameter("typeV", type),
+                new MySqlParameter("yearV", year),
+                new MySqlParameter("monthV", month),
+                new MySqlParameter("dayV", day),
+                new MySqlParameter("hourV", hour)};
+                DataTable dt = MysqlHelper.getDataTableOfSQL("insertMDeviationS", CommandType.StoredProcedure, paramses, ref errmsg);
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool updateMDeviationS(int id, MDeviationSOutClass newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("pid",id),
+                new MySqlParameter("spV", newClass.sp.ToString()),
+                new MySqlParameter("errV", newClass.err.ToString()),
+                new MySqlParameter("errrateV", newClass.errrate.ToString()),
+                new MySqlParameter("scoreV", newClass.score.ToString()),
+                new MySqlParameter("wscoreV", newClass.wscore.ToString()),};
+                isok = Helper.MysqlHelper.ModifySingleSql("updateMDeviationS", CommandType.StoredProcedure, paramses, ref errmsg);
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         private static bool deleteTime(int pid)
         {
             try

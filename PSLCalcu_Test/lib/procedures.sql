@@ -1890,3 +1890,61 @@ SET
 WHERE `id` = pid;
 
 END ;;
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMDeviationS`(
+    in DevHHNV varchar(45),
+    in spV varchar(45),
+    in errV varchar(45),
+    in errrateV varchar(45),
+    in scoreV varchar(45),
+    in wscoreV varchar(45),
+    in typeV varchar(45),
+    in yearV varchar(45),
+    in monthV varchar(45),
+    in dayV varchar(45),
+    in hourV varchar(45)
+)
+BEGIN
+    INSERT INTO `psldb`.`psl_mdeviations`
+(`sp`,
+`err`,
+`errrate`,
+`score`,
+`wscore`,
+`yearvalue`,
+`monthvalue`,
+`dayvalue`,
+`hourvalue`,
+`tagId`)
+VALUES
+(spV,
+errV,
+errrateV,
+scoreV,
+wscoreV,
+yearV,
+monthV,
+dayV,
+hourV,
+typeV);
+END ;;
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMDeviationS`(
+    in pid int,
+    in spV varchar(45),
+    in errV varchar(45),
+    in errrateV varchar(45),
+    in scoreV varchar(45),
+    in wscoreV varchar(45),
+)
+BEGIN
+    UPDATE `psldb`.`psl_mdeviations`
+SET
+`sp` = spV,
+`err` = errV,
+`errrate` = errrateV,
+`score` = scoreV,
+`wscore` = wscoreV
+WHERE `id` = pid;
+
+END ;;
