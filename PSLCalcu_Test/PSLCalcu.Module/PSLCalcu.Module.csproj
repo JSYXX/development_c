@@ -187,6 +187,8 @@
     <Compile Include="NewBase\MPVBase.cs" />
     <Compile Include="NewBase\MSpecOutline.cs" />
     <Compile Include="New_Base_Caculate\MultipleRegressionAlgorithm.cs" />
+    <Compile Include="New_Base_Caculate\NewMAddMul.cs" />
+    <Compile Include="New_Base_Caculate\NewMDeviation2DS.cs" />
     <Compile Include="New_Base_Caculate\NewMDeviationS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interface_RTDB\MAnalogReadCurrent.cs" />

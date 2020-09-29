@@ -209,5 +209,49 @@ namespace PSLCalcu.Module.BLL
                 throw;
             }
         }
+        public static bool insertMDeviation2DS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                bool isok = false;
+                DataTable dt = isHaveData(year, month, day, hour, type, "psl_mdeviation2ds");
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    isok = DAL.AlgorithmDAL.updateMDeviation2DS(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
+                }
+                else
+                {
+                    isok = DAL.AlgorithmDAL.insertMDeviation2DS(newClass, type, year, month, day, hour);
+                }
+                return isok;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static bool insertMAddMul(MAddMulOutClass newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                bool isok = false;
+                DataTable dt = isHaveData(year, month, day, hour, type, "psl_maddmul");
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    isok = DAL.AlgorithmDAL.updateMAddMul(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
+                }
+                else
+                {
+                    isok = DAL.AlgorithmDAL.insertMAddMul(newClass, type, year, month, day, hour);
+                }
+                return isok;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
     }
 }

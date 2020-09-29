@@ -445,7 +445,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 else
                 {
                     _fatalFlag = true;
-                    _fatalInfo = "MPVBase短周期数据录入数据库是失败";
+                    _fatalInfo = "MDeviationS数据录入数据库是失败";
                     return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
                 }
             }

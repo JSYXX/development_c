@@ -1127,7 +1127,50 @@ namespace PSLCalcu
 
             return createTable(databasename, tablename, filedname);
         }
+        public static bool createTable_pslmdeviation2ds()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mdeviation2ds";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                  "`sp` varchar(45) DEFAULT NULL",
+                                  "`err` varchar(45) DEFAULT NULL",
+                                  "`errrate` varchar(45) DEFAULT NULL",
+                                  "`score` varchar(45) DEFAULT NULL",
+                                  "`wscore` varchar(45) DEFAULT NULL"
+                                };
 
+
+            return createTable(databasename, tablename, filedname);
+        }
+
+        public static bool createTable_pslmaddmul()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_maddmul";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                  "`addmulsum` varchar(45) DEFAULT NULL",
+                                  "`addmulabssum` varchar(45) DEFAULT NULL",
+                                  "`addmulmul` varchar(45) DEFAULT NULL",
+                                  "`addmulabsmul` varchar(45) DEFAULT NULL",
+                                  "`addmulavg` varchar(45) DEFAULT NULL",
+                                  "`addmulabsavg` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
 
         //概化计算时间记录表
         public static bool createTable_psltimerecord()

@@ -869,8 +869,106 @@ namespace PSLCalcu.Module.DAL
                 new MySqlParameter("errV", newClass.err.ToString()),
                 new MySqlParameter("errrateV", newClass.errrate.ToString()),
                 new MySqlParameter("scoreV", newClass.score.ToString()),
-                new MySqlParameter("wscoreV", newClass.wscore.ToString()),};
+                new MySqlParameter("wscoreV", newClass.wscore.ToString())};
                 isok = Helper.MysqlHelper.ModifySingleSql("updateMDeviationS", CommandType.StoredProcedure, paramses, ref errmsg);
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool insertMDeviation2DS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("spV", newClass.sp.ToString()),
+                new MySqlParameter("errV", newClass.err.ToString()),
+                new MySqlParameter("errrateV", newClass.errrate.ToString()),
+                new MySqlParameter("scoreV", newClass.score.ToString()),
+                new MySqlParameter("wscoreV", newClass.wscore.ToString()),
+                new MySqlParameter("typeV", type),
+                new MySqlParameter("yearV", year),
+                new MySqlParameter("monthV", month),
+                new MySqlParameter("dayV", day),
+                new MySqlParameter("hourV", hour)};
+                DataTable dt = MysqlHelper.getDataTableOfSQL("insertMDeviation2DS", CommandType.StoredProcedure, paramses, ref errmsg);
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool updateMDeviation2DS(int id, MDeviationSOutClass newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("pid",id),
+                new MySqlParameter("spV", newClass.sp.ToString()),
+                new MySqlParameter("errV", newClass.err.ToString()),
+                new MySqlParameter("errrateV", newClass.errrate.ToString()),
+                new MySqlParameter("scoreV", newClass.score.ToString()),
+                new MySqlParameter("wscoreV", newClass.wscore.ToString())};
+                isok = Helper.MysqlHelper.ModifySingleSql("updateMDeviation2DS", CommandType.StoredProcedure, paramses, ref errmsg);
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool insertMAddMul(MAddMulOutClass newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("addMulSumV", newClass.addMulSum.ToString()),
+                new MySqlParameter("addMulAbsSumV", newClass.addMulAbsSum.ToString()),
+                new MySqlParameter("addMulMulV", newClass.addMulMul.ToString()),
+                new MySqlParameter("addMulAbsMulV", newClass.addMulAbsMul.ToString()),
+                new MySqlParameter("addMulAvgV", newClass.addMulAvg.ToString()),
+                new MySqlParameter("addMulAbsAvgV", newClass.addMulAbsAvg.ToString()),
+                new MySqlParameter("typeV", type),
+                new MySqlParameter("yearV", year),
+                new MySqlParameter("monthV", month),
+                new MySqlParameter("dayV", day),
+                new MySqlParameter("hourV", hour)};
+                DataTable dt = MysqlHelper.getDataTableOfSQL("insertMAddMul", CommandType.StoredProcedure, paramses, ref errmsg);
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool updateMAddMul(int id, MAddMulOutClass newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("pid",id),
+                new MySqlParameter("addMulSumV", newClass.addMulSum.ToString()),
+                new MySqlParameter("addMulAbsSumV", newClass.addMulAbsSum.ToString()),
+                new MySqlParameter("addMulMulV", newClass.addMulMul.ToString()),
+                new MySqlParameter("addMulAbsMulV", newClass.addMulAbsMul.ToString()),
+                new MySqlParameter("addMulAvgV", newClass.addMulAvg.ToString()),
+                new MySqlParameter("addMulAbsAvgV", newClass.addMulAbsAvg.ToString())};
+                isok = Helper.MysqlHelper.ModifySingleSql("updateMAddMul", CommandType.StoredProcedure, paramses, ref errmsg);
                 return isok;
             }
             catch (Exception ex)

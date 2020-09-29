@@ -49,6 +49,7 @@
     <Compile Include="NewCaculateCommand\CurveClass.cs" />
     <Compile Include="NewCaculateCommand\D22STimeClass.cs" />
     <Compile Include="NewCaculateCommand\IndependentVariableClass.cs" />
+    <Compile Include="NewCaculateCommand\MAddMulOutClass.cs" />
     <Compile Include="NewCaculateCommand\MDeviationSOutClass.cs" />
     <Compile Include="NewCaculateCommand\MDevLimitClass.cs" />
     <Compile Include="NewCaculateCommand\MDevLimitMessageOutBadClass.cs" />

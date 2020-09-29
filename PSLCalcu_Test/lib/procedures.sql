@@ -1892,7 +1892,6 @@ WHERE `id` = pid;
 END ;;
 sqlSplit
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMDeviationS`(
-    in DevHHNV varchar(45),
     in spV varchar(45),
     in errV varchar(45),
     in errrateV varchar(45),
@@ -1945,6 +1944,125 @@ SET
 `errrate` = errrateV,
 `score` = scoreV,
 `wscore` = wscoreV
+WHERE `id` = pid;
+
+END ;;
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMDeviation2DS`(
+    in spV varchar(45),
+    in errV varchar(45),
+    in errrateV varchar(45),
+    in scoreV varchar(45),
+    in wscoreV varchar(45),
+    in typeV varchar(45),
+    in yearV varchar(45),
+    in monthV varchar(45),
+    in dayV varchar(45),
+    in hourV varchar(45)
+)
+BEGIN
+    INSERT INTO `psldb`.`psl_mdeviation2ds`
+(`sp`,
+`err`,
+`errrate`,
+`score`,
+`wscore`,
+`yearvalue`,
+`monthvalue`,
+`dayvalue`,
+`hourvalue`,
+`tagId`)
+VALUES
+(spV,
+errV,
+errrateV,
+scoreV,
+wscoreV,
+yearV,
+monthV,
+dayV,
+hourV,
+typeV);
+END ;;
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMDeviation2DS`(
+    in pid int,
+    in spV varchar(45),
+    in errV varchar(45),
+    in errrateV varchar(45),
+    in scoreV varchar(45),
+    in wscoreV varchar(45),
+)
+BEGIN
+    UPDATE `psldb`.`psl_mdeviation2ds`
+SET
+`sp` = spV,
+`err` = errV,
+`errrate` = errrateV,
+`score` = scoreV,
+`wscore` = wscoreV
+WHERE `id` = pid;
+
+END ;;
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMAddMul`(
+    in addMulSumV varchar(45),
+    in addMulAbsSumV varchar(45),
+    in addMulMulV varchar(45),
+    in addMulAbsMulV varchar(45),
+    in addMulAvgV varchar(45),
+    in addMulAbsAvgV varchar(45),
+    in typeV varchar(45),
+    in yearV varchar(45),
+    in monthV varchar(45),
+    in dayV varchar(45),
+    in hourV varchar(45)
+)
+BEGIN
+    INSERT INTO `psldb`.`psl_maddmul`
+(`addmulsum`,
+`addmulabssum`,
+`addmulmul`,
+`addmulabsmul`,
+`addmulavg`,
+`addmulabsavg`,
+`yearvalue`,
+`monthvalue`,
+`dayvalue`,
+`hourvalue`,
+`tagId`)
+VALUES
+(addMulSumV,
+addMulAbsSumV,
+addMulMulV,
+addMulAbsMulV,
+addMulAvgV,
+addMulAbsAvgV,
+yearV,
+monthV,
+dayV,
+hourV,
+typeV);
+END ;;
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMAddMul`(
+    in pid int,
+    in addMulSumV varchar(45),
+    in addMulAbsSumV varchar(45),
+    in addMulMulV varchar(45),
+    in addMulAbsMulV varchar(45),
+    in addMulAvgV varchar(45),
+    in addMulAbsAvgV varchar(45),
+)
+BEGIN
+    UPDATE `psldb`.`psl_maddmul`
+SET
+`addmulsum` = addMulSumV,
+`addmulabssum` = addMulAbsSumV,
+`addmulmul` = addMulMulV,
+`addmulabsmul` = addMulAbsMulV,
+`addmulavg` = addMulAvgV,
+`addmulabsavg` = addMulAbsAvgV
 WHERE `id` = pid;
 
 END ;;
