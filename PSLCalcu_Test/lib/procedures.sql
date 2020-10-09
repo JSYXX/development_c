@@ -1934,7 +1934,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMDeviationS`(
     in errV varchar(45),
     in errrateV varchar(45),
     in scoreV varchar(45),
-    in wscoreV varchar(45),
+    in wscoreV varchar(45)
 )
 BEGIN
     UPDATE `psldb`.`psl_mdeviations`
@@ -1991,7 +1991,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMDeviation2DS`(
     in errV varchar(45),
     in errrateV varchar(45),
     in scoreV varchar(45),
-    in wscoreV varchar(45),
+    in wscoreV varchar(45)
 )
 BEGIN
     UPDATE `psldb`.`psl_mdeviation2ds`
@@ -2052,7 +2052,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMAddMul`(
     in addMulMulV varchar(45),
     in addMulAbsMulV varchar(45),
     in addMulAvgV varchar(45),
-    in addMulAbsAvgV varchar(45),
+    in addMulAbsAvgV varchar(45)
 )
 BEGIN
     UPDATE `psldb`.`psl_maddmul`
