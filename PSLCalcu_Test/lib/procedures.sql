@@ -2066,3 +2066,86 @@ SET
 WHERE `id` = pid;
 
 END ;;
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMPVBasePlusSft`(
+    in PVBMinV varchar(45),
+    in PVBMinTimeV varchar(45),
+    in PVBAvgV varchar(45),
+    in PVBMaxV varchar(45),
+    in PVBMaxTimeV varchar(45),
+    in PVBSumV varchar(45),
+    in PVBSumkbV varchar(45),
+    in PVBAbsSumV varchar(45),
+    in PVBStbTRV varchar(45),
+    in PVBNoStbTRV varchar(45),
+    in UpdateTimeV varchar(45),
+    in EffectiveCountV varchar(45),
+    in typeV varchar(45),
+    in dutyTimeV varchar(45)
+)
+BEGIN
+    INSERT INTO `psldb`.`psl_mpvbaseplussft`
+(`PVBMin`,
+`PVBMinTime`,
+`PVBAvg`,
+`PVBMax`,
+`PVBMaxTime`,
+`PVBSum`,
+`PVBSumkb`,
+`PVBAbsSum`,
+`PVBStbTR`,
+`PVBNoStbTR`,
+`UpdateTime`,
+`EffectiveCount`,
+`tagId`,
+`dutytime`)
+VALUES
+(PVBMinV,
+PVBMinTimeV,
+PVBAvgV,
+PVBMaxV,
+PVBMaxTimeV,
+PVBSumV,
+PVBSumkbV,
+PVBAbsSumV,
+PVBStbTRV,
+PVBNoStbTRV,
+UpdateTimeV,
+EffectiveCountV,
+typeV,
+dutyTimeV);
+END ;;
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMPVBasePlusSft`(
+    in pid int,
+    in PVBMinV varchar(45),
+    in PVBMinTimeV varchar(45),
+    in PVBAvgV varchar(45),
+    in PVBMaxV varchar(45),
+    in PVBMaxTimeV varchar(45),
+    in PVBSumV varchar(45),
+    in PVBSumkbV varchar(45),
+    in PVBAbsSumV varchar(45),
+    in PVBStbTRV varchar(45),
+    in PVBNoStbTRV varchar(45),
+    in UpdateTimeV varchar(45),
+    in EffectiveCountV varchar(45)
+)
+BEGIN
+    UPDATE `psldb`.`psl_mpvbaseplussft`
+SET
+`PVBMin` = PVBMinV,
+`PVBMinTime` = PVBMinTimeV,
+`PVBAvg` = PVBAvgV,
+`PVBMax` = PVBMaxV,
+`PVBMaxTime` = PVBMaxTimeV,
+`PVBSum` = PVBSumV,
+`PVBSumkb` = PVBSumkbV,
+`PVBAbsSum` = PVBAbsSumV,
+`PVBStbTR` = PVBStbTRV,
+`PVBNoStbTR` = PVBNoStbTRV,
+`UpdateTime` = UpdateTimeV,
+`EffectiveCount` = EffectiveCountV
+WHERE `id` = pid;
+
+END ;;

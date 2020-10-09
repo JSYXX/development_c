@@ -60,6 +60,7 @@
     <Compile Include="NewCaculateCommand\MPVBaseMessageOutBadClass.cs" />
     <Compile Include="NewCaculateCommand\MPVBaseMessageOutClass.cs" />
     <Compile Include="NewCaculateCommand\MPVBaseMultiMessageInClass.cs" />
+    <Compile Include="NewCaculateCommand\MPVBasePlusSftClass.cs" />
     <Compile Include="NewCaculateCommand\MultiEffectMessageInClass.cs" />
     <Compile Include="NewCaculateCommand\MultiMessageInClass.cs" />
     <Compile Include="NewCaculateCommand\StartEndDateClass.cs" />

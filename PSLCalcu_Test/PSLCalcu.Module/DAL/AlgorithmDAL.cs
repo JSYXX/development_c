@@ -999,6 +999,67 @@ namespace PSLCalcu.Module.DAL
             }
 
         }
+
+        public static bool updateMPVBasePlusSft(MPVBasePlusSftClass newClass)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("pid",newClass.id),
+                new MySqlParameter("PVBMinV", newClass.PVBMin),
+                new MySqlParameter("PVBMinTimeV", newClass.PVBMinTime),
+                new MySqlParameter("PVBAvgV", newClass.PVBAvg),
+                new MySqlParameter("PVBMaxV", newClass.PVBMax),
+                new MySqlParameter("PVBMaxTimeV", newClass.PVBMaxTime),
+                new MySqlParameter("PVBSumV", newClass.PVBSum),
+                new MySqlParameter("PVBSumkbV", newClass.PVBSumkb),
+                new MySqlParameter("PVBAbsSumV", newClass.PVBAbsSum),
+                new MySqlParameter("PVBStbTRV", newClass.PVBStbTR),
+                new MySqlParameter("PVBNoStbTRV", newClass.PVBNoStbTR),
+                new MySqlParameter("UpdateTimeV", newClass.UpdateTime),
+                new MySqlParameter("EffectiveCountV", newClass.EffectiveCount)};
+                isok = Helper.MysqlHelper.ModifySingleSql("updateMPVBasePlusSft", CommandType.StoredProcedure, paramses, ref errmsg);
+
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static bool insertMPVBasePlusSft(MPVBasePlusSftClass newClass)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("PVBMinV", newClass.PVBMin),
+                new MySqlParameter("PVBMinTimeV", newClass.PVBMinTime),
+                new MySqlParameter("PVBAvgV", newClass.PVBAvg),
+                new MySqlParameter("PVBMaxV", newClass.PVBMax),
+                new MySqlParameter("PVBMaxTimeV", newClass.PVBMaxTime),
+                new MySqlParameter("PVBSumV", newClass.PVBSum),
+                new MySqlParameter("PVBSumkbV", newClass.PVBSumkb),
+                new MySqlParameter("PVBAbsSumV", newClass.PVBAbsSum),
+                new MySqlParameter("PVBStbTRV", newClass.PVBStbTR),
+                new MySqlParameter("PVBNoStbTRV", newClass.PVBNoStbTR),
+                new MySqlParameter("UpdateTimeV", newClass.UpdateTime),
+                new MySqlParameter("EffectiveCountV", newClass.EffectiveCount),
+                new MySqlParameter("dutyTimeV", newClass.dutyTime),
+                new MySqlParameter("typeV", newClass.type)};
+                isok = Helper.MysqlHelper.ModifySingleSql("insertMPVBasePlusSft", CommandType.StoredProcedure, paramses, ref errmsg);
+
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static DataTable isHaveData(string sql)
         {
             try

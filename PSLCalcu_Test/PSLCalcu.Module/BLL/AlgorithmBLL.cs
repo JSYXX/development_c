@@ -76,6 +76,26 @@ namespace PSLCalcu.Module.BLL
                 throw;
             }
         }
+        public static bool insertMPVBasePlusSft(MPVBasePlusSftClass newClass, bool isNew)
+        {
+            try
+            {
+                bool isok = false;
+                if (isNew)
+                {
+                    isok = DAL.AlgorithmDAL.insertMPVBasePlusSft(newClass);
+                }
+                else
+                {
+                    isok = DAL.AlgorithmDAL.updateMPVBasePlusSft(newClass);
+                }
+                return isok;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public static bool insertLongMPVBase(MPVBaseMessageOutClass newClass, string type, string year, string month, string day, string hour)
         {
             try

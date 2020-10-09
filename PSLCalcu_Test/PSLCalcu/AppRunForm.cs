@@ -667,6 +667,8 @@ namespace PSLCalcu
             if (runflag) runflag = IniTable.createTable_pslmdeviations();
             if (runflag) runflag = IniTable.createTable_pslmdeviation2ds();
             if (runflag) runflag = IniTable.createTable_pslmaddmul();
+            if (runflag) runflag = IniTable.createTable_pslmpvbaseplussft();
+            
 
             string sqlFilePath = AppDomain.CurrentDomain.BaseDirectory + "procedures.sql";
             string MysqlConStr = System.Configuration.ConfigurationManager.AppSettings["Local"].ToString();

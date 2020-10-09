@@ -1172,6 +1172,32 @@ namespace PSLCalcu
             return createTable(databasename, tablename, filedname);
         }
 
+        public static bool createTable_pslmpvbaseplussft()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mpvbaseplussft";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`dutytime` varchar(45) DEFAULT NULL",
+                                  "`PVBMin` varchar(45) DEFAULT NULL",
+                                  "`PVBMinTime` varchar(45) DEFAULT NULL",
+                                  "`PVBAvg` varchar(45) DEFAULT NULL",
+                                  "`PVBMax` varchar(45) DEFAULT NULL",
+                                  "`PVBMaxTime` varchar(45) DEFAULT NULL",
+                                  "`PVBSum` varchar(45) DEFAULT NULL",
+                                  "`PVBSumkb` varchar(45) DEFAULT NULL",
+                                  "`PVBAbsSum` varchar(45) DEFAULT NULL",
+                                  "`PVBStbTR` varchar(45) DEFAULT NULL",
+                                  "`PVBNoStbTR` varchar(45) DEFAULT NULL",
+                                  "`UpdateTime` varchar(45) DEFAULT NULL",
+                                  "`EffectiveCount` int(11) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+
         //概化计算时间记录表
         public static bool createTable_psltimerecord()
         {
