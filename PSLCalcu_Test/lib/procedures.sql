@@ -1901,7 +1901,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMDeviationS`(
     in yearV varchar(45),
     in monthV varchar(45),
     in dayV varchar(45),
-    in hourV varchar(45)
+    in hourV varchar(45),
+    in invalidflagV int
 )
 BEGIN
     INSERT INTO `psldb`.`psl_mdeviations`
@@ -1914,7 +1915,8 @@ BEGIN
 `monthvalue`,
 `dayvalue`,
 `hourvalue`,
-`tagId`)
+`tagId`,
+`status`)
 VALUES
 (spV,
 errV,
@@ -1925,7 +1927,8 @@ yearV,
 monthV,
 dayV,
 hourV,
-typeV);
+typeV,
+invalidflagV);
 END ;;
 sqlSplit
 CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMDeviationS`(
@@ -1934,7 +1937,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMDeviationS`(
     in errV varchar(45),
     in errrateV varchar(45),
     in scoreV varchar(45),
-    in wscoreV varchar(45)
+    in wscoreV varchar(45),
+    in invalidflagV int
 )
 BEGIN
     UPDATE `psldb`.`psl_mdeviations`
@@ -1943,7 +1947,8 @@ SET
 `err` = errV,
 `errrate` = errrateV,
 `score` = scoreV,
-`wscore` = wscoreV
+`wscore` = wscoreV,
+`status` = invalidflagV
 WHERE `id` = pid;
 
 END ;;
@@ -1958,7 +1963,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMDeviation2DS`(
     in yearV varchar(45),
     in monthV varchar(45),
     in dayV varchar(45),
-    in hourV varchar(45)
+    in hourV varchar(45),
+    in invalidflagV int
 )
 BEGIN
     INSERT INTO `psldb`.`psl_mdeviation2ds`
@@ -1971,7 +1977,8 @@ BEGIN
 `monthvalue`,
 `dayvalue`,
 `hourvalue`,
-`tagId`)
+`tagId`,
+`status`)
 VALUES
 (spV,
 errV,
@@ -1982,7 +1989,8 @@ yearV,
 monthV,
 dayV,
 hourV,
-typeV);
+typeV,
+invalidflagV);
 END ;;
 sqlSplit
 CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMDeviation2DS`(
@@ -1991,7 +1999,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMDeviation2DS`(
     in errV varchar(45),
     in errrateV varchar(45),
     in scoreV varchar(45),
-    in wscoreV varchar(45)
+    in wscoreV varchar(45),
+    in invalidflagV int
 )
 BEGIN
     UPDATE `psldb`.`psl_mdeviation2ds`
@@ -2000,7 +2009,8 @@ SET
 `err` = errV,
 `errrate` = errrateV,
 `score` = scoreV,
-`wscore` = wscoreV
+`wscore` = wscoreV,
+`status` = invalidflagV
 WHERE `id` = pid;
 
 END ;;

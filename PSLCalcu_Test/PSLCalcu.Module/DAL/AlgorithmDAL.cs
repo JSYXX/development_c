@@ -831,7 +831,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        public static bool insertMDeviationS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour)
+        public static bool insertMDeviationS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour,int invalidflag)
         {
             try
             {
@@ -847,7 +847,8 @@ namespace PSLCalcu.Module.DAL
                 new MySqlParameter("yearV", year),
                 new MySqlParameter("monthV", month),
                 new MySqlParameter("dayV", day),
-                new MySqlParameter("hourV", hour)};
+                new MySqlParameter("hourV", hour),
+                new MySqlParameter("invalidflagV", invalidflag)};
                 DataTable dt = MysqlHelper.getDataTableOfSQL("insertMDeviationS", CommandType.StoredProcedure, paramses, ref errmsg);
                 return isok;
             }
@@ -857,7 +858,7 @@ namespace PSLCalcu.Module.DAL
             }
         }
 
-        public static bool updateMDeviationS(int id, MDeviationSOutClass newClass, string type, string year, string month, string day, string hour)
+        public static bool updateMDeviationS(int id, MDeviationSOutClass newClass, string type, string year, string month, string day, string hour, int invalidflag)
         {
             try
             {
@@ -869,7 +870,8 @@ namespace PSLCalcu.Module.DAL
                 new MySqlParameter("errV", newClass.err.ToString()),
                 new MySqlParameter("errrateV", newClass.errrate.ToString()),
                 new MySqlParameter("scoreV", newClass.score.ToString()),
-                new MySqlParameter("wscoreV", newClass.wscore.ToString())};
+                new MySqlParameter("wscoreV", newClass.wscore.ToString()),
+                new MySqlParameter("invalidflagV", invalidflag)};
                 isok = Helper.MysqlHelper.ModifySingleSql("updateMDeviationS", CommandType.StoredProcedure, paramses, ref errmsg);
                 return isok;
             }
@@ -879,7 +881,7 @@ namespace PSLCalcu.Module.DAL
             }
         }
 
-        public static bool insertMDeviation2DS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour)
+        public static bool insertMDeviation2DS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour, int invalidflag)
         {
             try
             {
@@ -895,7 +897,8 @@ namespace PSLCalcu.Module.DAL
                 new MySqlParameter("yearV", year),
                 new MySqlParameter("monthV", month),
                 new MySqlParameter("dayV", day),
-                new MySqlParameter("hourV", hour)};
+                new MySqlParameter("hourV", hour),
+                new MySqlParameter("invalidflagV", invalidflag)};
                 DataTable dt = MysqlHelper.getDataTableOfSQL("insertMDeviation2DS", CommandType.StoredProcedure, paramses, ref errmsg);
                 return isok;
             }
@@ -905,7 +908,7 @@ namespace PSLCalcu.Module.DAL
             }
         }
 
-        public static bool updateMDeviation2DS(int id, MDeviationSOutClass newClass, string type, string year, string month, string day, string hour)
+        public static bool updateMDeviation2DS(int id, MDeviationSOutClass newClass, string type, string year, string month, string day, string hour, int invalidflag)
         {
             try
             {
@@ -917,7 +920,8 @@ namespace PSLCalcu.Module.DAL
                 new MySqlParameter("errV", newClass.err.ToString()),
                 new MySqlParameter("errrateV", newClass.errrate.ToString()),
                 new MySqlParameter("scoreV", newClass.score.ToString()),
-                new MySqlParameter("wscoreV", newClass.wscore.ToString())};
+                new MySqlParameter("wscoreV", newClass.wscore.ToString()),
+                new MySqlParameter("invalidflagV", invalidflag)};
                 isok = Helper.MysqlHelper.ModifySingleSql("updateMDeviation2DS", CommandType.StoredProcedure, paramses, ref errmsg);
                 return isok;
             }

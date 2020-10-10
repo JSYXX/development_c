@@ -208,7 +208,7 @@ namespace PSLCalcu.Module.BLL
             }
         }
 
-        public static bool insertMDeviationS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour)
+        public static bool insertMDeviationS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour, int invalidflag)
         {
             try
             {
@@ -216,11 +216,11 @@ namespace PSLCalcu.Module.BLL
                 DataTable dt = isHaveData(year, month, day, hour, type, "psl_mdeviations");
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    isok = DAL.AlgorithmDAL.updateMDeviationS(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
+                    isok = DAL.AlgorithmDAL.updateMDeviationS(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour, invalidflag);
                 }
                 else
                 {
-                    isok = DAL.AlgorithmDAL.insertMDeviationS(newClass, type, year, month, day, hour);
+                    isok = DAL.AlgorithmDAL.insertMDeviationS(newClass, type, year, month, day, hour, invalidflag);
                 }
                 return isok;
             }
@@ -229,7 +229,7 @@ namespace PSLCalcu.Module.BLL
                 throw;
             }
         }
-        public static bool insertMDeviation2DS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour)
+        public static bool insertMDeviation2DS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour, int invalidflag)
         {
             try
             {
@@ -237,11 +237,11 @@ namespace PSLCalcu.Module.BLL
                 DataTable dt = isHaveData(year, month, day, hour, type, "psl_mdeviation2ds");
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    isok = DAL.AlgorithmDAL.updateMDeviation2DS(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
+                    isok = DAL.AlgorithmDAL.updateMDeviation2DS(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour, invalidflag);
                 }
                 else
                 {
-                    isok = DAL.AlgorithmDAL.insertMDeviation2DS(newClass, type, year, month, day, hour);
+                    isok = DAL.AlgorithmDAL.insertMDeviation2DS(newClass, type, year, month, day, hour, invalidflag);
                 }
                 return isok;
             }

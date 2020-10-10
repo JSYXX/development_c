@@ -95,15 +95,22 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 return _outputNumber;
             }
         }
-        private string _outputDescs = "返回过滤后的有效数据;" +
-                                    "返回过滤后的有效数据占比;" +
-                                    "返回系数数组;" +
-                                    "r2;" +
-                                    "sey;" +
-                                    "df;" +
-                                    "ssreg;" +
-                                    "ssresid;" +
-                                    "F";
+        private string _outputDescs = "sey;" +
+                                     "r2;" +
+                                     "F;" +
+                                     "df;" +
+                                     "ssreg;" +
+                                     "ssresid;" +
+                                     "m1;" +
+                                     "m2;" +
+                                     "m3;" +
+                                     "m4;" +
+                                     "m5;" +
+                                     "m6;" +
+                                     "m7;" +
+                                     "m8;" +
+                                     "m9;" +
+                                     "m10";
 
         public string outputDescs
         {
@@ -112,12 +119,22 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 return _outputDescs;
             }
         }
-        private string _outputDescsCN = "参与建模点数;" +
-                                        "占总点数百分比;" +
-                                        "二次项a;" +
-                                        "二次项b;" +
-                                        "二次项c;" +
-                                        "r2";
+        private string _outputDescsCN = "y 估计值的标准误差" +
+                                        "判定系数;" +
+                                        "统计、观察值;" +
+                                        "自由度;" +
+                                        "回归平方和;" +
+                                        "残差平方和;" +
+                                        "X1 系数;" +
+                                        "X2 系数;" +
+                                        "X3 系数;" +
+                                        "X4 系数;" +
+                                        "X5 系数;" +
+                                        "X6 系数;" +
+                                        "X7 系数;" +
+                                        "X8 系数;" +
+                                        "X9 系数;" +
+                                        "X10 系数;";
 
         public string outputDescsCN
         {
@@ -308,6 +325,17 @@ namespace PSLCalcu.Module.New_Base_Caculate
                     PValue rValue = new PValue(resultlist[i], calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                     results[i + 2 + mlist.Length] = new List<PValue>();
                     results[i + 2 + mlist.Length].Add(rValue);
+                }
+                //不够16位的0补齐
+                if (results.Length < 16)
+                {
+                    int l = results.Length;
+                    for (int i = 0; i < 16 - results.Length; i++)
+                    {
+                        PValue rValue = new PValue(0, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
+                        results[i + l] = new List<PValue>();
+                        results[i + l].Add(rValue);
+                    }
                 }
                 //计算结果初始化
                 return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);

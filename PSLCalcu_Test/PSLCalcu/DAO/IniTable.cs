@@ -1121,7 +1121,8 @@ namespace PSLCalcu
                                   "`err` varchar(45) DEFAULT NULL",
                                   "`errrate` varchar(45) DEFAULT NULL",
                                   "`score` varchar(45) DEFAULT NULL",
-                                  "`wscore` varchar(45) DEFAULT NULL"
+                                  "`wscore` varchar(45) DEFAULT NULL",
+                                  "`status` int(11) DEFAULT NULL"
                                 };
 
 
@@ -1142,7 +1143,8 @@ namespace PSLCalcu
                                   "`err` varchar(45) DEFAULT NULL",
                                   "`errrate` varchar(45) DEFAULT NULL",
                                   "`score` varchar(45) DEFAULT NULL",
-                                  "`wscore` varchar(45) DEFAULT NULL"
+                                  "`wscore` varchar(45) DEFAULT NULL",
+                                  "`status` int(11) DEFAULT NULL"
                                 };
 
 

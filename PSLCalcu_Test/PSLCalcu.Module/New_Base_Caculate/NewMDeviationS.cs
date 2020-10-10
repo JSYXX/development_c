@@ -437,7 +437,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 month = calcuinfo.fstarttime.Month.ToString();
                 day = calcuinfo.fstarttime.Day.ToString();
                 hour = calcuinfo.fstarttime.Hour.ToString();
-                bool isok = BLL.AlgorithmBLL.insertMDeviationS(MessageIN, calcuinfo.fsourtagids[0].ToString(), year, month, day, hour);
+                bool isok = BLL.AlgorithmBLL.insertMDeviationS(MessageIN, calcuinfo.fsourtagids[0].ToString(), year, month, day, hour, Convert.ToInt32(invalidflag));
                 if (isok)
                 {
                     return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
