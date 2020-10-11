@@ -3,6 +3,7 @@ using PCCommon.NewCaculateCommand;
 using PSLCalcu.Module.NewCaculate;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -155,9 +156,9 @@ namespace PSLCalcu.Module.New_Base_Caculate
         #region 输入输出参数的读写接口
         //输入输出参数读写，之所以要单独做成类的静态变量，主要是考虑有外部计算条件的计算模块，外部条件完成对时间帅选后，可以直接用时间去处理inputData
         //这样能够保持带条件和不带条件的计算，Calcu方法在形式上可以统一。
-        private static List<PValue> _inputData;
+        private static List<PValue>[] _inputData;
         //多输入参数标签顺序：
-        public static List<PValue> inputData
+        public static List<PValue>[] inputData
         {
             get
             {
@@ -200,7 +201,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
             return Calcu(_inputData, _calcuInfo);
         }
 
-        public static Results Calcu(List<PValue> input, CalcuInfo calcuinfo)
+        public static Results Calcu(List<PValue>[] inputs, CalcuInfo calcuinfo)
         {
             //公用变量
             bool _errorFlag = false;
@@ -222,19 +223,6 @@ namespace PSLCalcu.Module.New_Base_Caculate
 
             try
             {
-
-                //0.1、输入处理：截止时刻值。该算法不需要截止时刻点参与计算。 
-                if (input.Count > 1) input.RemoveAt(input.Count - 1);
-                //0.2、输入处理：过滤后结果。
-                //——如果去除了截止时刻点，过滤后长度小于1（计算要求至少有一个有效数据），则直接返回null
-                //——如果没取除截止时刻点，过滤后长度小于2（计算要求至少有一个有效数据和一个截止时刻值）
-                if (input.Count < 1)
-                {
-                    _warningFlag = true;
-                    _warningInfo = "对应时间段内的源数据状态位全部异常。";
-                    return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
-                }
-
                 //读取参数
 
                 double N1, N2, N3, k, b, stbl, nostbl;
@@ -250,10 +238,31 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 stbl = double.Parse(paras[5]);
                 nostbl = double.Parse(paras[6]);
                 //tagId
-                string type = paras[7];
+                string type = calcuInfo.fsourtagids[0].ToString();
+                DataSet ds = BLL.AlgorithmBLL.getSftData("psl_mpvbaseplussft", type, calcuinfo.fstarttime);
+                List<PValue> input = new List<PValue>();
+                input = inputs[0];
+                for (int l = 0; l < ds.Tables[1].Rows.Count; l++)
+                {
+                    PValue newClass = new PValue();
+
+                }
+                //0.1、输入处理：截止时刻值。该算法不需要截止时刻点参与计算。 
+                if (input.Count > 1) input.RemoveAt(input.Count - 1);
+                //0.2、输入处理：过滤后结果。
+                //——如果去除了截止时刻点，过滤后长度小于1（计算要求至少有一个有效数据），则直接返回null
+                //——如果没取除截止时刻点，过滤后长度小于2（计算要求至少有一个有效数据和一个截止时刻值）
+                if (input.Count < 1)
+                {
+                    _warningFlag = true;
+                    _warningInfo = "对应时间段内的源数据状态位全部异常。";
+                    return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                }
+
+
                 mpvMessageInClass.type = type;
                 bool isNewAdd = false;
-                if (paras.Length < 9)
+                if (ds.Tables[0] == null || ds.Tables[0].Rows.Count == 0)
                 {
                     isNewAdd = true;
                     mpvMessageInClass.dutyTime = input[1].Endtime.ToString();
@@ -287,18 +296,18 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 else
                 {
                     MPVBasePlusSftClass mpvClass = new MPVBasePlusSftClass();
-                    mpvClass.PVBMin = paras[8];
-                    mpvClass.PVBMinTime = paras[9];
-                    mpvClass.PVBAvg = paras[10];
-                    mpvClass.PVBMax = paras[11];
-                    mpvClass.PVBMaxTime = paras[12];
-                    mpvClass.PVBSum = paras[13];
-                    mpvClass.PVBSumkb = paras[14];
-                    mpvClass.PVBAbsSum = paras[15];
-                    mpvClass.PVBStbTR = paras[16];
-                    mpvClass.PVBNoStbTR = paras[17];
-                    mpvClass.UpdateTime = paras[18];
-                    mpvClass.EffectiveCount = paras[19];
+                    mpvClass.PVBMin = ds.Tables[0].Rows[0]["PVBMin"].ToString();
+                    mpvClass.PVBMinTime = ds.Tables[0].Rows[0]["PVBMinTime"].ToString();
+                    mpvClass.PVBAvg = ds.Tables[0].Rows[0]["PVBAvg"].ToString();
+                    mpvClass.PVBMax = ds.Tables[0].Rows[0]["PVBMax"].ToString();
+                    mpvClass.PVBMaxTime = ds.Tables[0].Rows[0]["PVBMaxTime"].ToString();
+                    mpvClass.PVBSum = ds.Tables[0].Rows[0]["PVBSum"].ToString();
+                    mpvClass.PVBSumkb = ds.Tables[0].Rows[0]["PVBSumkb"].ToString();
+                    mpvClass.PVBAbsSum = ds.Tables[0].Rows[0]["PVBAbsSum"].ToString();
+                    mpvClass.PVBStbTR = ds.Tables[0].Rows[0]["PVBStbTR"].ToString();
+                    mpvClass.PVBNoStbTR = ds.Tables[0].Rows[0]["PVBNoStbTR"].ToString();
+                    mpvClass.UpdateTime = ds.Tables[0].Rows[0]["UpdateTime"].ToString();
+                    mpvClass.EffectiveCount = ds.Tables[0].Rows[0]["EffectiveCount"].ToString();
 
                     if (Convert.ToDouble(mpvClass.PVBMin) > input[1].Value)
                     {

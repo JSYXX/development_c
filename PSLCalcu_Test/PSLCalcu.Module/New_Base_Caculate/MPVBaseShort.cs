@@ -373,7 +373,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 stbl = double.Parse(paras[5]);
                 nostbl = double.Parse(paras[6]);
                 //tagId
-                string type = calcuinfo.fsourtagids[0].ToString(); ;
+                string type = calcuinfo.fsourtagids[0].ToString();
 
                 #region 短周期计算
 

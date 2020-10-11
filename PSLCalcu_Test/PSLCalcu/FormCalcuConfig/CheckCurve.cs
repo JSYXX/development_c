@@ -33,6 +33,7 @@ namespace PSLCalcu
             cb_select.Items.Add("一维期望曲线");          //对应SelectedIndex=0
             cb_select.Items.Add("二维期望曲线");          //对应SelectedIndex=1
             cb_select.Items.Add("得分曲线");             //对应SelectedIndex=2
+            cb_select.Items.Add("二维得分曲线");  
             cb_select.SelectedIndex = 0;                //默认
 
         }
@@ -167,6 +168,26 @@ namespace PSLCalcu
                                     score.Name,
                                     String.Join(",", score.Xvalue),
                                     String.Join(",", score.Yvalue)
+                                    );
+                            }
+                        }
+                    }
+                    this.tb_readstatus.Text = strTemp;
+                    break;
+                case 3:
+                    strTemp = CurveConfig.Instance.ScoreCurves2DReadStatus;
+                    if (CurveConfig.Instance.ScoreCurves2D != null && CurveConfig.Instance.ScoreCurves2D.Count != 0)
+                    {
+                        if (CurveConfig.Instance.ScoreCurves2D.FindAll(x => { return x == null; }).Count != CurveConfig.Instance.ScoreCurves2D.Count)   //如果曲线对象集不为空，但曲线对象均为null也不行
+                        {
+                            for (int i = 0; i < CurveConfig.Instance.ScoreCurves2D.Count; i++)
+                            {
+                                Curve2D score_2D = CurveConfig.Instance.ScoreCurves2D[i];
+                                strTemp = strTemp + Environment.NewLine + String.Format("二纵得分曲线第{0}条，名称是：{1}" + Environment.NewLine + "X数组是：{2}" + Environment.NewLine + "Y数组是：{3}",
+                                    i + 1,
+                                    score_2D.Name,
+                                    String.Join(",", score_2D.Xvalue),
+                                    String.Join(",", score_2D.Yvalue)
                                     );
                             }
                         }

@@ -22,12 +22,30 @@ namespace PSLCalcu.Module.BLL
                 throw ex;
             }
         }
+        public static DataSet getSftData(string tableName, string tagid, DateTime nowDate)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                string sqlstr = "select * from " + tableName + " where `tagId`=" + tagid + " order by `dutytime` desc limit 1;";
+                DataTable dt = DAL.AlgorithmDAL.getData(sqlstr);
+                //string sqlChildStr = "select * from psldata" + nowDate.ToString("yyyyMM") + " where `tagid`=" + tagid + " and tagstarttime<=" + nowDate.ToString("yyyy-MM-dd HH:mm") + " limit 2";
+                //DataTable dtTime = DAL.AlgorithmDAL.getData(sqlChildStr);
+                ds.Tables.Add(dt);
+                //ds.Tables.Add(dtTime);
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static DataSet getSData(string tableName, string tagid, string year, string month, string day)
         {
             try
             {
                 DataSet ds = new DataSet();
-                string sqlstr = "select * from " + tableName + "where `tagId`=" + tagid + " and `yearvalue`=\"" + year + "\"";
+                string sqlstr = "select * from " + tableName + " where `tagId`=" + tagid + " and `yearvalue`=\"" + year + "\"";
                 if (!string.IsNullOrWhiteSpace(month))
                 {
                     sqlstr += " and `monthvalue`=\"" + month + "\"";

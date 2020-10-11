@@ -1181,7 +1181,7 @@ namespace PSLCalcu
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
                                   "`tagId` int(11) DEFAULT NULL",
-                                  "`dutytime` varchar(45) DEFAULT NULL",
+                                  "`dutytime` datetime DEFAULT NULL",
                                   "`PVBMin` varchar(45) DEFAULT NULL",
                                   "`PVBMinTime` varchar(45) DEFAULT NULL",
                                   "`PVBAvg` varchar(45) DEFAULT NULL",
