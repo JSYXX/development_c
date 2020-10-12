@@ -63,14 +63,14 @@ namespace PSLCalcu.Module.DAL
 
                 int aid = getAID(type);
                 isok = deleteTime(id);
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBSDMaxTime }, aid, id, "PVBSDMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBStbTSLT }, aid, id, "PVBStbTSLT");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBNoStbTSLT }, aid, id, "PVBNoStbTSLT");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBUpTSLT }, aid, id, "PVBUpTSLT");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBDownTSLT }, aid, id, "PVBDownTSLT");
-                isok = insertTimeValue(newClass.PVBStbT, aid, id, "PVBStbT");
-                isok = insertTimeValue(newClass.PVBNoStbT, aid, id, "PVBNoStbT");
-                isok = insertTimeValue(newClass.PVBSDMaxTimeG, aid, id, "PVBSDMaxTimeG");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBSDMaxTime }, aid, id, "PVBSDMaxTime", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBStbTSLT }, aid, id, "PVBStbTSLT", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBNoStbTSLT }, aid, id, "PVBNoStbTSLT", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBUpTSLT }, aid, id, "PVBUpTSLT", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBDownTSLT }, aid, id, "PVBDownTSLT", "MPVBase");
+                isok = insertTimeValue(newClass.PVBStbT, aid, id, "PVBStbT", "MPVBase");
+                isok = insertTimeValue(newClass.PVBNoStbT, aid, id, "PVBNoStbT", "MPVBase");
+                isok = insertTimeValue(newClass.PVBSDMaxTimeG, aid, id, "PVBSDMaxTimeG", "MPVBase");
                 return isok;
             }
             catch (Exception ex)
@@ -129,14 +129,14 @@ namespace PSLCalcu.Module.DAL
 
                 int aid = getAID(type);
                 isok = deleteTime(id);
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBSDMaxTime }, aid, id, "PVBSDMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBStbTSLT }, aid, id, "PVBStbTSLT");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBNoStbTSLT }, aid, id, "PVBNoStbTSLT");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBUpTSLT }, aid, id, "PVBUpTSLT");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBDownTSLT }, aid, id, "PVBDownTSLT");
-                isok = insertTimeValue(newClass.PVBStbT, aid, id, "PVBStbT");
-                isok = insertTimeValue(newClass.PVBNoStbT, aid, id, "PVBNoStbT");
-                isok = insertTimeValue(newClass.PVBSDMaxTimeG, aid, id, "PVBSDMaxTimeG");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBSDMaxTime }, aid, id, "PVBSDMaxTime", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBStbTSLT }, aid, id, "PVBStbTSLT", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBNoStbTSLT }, aid, id, "PVBNoStbTSLT", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBUpTSLT }, aid, id, "PVBUpTSLT", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBDownTSLT }, aid, id, "PVBDownTSLT", "MPVBase");
+                isok = insertTimeValue(newClass.PVBStbT, aid, id, "PVBStbT", "MPVBase");
+                isok = insertTimeValue(newClass.PVBNoStbT, aid, id, "PVBNoStbT", "MPVBase");
+                isok = insertTimeValue(newClass.PVBSDMaxTimeG, aid, id, "PVBSDMaxTimeG", "MPVBase");
                 return isok;
             }
             catch (Exception ex)
@@ -198,14 +198,14 @@ namespace PSLCalcu.Module.DAL
                 DataTable dt = Helper.MysqlHelper.getDataTableOfSQL("insertMPVBase", CommandType.StoredProcedure, paramses, ref errmsg);
                 int pid = Convert.ToInt32(dt.Rows[0]["lastid"].ToString());
                 int aid = getAID(type);
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBSDMaxTime }, aid, pid, "PVBSDMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBStbTSLT }, aid, pid, "PVBStbTSLT");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBNoStbTSLT }, aid, pid, "PVBNoStbTSLT");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBUpTSLT }, aid, pid, "PVBUpTSLT");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBDownTSLT }, aid, pid, "PVBDownTSLT");
-                isok = insertTimeValue(newClass.PVBStbT, aid, pid, "PVBStbT");
-                isok = insertTimeValue(newClass.PVBNoStbT, aid, pid, "PVBNoStbT");
-                isok = insertTimeValue(newClass.PVBSDMaxTimeG, aid, pid, "PVBSDMaxTimeG");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBSDMaxTime }, aid, pid, "PVBSDMaxTime", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBStbTSLT }, aid, pid, "PVBStbTSLT", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBNoStbTSLT }, aid, pid, "PVBNoStbTSLT", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBUpTSLT }, aid, pid, "PVBUpTSLT", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBDownTSLT }, aid, pid, "PVBDownTSLT", "MPVBase");
+                isok = insertTimeValue(newClass.PVBStbT, aid, pid, "PVBStbT", "MPVBase");
+                isok = insertTimeValue(newClass.PVBNoStbT, aid, pid, "PVBNoStbT", "MPVBase");
+                isok = insertTimeValue(newClass.PVBSDMaxTimeG, aid, pid, "PVBSDMaxTimeG", "MPVBase");
                 return isok;
             }
             catch (Exception ex)
@@ -267,14 +267,14 @@ namespace PSLCalcu.Module.DAL
                 DataTable dt = MysqlHelper.getDataTableOfSQL("insertMPVBase", CommandType.StoredProcedure, paramses, ref errmsg);
                 int pid = Convert.ToInt32(dt.Rows[0]["lastid"].ToString());
                 int aid = getAID(type);
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBSDMaxTime }, aid, pid, "PVBSDMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBStbTSLT }, aid, pid, "PVBStbTSLT");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBNoStbTSLT }, aid, pid, "PVBNoStbTSLT");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBUpTSLT }, aid, pid, "PVBUpTSLT");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBDownTSLT }, aid, pid, "PVBDownTSLT");
-                isok = insertTimeValue(newClass.PVBStbT, aid, pid, "PVBStbT");
-                isok = insertTimeValue(newClass.PVBNoStbT, aid, pid, "PVBNoStbT");
-                isok = insertTimeValue(newClass.PVBSDMaxTimeG, aid, pid, "PVBSDMaxTimeG");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBSDMaxTime }, aid, pid, "PVBSDMaxTime", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBStbTSLT }, aid, pid, "PVBStbTSLT", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBNoStbTSLT }, aid, pid, "PVBNoStbTSLT", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBUpTSLT }, aid, pid, "PVBUpTSLT", "MPVBase");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBDownTSLT }, aid, pid, "PVBDownTSLT", "MPVBase");
+                isok = insertTimeValue(newClass.PVBStbT, aid, pid, "PVBStbT", "MPVBase");
+                isok = insertTimeValue(newClass.PVBNoStbT, aid, pid, "PVBNoStbT", "MPVBase");
+                isok = insertTimeValue(newClass.PVBSDMaxTimeG, aid, pid, "PVBSDMaxTimeG", "MPVBase");
                 return isok;
             }
             catch (Exception ex)
@@ -282,7 +282,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        private static bool insertTimeValue(List<D22STimeClass> value, int aid, int pid, string columnName)
+        private static bool insertTimeValue(List<D22STimeClass> value, int aid, int pid, string columnName, string caculateName)
         {
             try
             {
@@ -290,13 +290,18 @@ namespace PSLCalcu.Module.DAL
                 string errmsg = string.Empty;
                 foreach (D22STimeClass item in value)
                 {
-                    MySqlParameter[] paramses = {
+                    if (item != null)
+                    {
+                        MySqlParameter[] paramses = {
                 new MySqlParameter("sDate", item.startDate),
                 new MySqlParameter("eDate", item.endDate),
                 new MySqlParameter("aid", aid),
                 new MySqlParameter("pid", pid),
-                new MySqlParameter("cid", getColumnID(columnName)) };
-                    isok = MysqlHelper.ModifySingleSql("insertTimeValue", CommandType.StoredProcedure, paramses, ref errmsg);
+                new MySqlParameter("cid", columnName),
+                new MySqlParameter("cName", caculateName)
+                        };
+                        isok = MysqlHelper.ModifySingleSql("insertTimeValue", CommandType.StoredProcedure, paramses, ref errmsg);
+                    }
                 }
 
                 return isok;
@@ -415,38 +420,38 @@ namespace PSLCalcu.Module.DAL
                 DataTable dt = MysqlHelper.getDataTableOfSQL("insertMDevLimit", CommandType.StoredProcedure, paramses, ref errmsg);
                 int pid = Convert.ToInt32(dt.Rows[0]["lastid"].ToString());
                 int aid = getAID(type);
-                isok = insertTimeValue(newClass.DevHHTime, aid, pid, "DevHHTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHHTMaxTime }, aid, pid, "DevHHTMaxTime");
+                isok = insertTimeValue(newClass.DevHHTime, aid, pid, "DevHHTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHHTMaxTime }, aid, pid, "DevHHTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevHTime, aid, pid, "DevHTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHTMaxTime }, aid, pid, "DevHTMaxTime");
+                isok = insertTimeValue(newClass.DevHTime, aid, pid, "DevHTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHTMaxTime }, aid, pid, "DevHTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevRPTime, aid, pid, "DevRPTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRPTMaxTime }, aid, pid, "DevRPTMaxTime");
+                isok = insertTimeValue(newClass.DevRPTime, aid, pid, "DevRPTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRPTMaxTime }, aid, pid, "DevRPTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.Dev0PTime, aid, pid, "Dev0PTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0PTMaxTime }, aid, pid, "Dev0PTMaxTime");
+                isok = insertTimeValue(newClass.Dev0PTime, aid, pid, "Dev0PTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0PTMaxTime }, aid, pid, "Dev0PTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.Dev0NTime, aid, pid, "Dev0NTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0NTMaxTime }, aid, pid, "Dev0NTMaxTime");
+                isok = insertTimeValue(newClass.Dev0NTime, aid, pid, "Dev0NTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0NTMaxTime }, aid, pid, "Dev0NTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevRNTime, aid, pid, "DevRNTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRNTMaxTime }, aid, pid, "DevRNTMaxTime");
+                isok = insertTimeValue(newClass.DevRNTime, aid, pid, "DevRNTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRNTMaxTime }, aid, pid, "DevRNTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevLTime, aid, pid, "DevLTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLTMaxTime }, aid, pid, "DevLTMaxTime");
+                isok = insertTimeValue(newClass.DevLTime, aid, pid, "DevLTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLTMaxTime }, aid, pid, "DevLTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevLLTime, aid, pid, "DevLLTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLLTMaxTime }, aid, pid, "DevLLTMaxTime");
+                isok = insertTimeValue(newClass.DevLLTime, aid, pid, "DevLLTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLLTMaxTime }, aid, pid, "DevLLTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0RPRMTMaxTime }, aid, pid, "Dev0RPRMTMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHLTMaxTime }, aid, pid, "DevHLTMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevPTRTMaxTime }, aid, pid, "DevPTRTMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevNTRTMaxTime }, aid, pid, "DevNTRTMaxTime");
-                isok = insertTimeValue(newClass.Dev0RPRMTTime, aid, pid, "Dev0RPRMTTime");
-                isok = insertTimeValue(newClass.DevHLTTime, aid, pid, "DevHLTTime");
-                isok = insertTimeValue(newClass.DevPTTime, aid, pid, "DevPTTime");
-                isok = insertTimeValue(newClass.DevNTTime, aid, pid, "DevNTTime");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0RPRMTMaxTime }, aid, pid, "Dev0RPRMTMaxTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHLTMaxTime }, aid, pid, "DevHLTMaxTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevPTRTMaxTime }, aid, pid, "DevPTRTMaxTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevNTRTMaxTime }, aid, pid, "DevNTRTMaxTime", "MDevLimit");
+                isok = insertTimeValue(newClass.Dev0RPRMTTime, aid, pid, "Dev0RPRMTTime", "MDevLimit");
+                isok = insertTimeValue(newClass.DevHLTTime, aid, pid, "DevHLTTime", "MDevLimit");
+                isok = insertTimeValue(newClass.DevPTTime, aid, pid, "DevPTTime", "MDevLimit");
+                isok = insertTimeValue(newClass.DevNTTime, aid, pid, "DevNTTime", "MDevLimit");
                 return isok;
             }
             catch (Exception ex)
@@ -539,38 +544,38 @@ namespace PSLCalcu.Module.DAL
                 isok = MysqlHelper.ModifySingleSql("updateMDevLimit", CommandType.StoredProcedure, paramses, ref errmsg);
                 int aid = getAID(type);
                 isok = deleteTime(id);
-                isok = insertTimeValue(newClass.DevHHTime, aid, id, "DevHHTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHHTMaxTime }, aid, id, "DevHHTMaxTime");
+                isok = insertTimeValue(newClass.DevHHTime, aid, id, "DevHHTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHHTMaxTime }, aid, id, "DevHHTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevHTime, aid, id, "DevHTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHTMaxTime }, aid, id, "DevHTMaxTime");
+                isok = insertTimeValue(newClass.DevHTime, aid, id, "DevHTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHTMaxTime }, aid, id, "DevHTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevRPTime, aid, id, "DevRPTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRPTMaxTime }, aid, id, "DevRPTMaxTime");
+                isok = insertTimeValue(newClass.DevRPTime, aid, id, "DevRPTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRPTMaxTime }, aid, id, "DevRPTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.Dev0PTime, aid, id, "Dev0PTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0PTMaxTime }, aid, id, "Dev0PTMaxTime");
+                isok = insertTimeValue(newClass.Dev0PTime, aid, id, "Dev0PTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0PTMaxTime }, aid, id, "Dev0PTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.Dev0NTime, aid, id, "Dev0NTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0NTMaxTime }, aid, id, "Dev0NTMaxTime");
+                isok = insertTimeValue(newClass.Dev0NTime, aid, id, "Dev0NTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0NTMaxTime }, aid, id, "Dev0NTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevRNTime, aid, id, "DevRNTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRNTMaxTime }, aid, id, "DevRNTMaxTime");
+                isok = insertTimeValue(newClass.DevRNTime, aid, id, "DevRNTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRNTMaxTime }, aid, id, "DevRNTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevLTime, aid, id, "DevLTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLTMaxTime }, aid, id, "DevLTMaxTime");
+                isok = insertTimeValue(newClass.DevLTime, aid, id, "DevLTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLTMaxTime }, aid, id, "DevLTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevLLTime, aid, id, "DevLLTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLLTMaxTime }, aid, id, "DevLLTMaxTime");
+                isok = insertTimeValue(newClass.DevLLTime, aid, id, "DevLLTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLLTMaxTime }, aid, id, "DevLLTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0RPRMTMaxTime }, aid, id, "Dev0RPRMTMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHLTMaxTime }, aid, id, "DevHLTMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevPTRTMaxTime }, aid, id, "DevPTRTMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevNTRTMaxTime }, aid, id, "DevNTRTMaxTime");
-                isok = insertTimeValue(newClass.Dev0RPRMTTime, aid, id, "Dev0RPRMTTime");
-                isok = insertTimeValue(newClass.DevHLTTime, aid, id, "DevHLTTime");
-                isok = insertTimeValue(newClass.DevPTTime, aid, id, "DevPTTime");
-                isok = insertTimeValue(newClass.DevNTTime, aid, id, "DevNTTime");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0RPRMTMaxTime }, aid, id, "Dev0RPRMTMaxTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHLTMaxTime }, aid, id, "DevHLTMaxTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevPTRTMaxTime }, aid, id, "DevPTRTMaxTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevNTRTMaxTime }, aid, id, "DevNTRTMaxTime", "MDevLimit");
+                isok = insertTimeValue(newClass.Dev0RPRMTTime, aid, id, "Dev0RPRMTTime", "MDevLimit");
+                isok = insertTimeValue(newClass.DevHLTTime, aid, id, "DevHLTTime", "MDevLimit");
+                isok = insertTimeValue(newClass.DevPTTime, aid, id, "DevPTTime", "MDevLimit");
+                isok = insertTimeValue(newClass.DevNTTime, aid, id, "DevNTTime", "MDevLimit");
                 return isok;
             }
             catch (Exception ex)
@@ -664,38 +669,38 @@ namespace PSLCalcu.Module.DAL
                 isok = MysqlHelper.ModifySingleSql("updateMDevLimit", CommandType.StoredProcedure, paramses, ref errmsg);
                 int aid = getAID(type);
                 isok = deleteTime(id);
-                isok = insertTimeValue(newClass.DevHHTime, aid, id, "DevHHTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHHTMaxTime }, aid, id, "DevHHTMaxTime");
+                isok = insertTimeValue(newClass.DevHHTime, aid, id, "DevHHTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHHTMaxTime }, aid, id, "DevHHTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevHTime, aid, id, "DevHTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHTMaxTime }, aid, id, "DevHTMaxTime");
+                isok = insertTimeValue(newClass.DevHTime, aid, id, "DevHTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHTMaxTime }, aid, id, "DevHTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevRPTime, aid, id, "DevRPTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRPTMaxTime }, aid, id, "DevRPTMaxTime");
+                isok = insertTimeValue(newClass.DevRPTime, aid, id, "DevRPTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRPTMaxTime }, aid, id, "DevRPTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.Dev0PTime, aid, id, "Dev0PTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0PTMaxTime }, aid, id, "Dev0PTMaxTime");
+                isok = insertTimeValue(newClass.Dev0PTime, aid, id, "Dev0PTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0PTMaxTime }, aid, id, "Dev0PTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.Dev0NTime, aid, id, "Dev0NTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0NTMaxTime }, aid, id, "Dev0NTMaxTime");
+                isok = insertTimeValue(newClass.Dev0NTime, aid, id, "Dev0NTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0NTMaxTime }, aid, id, "Dev0NTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevRNTime, aid, id, "DevRNTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRNTMaxTime }, aid, id, "DevRNTMaxTime");
+                isok = insertTimeValue(newClass.DevRNTime, aid, id, "DevRNTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRNTMaxTime }, aid, id, "DevRNTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevLTime, aid, id, "DevLTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLTMaxTime }, aid, id, "DevLTMaxTime");
+                isok = insertTimeValue(newClass.DevLTime, aid, id, "DevLTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLTMaxTime }, aid, id, "DevLTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevLLTime, aid, id, "DevLLTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLLTMaxTime }, aid, id, "DevLLTMaxTime");
+                isok = insertTimeValue(newClass.DevLLTime, aid, id, "DevLLTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLLTMaxTime }, aid, id, "DevLLTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0RPRMTMaxTime }, aid, id, "Dev0RPRMTMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHLTMaxTime }, aid, id, "DevHLTMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevPTRTMaxTime }, aid, id, "DevPTRTMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevNTRTMaxTime }, aid, id, "DevNTRTMaxTime");
-                isok = insertTimeValue(newClass.Dev0RPRMTTime, aid, id, "Dev0RPRMTTime");
-                isok = insertTimeValue(newClass.DevHLTTime, aid, id, "DevHLTTime");
-                isok = insertTimeValue(newClass.DevPTTime, aid, id, "DevPTTime");
-                isok = insertTimeValue(newClass.DevNTTime, aid, id, "DevNTTime");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0RPRMTMaxTime }, aid, id, "Dev0RPRMTMaxTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHLTMaxTime }, aid, id, "DevHLTMaxTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevPTRTMaxTime }, aid, id, "DevPTRTMaxTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevNTRTMaxTime }, aid, id, "DevNTRTMaxTime", "MDevLimit");
+                isok = insertTimeValue(newClass.Dev0RPRMTTime, aid, id, "Dev0RPRMTTime", "MDevLimit");
+                isok = insertTimeValue(newClass.DevHLTTime, aid, id, "DevHLTTime", "MDevLimit");
+                isok = insertTimeValue(newClass.DevPTTime, aid, id, "DevPTTime", "MDevLimit");
+                isok = insertTimeValue(newClass.DevNTTime, aid, id, "DevNTTime", "MDevLimit");
                 return isok;
             }
             catch (Exception ex)
@@ -792,38 +797,38 @@ namespace PSLCalcu.Module.DAL
                 DataTable dt = MysqlHelper.getDataTableOfSQL("insertMDevLimit", CommandType.StoredProcedure, paramses, ref errmsg);
                 int pid = Convert.ToInt32(dt.Rows[0]["lastid"].ToString());
                 int aid = getAID(type);
-                isok = insertTimeValue(newClass.DevHHTime, aid, pid, "DevHHTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHHTMaxTime }, aid, pid, "DevHHTMaxTime");
+                isok = insertTimeValue(newClass.DevHHTime, aid, pid, "DevHHTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHHTMaxTime }, aid, pid, "DevHHTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevHTime, aid, pid, "DevHTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHTMaxTime }, aid, pid, "DevHTMaxTime");
+                isok = insertTimeValue(newClass.DevHTime, aid, pid, "DevHTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHTMaxTime }, aid, pid, "DevHTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevRPTime, aid, pid, "DevRPTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRPTMaxTime }, aid, pid, "DevRPTMaxTime");
+                isok = insertTimeValue(newClass.DevRPTime, aid, pid, "DevRPTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRPTMaxTime }, aid, pid, "DevRPTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.Dev0PTime, aid, pid, "Dev0PTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0PTMaxTime }, aid, pid, "Dev0PTMaxTime");
+                isok = insertTimeValue(newClass.Dev0PTime, aid, pid, "Dev0PTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0PTMaxTime }, aid, pid, "Dev0PTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.Dev0NTime, aid, pid, "Dev0NTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0NTMaxTime }, aid, pid, "Dev0NTMaxTime");
+                isok = insertTimeValue(newClass.Dev0NTime, aid, pid, "Dev0NTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0NTMaxTime }, aid, pid, "Dev0NTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevRNTime, aid, pid, "DevRNTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRNTMaxTime }, aid, pid, "DevRNTMaxTime");
+                isok = insertTimeValue(newClass.DevRNTime, aid, pid, "DevRNTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevRNTMaxTime }, aid, pid, "DevRNTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevLTime, aid, pid, "DevLTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLTMaxTime }, aid, pid, "DevLTMaxTime");
+                isok = insertTimeValue(newClass.DevLTime, aid, pid, "DevLTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLTMaxTime }, aid, pid, "DevLTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(newClass.DevLLTime, aid, pid, "DevLLTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLLTMaxTime }, aid, pid, "DevLLTMaxTime");
+                isok = insertTimeValue(newClass.DevLLTime, aid, pid, "DevLLTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevLLTMaxTime }, aid, pid, "DevLLTMaxTime", "MDevLimit");
 
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0RPRMTMaxTime }, aid, pid, "Dev0RPRMTMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHLTMaxTime }, aid, pid, "DevHLTMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevPTRTMaxTime }, aid, pid, "DevPTRTMaxTime");
-                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevNTRTMaxTime }, aid, pid, "DevNTRTMaxTime");
-                isok = insertTimeValue(newClass.Dev0RPRMTTime, aid, pid, "Dev0RPRMTTime");
-                isok = insertTimeValue(newClass.DevHLTTime, aid, pid, "DevHLTTime");
-                isok = insertTimeValue(newClass.DevPTTime, aid, pid, "DevPTTime");
-                isok = insertTimeValue(newClass.DevNTTime, aid, pid, "DevNTTime");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.Dev0RPRMTMaxTime }, aid, pid, "Dev0RPRMTMaxTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevHLTMaxTime }, aid, pid, "DevHLTMaxTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevPTRTMaxTime }, aid, pid, "DevPTRTMaxTime", "MDevLimit");
+                isok = insertTimeValue(new List<D22STimeClass> { newClass.DevNTRTMaxTime }, aid, pid, "DevNTRTMaxTime", "MDevLimit");
+                isok = insertTimeValue(newClass.Dev0RPRMTTime, aid, pid, "Dev0RPRMTTime", "MDevLimit");
+                isok = insertTimeValue(newClass.DevHLTTime, aid, pid, "DevHLTTime", "MDevLimit");
+                isok = insertTimeValue(newClass.DevPTTime, aid, pid, "DevPTTime", "MDevLimit");
+                isok = insertTimeValue(newClass.DevNTTime, aid, pid, "DevNTTime", "MDevLimit");
                 return isok;
             }
             catch (Exception ex)
@@ -831,7 +836,7 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
-        public static bool insertMDeviationS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour,int invalidflag)
+        public static bool insertMDeviationS(MDeviationSOutClass newClass, string type, string year, string month, string day, string hour, int invalidflag)
         {
             try
             {

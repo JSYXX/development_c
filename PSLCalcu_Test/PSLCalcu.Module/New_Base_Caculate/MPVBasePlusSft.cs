@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace PSLCalcu.Module.New_Base_Caculate
+namespace PSLCalcu.Module
 {
     public class MPVBasePlusSft : BaseModule, IModule, IModuleExPara
     {
@@ -55,7 +55,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 return _algorithms;
             }
         }
-        private string _algorithmsflag = "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY";
+        private string _algorithmsflag = "YYYYYYYYYY";
         public string algorithmsflag
         {
             get
@@ -89,7 +89,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
         }
 
 
-        private int _outputNumber = 67;
+        private int _outputNumber = 10;
         public int outputNumber
         {
             get
@@ -106,7 +106,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                                     "PVBSumkb;" +
                                     "PVBAbsSum;" +
                                     "PVBStbTR;" +
-                                    "PVBNoStbTR;";
+                                    "PVBNoStbTR";
 
 
 
@@ -127,7 +127,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                                          "上面的和乘 k 加 b;" +
                                          "绝对值和;" +
                                          "稳定时间占比，稳定：|Δxi| ≤ StbL;" +
-                                         "不稳定时间占比，稳定：|Δxi| ＞ NoStbL;";
+                                         "不稳定时间占比，稳定：|Δxi| ＞ NoStbL";
 
         public string outputDescsCN
         {
@@ -214,7 +214,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
             int i;
 
             //0输出初始化：该算法如果没有有效输入值（inputs为null）或者输入值得有效值为null，给出的计算结果。值为0，计算标志位为StatusConst.InputIsNull
-            List<PValue>[] results = new List<PValue>[67];
+            List<PValue>[] results = new List<PValue>[10];
             for (i = 0; i < results.Length; i++)
             {
                 results[i] = new List<PValue>();

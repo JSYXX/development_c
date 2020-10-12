@@ -78,7 +78,7 @@ namespace PSLCalcu.Module.BLL
             try
             {
                 bool isok = false;
-                DataTable dt = isHaveData(year, month, day, hour, type, "psl_mpvbase");
+                DataTable dt = isHaveData(year, month, day, hour, type, "psldb.psl_mpvbase");
                 if (dt != null && dt.Rows.Count > 0)
                 {
                     isok = DAL.AlgorithmDAL.updateMPVBase(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);

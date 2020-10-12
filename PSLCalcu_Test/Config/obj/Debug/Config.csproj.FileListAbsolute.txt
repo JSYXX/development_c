@@ -48,4 +48,3 @@ D:\C# Project\JSYXX\PSLCalcu_Test\lib\Config.dll
 D:\C# Project\JSYXX\PSLCalcu_Test\lib\Config.pdb
 D:\C# Project\JSYXX\PSLCalcu_Test\Config\obj\Debug\Config.dll
 D:\C# Project\JSYXX\PSLCalcu_Test\Config\obj\Debug\Config.pdb
-D:\C# Project\JSYXX\PSLCalcu_Test\Config\obj\Debug\Config.csprojResolveAssemblyReference.cache

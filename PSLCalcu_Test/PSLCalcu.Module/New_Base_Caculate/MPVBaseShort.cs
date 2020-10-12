@@ -8,13 +8,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace PSLCalcu.Module.New_Base_Caculate
+namespace PSLCalcu.Module
 {
     public class MPVBaseShort : BaseModule, IModule, IModuleExPara
     {
         #region 计算模块信息：
 
-        private string _moduleName = "NewMPVBaseShort";
+        private string _moduleName = "MPVBaseShort";
         public string moduleName
         {
             get
@@ -46,7 +46,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 return _inputDescsCN;
             }
         }
-        private string _algorithms = "NewMPVBaseShort";
+        private string _algorithms = "MPVBaseShort";
         public string algorithms
         {
             get

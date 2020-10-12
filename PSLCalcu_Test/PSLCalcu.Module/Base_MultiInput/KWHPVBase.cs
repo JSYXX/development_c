@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace PSLCalcu.Module.Base_MultiInput
+namespace PSLCalcu.Module
 {
     public class KWHPVBase : BaseModule, IModule, IModuleExPara
     {
@@ -30,7 +30,7 @@ namespace PSLCalcu.Module.Base_MultiInput
                 return _moduleDesc;
             }
         }
-        private int _inputNumber = 2;
+        private int _inputNumber = 1;
         public int inputNumber
         {
             get
@@ -38,7 +38,7 @@ namespace PSLCalcu.Module.Base_MultiInput
                 return _inputNumber;
             }
         }
-        private string _inputDescsCN = "至少2个；最多不限";
+        private string _inputDescsCN = "至少1个；最多不限";
         public string inputDescsCN
         {
             get
@@ -54,7 +54,7 @@ namespace PSLCalcu.Module.Base_MultiInput
                 return _algorithms;
             }
         }
-        private string _algorithmsflag = "YY";
+        private string _algorithmsflag = "YYYY";
         public string algorithmsflag
         {
             get
@@ -63,7 +63,7 @@ namespace PSLCalcu.Module.Base_MultiInput
             }
         }
 
-        private int _outputNumber = 2;
+        private int _outputNumber = 4;
         public int outputNumber
         {
             get
@@ -71,7 +71,7 @@ namespace PSLCalcu.Module.Base_MultiInput
                 return _outputNumber;
             }
         }
-        private string _outputDescs = "vagueDifference;accurateDifference";
+        private string _outputDescs = "vagueDifference;accurateDifference;sumVagueDifference;sumAccurateDifference";
         public string outputDescs
         {
             get
@@ -79,7 +79,7 @@ namespace PSLCalcu.Module.Base_MultiInput
                 return _outputDescs;
             }
         }
-        private string _outputDescsCN = "模糊端差值;精确端差值";
+        private string _outputDescsCN = "模糊端差值;精确端差值;精确端差值和;模糊端差值和";
         public string outputDescsCN
         {
             get
@@ -106,7 +106,7 @@ namespace PSLCalcu.Module.Base_MultiInput
         #endregion
 
         #region 输入参数
-        private string _moduleParaExample = "20;30;";    // 注意：如果计算模块需要参数，则该属性必须有值，不能为空。检查程序依据此属性是否为空来决定是否对配置项进行正则检查
+        private string _moduleParaExample = "20;30;S";    // 注意：如果计算模块需要参数，则该属性必须有值，不能为空。检查程序依据此属性是否为空来决定是否对配置项进行正则检查
         public string moduleParaExample
         {
             get
@@ -114,7 +114,7 @@ namespace PSLCalcu.Module.Base_MultiInput
                 return _moduleParaExample;
             }
         }
-        private string _moduleParaDesc = "k;b;";    // 注意：如果计算模块需要参数，则该属性必须有值，不能为空。检查程序依据此属性是否为空来决定是否对配置项进行正则检查
+        private string _moduleParaDesc = "k;b;计算周期标志S/L.";    // 注意：如果计算模块需要参数，则该属性必须有值，不能为空。检查程序依据此属性是否为空来决定是否对配置项进行正则检查
         public string moduleParaDesc
         {
             get
@@ -130,7 +130,7 @@ namespace PSLCalcu.Module.Base_MultiInput
         //(,){1}，表示区间中间的逗号必须出现一次。
         //([+-]?\d+){1},表示区间时间段最小阈值，必须为正，必须出现一次。单位是秒
         //([+-]?\d+){1},表示区间后面的延时参数，可正可负，必须出现一次。单位是秒
-        private Regex _moduleParaRegex = new Regex(@"^([+-]?\d+(\.\d+)?){0,1}(;){1}([+-]?\d+(\.\d+)?){0,1}(;){1}([+]?\d+){1}(;){1}([+-]?\d+){0,1}$");
+        private Regex _moduleParaRegex = new Regex(@"^([+-]?\d+(\.\d+)?){0,1}(;){1}([+-]?\d+(\.\d+)?){0,1}(;){1}([SL]){0,1}$");
         public Regex moduleParaRegex
         {
             get
@@ -197,68 +197,100 @@ namespace PSLCalcu.Module.Base_MultiInput
             string _warningInfo = "";
             bool _fatalFlag = false;
             string _fatalInfo = "";
+            int i;
 
-
-            List<PValue>[] results = new List<PValue>[2];
+            List<PValue>[] results = new List<PValue>[4];
+            for (i = 0; i < results.Length; i++)
+            {
+                results[i] = new List<PValue>();
+                results[i].Add(new PValue(0, calcuinfo.fstarttime, calcuinfo.fendtime, (long)StatusConst.InputIsNull));
+            }
             try
             {
                 //0、输入
-                //List<PValue> input = new List<PValue>();
+                List<PValue> input = new List<PValue>();
                 //0.1、输入处理：输入长度。当输入为空时，则输出项也为空.
                 if (inputs == null || inputs.Length == 0 || inputs[0] == null)
-                {
                     return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                else
+                {
+                    if (inputs.Length < 2)
+                    {
+                        input = inputs[0];
+                        //0.2、输入处理：截止时刻值。该算法不需要截止时刻点参与计算。 
+                        if (input.Count > 1) input.RemoveAt(input.Count - 1);
+                        //0.3、输入处理：标志位。该算法考虑标志位不为0的情况，先过滤这些点。
+                        for (i = input.Count - 1; i >= 0; i--)
+                        {
+                            if (input[i].Status != 0) input.RemoveAt(i);
+                        }
+                        //0.4、输入处理：过滤后结果。
+                        //——如果去除了截止时刻点，过滤后长度小于1（计算要求至少有一个有效数据），则直接返回null
+                        //——如果没取除截止时刻点，过滤后长度小于2（计算要求至少有一个有效数据和一个截止时刻值）
+                        if (input.Count < 1)
+                        {
+                            _warningFlag = true;
+                            _warningInfo = "对应时间段内的源数据状态位全部异常。";
+                            return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                        }
+                    }
+                    else
+                    {
+                        //0.2、输入处理：截止时刻值。该算法，截止时刻点不需要参与计算，要删除。
+                        //本算法做特别处理
+                        for (i = 0; i < inputs.Length; i++)
+                        {
+                            if (inputs[i].Count > 1) inputs[i].RemoveAt(inputs[i].Count - 1);
+                        }
+                        //0.3、输入处理：标志位。该算法考虑标志位不为0的情况，先过滤这些点。
+                        //0.4、输入处理：过滤后结果。
+                        //——如果去除了截止时刻点，过滤后长度小于1（计算要求至少有一个有效数据），则直接返回null
+                        //——如果没取除截止时刻点，过滤后长度小于2（计算要求至少有一个有效数据和一个截止时刻值）
+                        if (inputs.Length < 1)
+                        {
+                            _warningFlag = true;
+                            _warningInfo = "对应时间段内的源数据状态位全部异常。";
+                            return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                        }
+                    }
                 }
 
 
-
                 //处理参数
+                double k;
+                double b;
+                string mode;
                 string[] paras = calcuinfo.fparas.Split(';');
-                string mode = string.Empty;
+
+                k = float.Parse(paras[0]);
+                b = float.Parse(paras[1]);
+
                 if (paras.Length == 3)
                     mode = paras[2];   //如果设定了第8个参数，计算模式用第个参数值。S表示短周期，L表示长周期                
                 else
                     mode = "S";
 
-
-
-
                 //声明返回参数
                 //List<PValue> result = new List<PValue>();
                 if (mode == "S")
                 {
+                    //短周期算法
+                    //调用短周期算法数据是把每分钟的数据结果进行处理 小时级别时间数据运算                   
+                    //声明模糊端差值,精确端差值
+                    double vagueDifference,accurateDifference  = 0;
 
-
-                    for (int i = 0; i < results.Length; i++)
-                    {
-                        results[i] = new List<PValue>();
-                        results[i].Add(new PValue(0, calcuinfo.fstarttime, calcuinfo.fendtime, (long)StatusConst.InputIsNull));
-                    }
-                    //0.2、输入处理：数据数量必须大于等于2，不然无法求差值。
-                    if (inputs.Length < 2)
-                    {
-                        _errorFlag = true;
-                        _errorInfo = "数据数量必须大于等于2";
-                        return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
-                    }
-                    //处理参数
-                    double k;
-                    double b;
-                    k = float.Parse(paras[0]);
-                    b = float.Parse(paras[1]);
-                    //声明精确端差值，模糊端差值
-                    double vagueDifference, accurateDifference = 0;
-
-                    accurateDifference = (inputs[inputs.Length - 1][0].Value - inputs[0][0].Value) * k + b;
+                    vagueDifference = (input[input.Count - 1].Value - input[0].Value) * k + b;
                     //判断第0分钟和第59分钟是否有数据，若任意一个没有数据，精确端差值返回0
-                    if (inputs[0][0].Endtime.Minute != 0 || inputs[inputs.Length - 1][0].Endtime.Minute != 59)
+                    //if (inputs[0][0].Endtime.Minute != 0 || inputs[0][inputs[0].Count - 1].Endtime.Minute != 59)
+                    if (input[0].Timestamp.Minute != 0 || input[input.Count - 1].Timestamp.Minute != 59)
                     {
-                        vagueDifference = 0;
+                        accurateDifference = 0;
                     }
                     else
                     {
-                        vagueDifference = accurateDifference;
+                        accurateDifference = vagueDifference;
                     }
+                    //组织输出
                     results[0] = new List<PValue>();
                     results[0].Add(new PValue(vagueDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                     results[1] = new List<PValue>();
@@ -267,24 +299,21 @@ namespace PSLCalcu.Module.Base_MultiInput
                 }
                 else
                 {
-                    for (int i = 0; i < results.Length; i++)
-                    {
-                        results[i] = new List<PValue>();
-                        results[i].Add(new PValue(0, calcuinfo.fstarttime, calcuinfo.fendtime, (long)StatusConst.InputIsNull));
-                    }
-                    double sumVagueDifference = 0;
-                    double sumAccurateDifference = 0;
+                    //长周期算法
+                    //长周期算法数据是在短周期算法得出的数据结果上进行再次处理 天、月、年 等时间数据运算
+                    double sumVagueDifference = 0;      //声明精确端差值长周期（天、月、年）和
+                    double sumAccurateDifference = 0;   //声明模糊端差值长周期（天、月、年）和
 
                     List<PValue> vagueDifferenceList = inputs[0];
                     List<PValue> accurateDifferenceList = inputs[1];
 
                     sumVagueDifference = vagueDifferenceList.Sum(a => Math.Abs(a.Value));
                     sumAccurateDifference = accurateDifferenceList.Sum(a => Math.Abs(a.Value));
-
-                    results[0] = new List<PValue>();
-                    results[0].Add(new PValue(sumVagueDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                    results[1] = new List<PValue>();
-                    results[1].Add(new PValue(sumAccurateDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                    //组织输出 
+                    results[2] = new List<PValue>();
+                    results[2].Add(new PValue(sumVagueDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                    results[3] = new List<PValue>();
+                    results[3].Add(new PValue(sumAccurateDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
 
 
                 }

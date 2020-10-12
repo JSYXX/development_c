@@ -280,7 +280,7 @@ VALUES
         dayV,
         hourV,
         typeV);
-SELECT SCOPE_IDENTITY() as `lastid`;
+SELECT last_insert_id() as `lastid`;
 END ;;
 sqlSplit
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMDevLimitMulti`(
@@ -650,7 +650,7 @@ VALUES
         dayV,
         hourV,
         typeV);
-        SELECT SCOPE_IDENTITY() as `lastid`;
+        SELECT last_insert_id() as `lastid`;
 
 END ;;
 sqlSplit
@@ -843,7 +843,7 @@ MultiPVAvgDistanceLTRV,
 MultiPVAvgDistanceHTV,
 MultiPVAvgDistanceHTRV);
 
-SELECT SCOPE_IDENTITY() as `lastid`;
+SELECT last_insert_id() as `lastid`;
 END ;;
 sqlSplit
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMMultiPVAvgDistanceDetail`(
@@ -1000,7 +1000,7 @@ monthV,
 dayV,
 hourV,
 typeV);
-SELECT SCOPE_IDENTITY() as `lastid`;
+SELECT last_insert_id() as `lastid`;
 END ;;
 sqlSplit
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMPVBaseMulti`(
@@ -1269,7 +1269,7 @@ monthvalueV,
 dayvalueV,
 hourvalueV,
 typeV);
-SELECT SCOPE_IDENTITY() as `lastid`;
+SELECT last_insert_id() as `lastid`;
 END ;;
 sqlSplit
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMPVTypeRangeDetail`(
@@ -1418,7 +1418,7 @@ PVDAvgDistLinekV,
 PVDAvgDistLinebV,
 PVMAvgDistLinekV,
 PVMAvgDistLinebV);
-SELECT SCOPE_IDENTITY() as `lastid`;
+SELECT last_insert_id() as `lastid`;
 
 END ;;
 sqlSplit

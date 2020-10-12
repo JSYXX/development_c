@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace PSLCalcu.Module.New_Base_Caculate
+namespace PSLCalcu.Module
 {
     public class MultipleRegressionAlgorithm : BaseModule, IModule, IModuleExPara
     {
@@ -54,7 +54,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 return _algorithms;
             }
         }
-        private string _algorithmsflag = "YYYYYY";
+        private string _algorithmsflag = "YYYYYYYYYYYYYYYY";
         public string algorithmsflag
         {
             get
@@ -62,7 +62,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 return _algorithmsflag;
             }
         }
-        private string _moduleParaExample = "1,1;1,1;1:2*2*3,1:3*2*1,5:1*4*2;";   // 注意：如果计算模块需要参数，则该属性必须有值，不能为空。检查程序依据此属性是否为空来决定是否对配置项进行正则检查
+        private string _moduleParaExample = "1;2;1;2;1;2;1;1;1;1;1";   // 注意：如果计算模块需要参数，则该属性必须有值，不能为空。检查程序依据此属性是否为空来决定是否对配置项进行正则检查
         public string moduleParaExample
         {
             get
@@ -71,7 +71,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
             }
         }
         //去最大百分比滤波处理数组;去最小百分比滤波处理数组;预处理方式
-        private string _moduleParaDesc = "vib;vis;XF;";// 注意：如果计算模块需要参数，则该属性必须有值，不能为空。检查程序依据此属性是否为空来决定是否对配置项进行正则检查
+        private string _moduleParaDesc = "N;U;vib;vis;Y;XF;k;p;mList;resultList;errmsg";// 注意：如果计算模块需要参数，则该属性必须有值，不能为空。检查程序依据此属性是否为空来决定是否对配置项进行正则检查
         public string moduleParaDesc
         {
             get
@@ -79,7 +79,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 return _moduleParaDesc;
             }
         }
-        private Regex _moduleParaRegex = new Regex(@"^([+-]?\d+(\.\d+)?){1}(;[+-]?\d+(\.\d+)?){11}$");
+        private Regex _moduleParaRegex = new Regex(@"^([+-]?\d+(\.\d+)?){1}(;[+-]?\d+(\.\d+)?){6}(;)([+-]?\d+(\.\d+)?){0,1}(;){1}([+-]?\d+(\.\d+)?){0,1}(;){1}([+-]?\d+(\.\d+)?){0,1}(;){1}([+-]?\d+(\.\d+)?){0,1}$");
         public Regex moduleParaRegex
         {
             get
@@ -87,7 +87,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 return _moduleParaRegex;
             }
         }
-        private int _outputNumber = 6;
+        private int _outputNumber = 16;
         public int outputNumber
         {
             get
@@ -230,7 +230,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
             string _fatalInfo = "";
 
             //0输出初始化：该算法如果没有有效输入值（inputs为null）或者输入值得有效值为null，给出的计算结果。值为0，计算标志位为StatusConst.InputIsNull
-            List<PValue>[] results = new List<PValue>[7 + inputs.Length];   //平均值;最小值;最小值所在的点号;最大值;最大值所在的点号;最均差;最大差(最大值与最小值得差);和;绝对值和
+            List<PValue>[] results = new List<PValue>[16];   //平均值;最小值;最小值所在的点号;最大值;最大值所在的点号;最均差;最大差(最大值与最小值得差);和;绝对值和
             for (int i = 0; i < results.Length; i++)
             {
                 results[i] = new List<PValue>();
