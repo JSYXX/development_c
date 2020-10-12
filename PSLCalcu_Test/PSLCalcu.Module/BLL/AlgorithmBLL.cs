@@ -27,13 +27,96 @@ namespace PSLCalcu.Module.BLL
             try
             {
                 DataSet ds = new DataSet();
-                string sqlstr = "select * from " + tableName + " where `tagId`=" + tagid + " order by `dutytime` desc limit 1;";
+                string dutyStr = getDutyConst(nowDate);
+                string sqlstr = "select * from " + tableName + " where `tagId`=" + tagid + " and `dutytime`=" + dutyStr + ";";
                 DataTable dt = DAL.AlgorithmDAL.getData(sqlstr);
                 //string sqlChildStr = "select * from psldata" + nowDate.ToString("yyyyMM") + " where `tagid`=" + tagid + " and tagstarttime<=" + nowDate.ToString("yyyy-MM-dd HH:mm") + " limit 2";
                 //DataTable dtTime = DAL.AlgorithmDAL.getData(sqlChildStr);
                 ds.Tables.Add(dt);
                 //ds.Tables.Add(dtTime);
                 return ds;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="st1"></param>
+        /// <param name="st2"></param>
+        /// <returns></returns>
+        public static bool compareDate(string st1, string st2)
+        {
+            try
+            {
+                bool isbig = false;
+                if (st1 == "00:00")
+                {
+                    isbig = true;
+                }
+                else if (st2 == "00:00")
+                {
+
+                }
+                else
+                {
+                    DateTime dt1 = Convert.ToDateTime(st1);
+                    DateTime dt2 = Convert.ToDateTime(st2);
+                    if (DateTime.Compare(dt1, dt2) >= 0)
+                    {
+                        isbig = true;
+                    }
+                    else
+                    {
+                        isbig = false;
+                    }
+                }
+
+                return isbig;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static string getDutyConst(DateTime nowDate)
+        {
+            try
+            {
+                string dutyStr = string.Empty;
+                string sqlStr = "select * from psldb.psl_dutyconst;";
+                DataTable dutyTime = DAL.AlgorithmDAL.getData(sqlStr);
+                string dutyNow = nowDate.ToString("HH:mm");
+                for (int i = 1; i < dutyTime.Rows.Count - 1; i++)
+                {
+                    string dt1 = dutyTime.Rows[i - 1]["dutyTime"].ToString();
+                    string dt2 = dutyTime.Rows[i]["dutyTime"].ToString() == "00:00" ? "24:00" : dutyTime.Rows[i]["dutyTime"].ToString();
+                    if (DateTime.Compare(Convert.ToDateTime(dt2), Convert.ToDateTime(dt1)) >= 0)
+                    {
+                        if (DateTime.Compare(Convert.ToDateTime(dutyTime), Convert.ToDateTime(dt1)) >= 0 && DateTime.Compare(Convert.ToDateTime(dutyTime), Convert.ToDateTime(dt2)) < 0)
+                        {
+                            dutyStr = nowDate.ToString("yyyy-MM-dd") + " " + dt1;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (DateTime.Compare(Convert.ToDateTime(dutyTime), Convert.ToDateTime(dt1)) >= 0 && DateTime.Compare(Convert.ToDateTime(dutyTime), Convert.ToDateTime("24:00")) < 0)
+                        {
+                            dutyStr = nowDate.ToString("yyyy-MM-dd") + " " + dt1;
+                            break;
+                        }
+                        else if (DateTime.Compare(Convert.ToDateTime(dutyTime), Convert.ToDateTime("00:00")) >= 0 && DateTime.Compare(Convert.ToDateTime(dutyTime), Convert.ToDateTime(dt2)) < 0)
+                        {
+                            dutyStr = nowDate.ToString("yyyy-MM-dd") + " " + dt1;
+                            break;
+                        }
+                    }
+                }
+                return dutyStr;
             }
             catch (Exception ex)
             {

@@ -1098,9 +1098,10 @@ namespace PSLCalcu
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
                                   "`AlgorithmId` int(11) DEFAULT NULL",
                                   "`parentid` int(11) DEFAULT NULL",
-                                  "`columnid` int(11) DEFAULT NULL",
+                                  "`columnid` VARCHAR(45) DEFAULT NULL",
                                   "`startDate` varchar(45) DEFAULT NULL",
-                                  "`endDate` varchar(45) DEFAULT NULL"
+                                  "`endDate` varchar(45) DEFAULT NULL",
+                                  "`caculateName` varchar(45) DEFAULT NULL"
                                 };
 
 
@@ -1193,7 +1194,29 @@ namespace PSLCalcu
                                   "`PVBStbTR` varchar(45) DEFAULT NULL",
                                   "`PVBNoStbTR` varchar(45) DEFAULT NULL",
                                   "`UpdateTime` varchar(45) DEFAULT NULL",
-                                  "`EffectiveCount` int(11) DEFAULT NULL"
+                                  "`EffectiveCount` int(11) DEFAULT NULL",
+                                  "`PVBSDMax` varchar(45) DEFAULT NULL",
+                                  "`PVBSDMaxTime` varchar(45) DEFAULT NULL",
+                                  "`PVBDN1Num` varchar(45) DEFAULT NULL",
+                                  "`PVBDN2Num` varchar(45) DEFAULT NULL",
+                                  "`PVBDN3Num` varchar(45) DEFAULT NULL",
+                                  "`PVBTNum` varchar(45) DEFAULT NULL",
+                                  "`PVBSDSingle` varchar(45) DEFAULT NULL",
+                                  "`PVBSDSingleTime` varchar(45) DEFAULT NULL",
+                                  "`PVBSDSingleType` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
+
+        public static bool createTable_psldutyconst()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_dutyconst";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`dutyTime` varchar(45) DEFAULT NULL"
                                 };
 
 

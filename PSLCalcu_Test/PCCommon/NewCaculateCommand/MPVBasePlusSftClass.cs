@@ -22,5 +22,15 @@ namespace PCCommon.NewCaculateCommand
         public string PVBNoStbTR { get; set; }
         public string UpdateTime { get; set; }
         public string EffectiveCount { get; set; }
+
+        public string PVBSDMax { get; set; }
+        public string PVBSDMaxTime { get; set; }
+        public string PVBDN1Num { get; set; }
+        public string PVBDN2Num { get; set; }
+        public string PVBDN3Num { get; set; }
+        public string PVBTNum { get; set; }
+        public string PVBSDSingle { get; set; }
+        public string PVBSDSingleTime { get; set; }
+        public string PVBSDSingleType { get; set; }
     }
 }

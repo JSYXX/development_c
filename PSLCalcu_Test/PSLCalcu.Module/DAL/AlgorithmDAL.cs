@@ -293,12 +293,12 @@ namespace PSLCalcu.Module.DAL
                     if (item != null)
                     {
                         MySqlParameter[] paramses = {
-                new MySqlParameter("sDate", item.startDate),
-                new MySqlParameter("eDate", item.endDate),
-                new MySqlParameter("aid", aid),
-                new MySqlParameter("pid", pid),
-                new MySqlParameter("cid", columnName),
-                new MySqlParameter("cName", caculateName)
+                            new MySqlParameter("sDate", item.startDate),
+                            new MySqlParameter("eDate", item.endDate),
+                            new MySqlParameter("aid", aid),
+                            new MySqlParameter("pid", pid),
+                            new MySqlParameter("cid", columnName),
+                            new MySqlParameter("cName", caculateName)
                         };
                         isok = MysqlHelper.ModifySingleSql("insertTimeValue", CommandType.StoredProcedure, paramses, ref errmsg);
                     }
@@ -1028,7 +1028,16 @@ namespace PSLCalcu.Module.DAL
                 new MySqlParameter("PVBStbTRV", newClass.PVBStbTR),
                 new MySqlParameter("PVBNoStbTRV", newClass.PVBNoStbTR),
                 new MySqlParameter("UpdateTimeV", newClass.UpdateTime),
-                new MySqlParameter("EffectiveCountV", newClass.EffectiveCount)};
+                new MySqlParameter("EffectiveCountV", newClass.EffectiveCount),
+                new MySqlParameter("PVBSDMaxV", newClass.PVBSDMax),
+                new MySqlParameter("PVBSDMaxTimeV", newClass.PVBSDMaxTime),
+                new MySqlParameter("PVBDN1NumV", newClass.PVBDN1Num),
+                new MySqlParameter("PVBDN2NumV", newClass.PVBDN2Num),
+                new MySqlParameter("PVBDN3NumV", newClass.PVBDN3Num),
+                new MySqlParameter("PVBTNumV", newClass.PVBTNum),
+                new MySqlParameter("PVBSDSingleV", newClass.PVBSDSingle),
+                new MySqlParameter("PVBSDSingleTimeV", newClass.PVBSDSingleTime),
+                new MySqlParameter("PVBSDSingleTypeV", newClass.PVBSDSingleType)};
                 isok = Helper.MysqlHelper.ModifySingleSql("updateMPVBasePlusSft", CommandType.StoredProcedure, paramses, ref errmsg);
 
                 return isok;
@@ -1058,7 +1067,16 @@ namespace PSLCalcu.Module.DAL
                 new MySqlParameter("UpdateTimeV", newClass.UpdateTime),
                 new MySqlParameter("EffectiveCountV", newClass.EffectiveCount),
                 new MySqlParameter("dutyTimeV", newClass.dutyTime),
-                new MySqlParameter("typeV", newClass.type)};
+                new MySqlParameter("typeV", newClass.type),
+                new MySqlParameter("PVBSDMaxV", newClass.PVBSDMax),
+                new MySqlParameter("PVBSDMaxTimeV", newClass.PVBSDMaxTime),
+                new MySqlParameter("PVBDN1NumV", newClass.PVBDN1Num),
+                new MySqlParameter("PVBDN2NumV", newClass.PVBDN2Num),
+                new MySqlParameter("PVBDN3NumV", newClass.PVBDN3Num),
+                new MySqlParameter("PVBTNumV", newClass.PVBTNum),
+                new MySqlParameter("PVBSDSingleV", newClass.PVBSDSingle),
+                new MySqlParameter("PVBSDSingleTimeV", newClass.PVBSDSingleTime),
+                new MySqlParameter("PVBSDSingleTypeV", newClass.PVBSDSingleType)};
                 isok = Helper.MysqlHelper.ModifySingleSql("insertMPVBasePlusSft", CommandType.StoredProcedure, paramses, ref errmsg);
 
                 return isok;

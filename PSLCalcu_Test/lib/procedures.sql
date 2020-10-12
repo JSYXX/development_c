@@ -1476,7 +1476,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insertTimeValue`(
     in eDate varchar(45),
     in aid int,
     in pid int,
-    in cid int
+    in cid varchar(45),
+    in cName varchar(45)
 )
 BEGIN
     INSERT INTO `psldb`.`psl_timedata`
@@ -1484,13 +1485,15 @@ BEGIN
 `parentid`,
 `columnid`,
 `startDate`,
-`endDate`)
+`endDate`,
+`caculateName`)
 VALUES
 (aid,
 pid,
 cid,
 sDate,
-eDate);
+eDate,
+cName);
 
 END ;;
 sqlSplit
@@ -2091,7 +2094,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMPVBasePlusSft`(
     in UpdateTimeV varchar(45),
     in EffectiveCountV varchar(45),
     in typeV varchar(45),
-    in dutyTimeV varchar(45)
+    in dutyTimeV varchar(45),
+    in PVBSDMaxV varchar(45),
+    in PVBSDMaxTimeV varchar(45),
+    in PVBDN1NumV varchar(45),
+    in PVBDN2NumV varchar(45),
+    in PVBDN3NumV varchar(45),
+    in PVBTNumV varchar(45),
+    in PVBSDSingleV varchar(45),
+    in PVBSDSingleTimeV varchar(45),
+    in PVBSDSingleTypeV varchar(45)
 )
 BEGIN
     INSERT INTO `psldb`.`psl_mpvbaseplussft`
@@ -2108,7 +2120,16 @@ BEGIN
 `UpdateTime`,
 `EffectiveCount`,
 `tagId`,
-`dutytime`)
+`dutytime`,
+`PVBSDMax`,
+`PVBSDMaxTime`,
+`PVBDN1Num`,
+`PVBDN2Num`,
+`PVBDN3Num`,
+`PVBTNum`,
+`PVBSDSingle`,
+`PVBSDSingleTime`,
+`PVBSDSingleType`)
 VALUES
 (PVBMinV,
 PVBMinTimeV,
@@ -2123,7 +2144,16 @@ PVBNoStbTRV,
 UpdateTimeV,
 EffectiveCountV,
 typeV,
-dutyTimeV);
+dutyTimeV,
+PVBSDMaxV,
+PVBSDMaxTimeV,
+PVBDN1NumV,
+PVBDN2NumV,
+PVBDN3NumV,
+PVBTNumV,
+PVBSDSingleV,
+PVBSDSingleTimeV,
+PVBSDSingleTypeV);
 END ;;
 sqlSplit
 CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMPVBasePlusSft`(
@@ -2139,7 +2169,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMPVBasePlusSft`(
     in PVBStbTRV varchar(45),
     in PVBNoStbTRV varchar(45),
     in UpdateTimeV varchar(45),
-    in EffectiveCountV varchar(45)
+    in EffectiveCountV varchar(45),
+    in PVBSDMaxV varchar(45),
+    in PVBSDMaxTimeV varchar(45),
+    in PVBDN1NumV varchar(45),
+    in PVBDN2NumV varchar(45),
+    in PVBDN3NumV varchar(45),
+    in PVBTNumV varchar(45),
+    in PVBSDSingleV varchar(45),
+    in PVBSDSingleTimeV varchar(45),
+    in PVBSDSingleTypeV varchar(45)
 )
 BEGIN
     UPDATE `psldb`.`psl_mpvbaseplussft`
@@ -2155,7 +2194,22 @@ SET
 `PVBStbTR` = PVBStbTRV,
 `PVBNoStbTR` = PVBNoStbTRV,
 `UpdateTime` = UpdateTimeV,
-`EffectiveCount` = EffectiveCountV
+`EffectiveCount` = EffectiveCountV,
+`PVBSDMax` = PVBSDMaxV,
+`PVBSDMaxTime` = PVBSDMaxTimeV,
+`PVBDN1Num` = PVBDN1NumV,
+`PVBDN2Num` = PVBDN2NumV,
+`PVBDN3Num` = PVBDN3NumV,
+`PVBTNum` = PVBTNumV,
+`PVBSDSingle` = PVBSDSingleV,
+`PVBSDSingleTime` = PVBSDSingleTimeV,
+`PVBSDSingleType` = PVBSDSingleTypeV
 WHERE `id` = pid;
 
 END ;;
+sqlSplit
+INSERT INTO `psldb`.`psl_dutyconst` (`dutyTime`) VALUES ('8:00');
+sqlSplit
+INSERT INTO `psldb`.`psl_dutyconst` (`dutyTime`) VALUES ('16:00');
+sqlSplit
+INSERT INTO `psldb`.`psl_dutyconst` (`dutyTime`) VALUES ('00:00');
