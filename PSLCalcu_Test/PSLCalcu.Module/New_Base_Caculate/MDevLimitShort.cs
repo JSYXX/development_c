@@ -481,7 +481,7 @@ namespace PSLCalcu.Module
                 LimitRN = double.Parse(paras[4]);
                 LimitL = double.Parse(paras[5]);
                 LimitLL = double.Parse(paras[6]);
-                string type = paras[7];
+                string type = calcuinfo.fsourtagids[0].ToString();
                 #region 短周期计算
 
 

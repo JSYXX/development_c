@@ -288,20 +288,31 @@ namespace PSLCalcu.Module.DAL
             {
                 bool isok = false;
                 string errmsg = string.Empty;
-                foreach (D22STimeClass item in value)
+                if (value != null)
                 {
-                    if (item != null)
+                    foreach (D22STimeClass item in value)
                     {
-                        MySqlParameter[] paramses = {
-                            new MySqlParameter("sDate", item.startDate),
-                            new MySqlParameter("eDate", item.endDate),
-                            new MySqlParameter("aid", aid),
-                            new MySqlParameter("pid", pid),
-                            new MySqlParameter("cid", columnName),
-                            new MySqlParameter("cName", caculateName)
-                        };
-                        isok = MysqlHelper.ModifySingleSql("insertTimeValue", CommandType.StoredProcedure, paramses, ref errmsg);
+                        if (item != null)
+                        {
+                            MySqlParameter[] paramses = {
+                                new MySqlParameter("sDate", item.startDate),
+                                new MySqlParameter("eDate", item.endDate),
+                                new MySqlParameter("aid", aid),
+                                new MySqlParameter("pid", pid),
+                                new MySqlParameter("cid", columnName),
+                                new MySqlParameter("cName", caculateName)
+                            };
+                            isok = MysqlHelper.ModifySingleSql("insertTimeValue", CommandType.StoredProcedure, paramses, ref errmsg);
+                        }
+                        else
+                        {
+                            isok = true;
+                        }
                     }
+                }
+                else
+                {
+                    isok = true;
                 }
 
                 return isok;
