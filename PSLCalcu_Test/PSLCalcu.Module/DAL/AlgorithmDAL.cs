@@ -965,7 +965,7 @@ namespace PSLCalcu.Module.DAL
                 new MySqlParameter("monthV", month),
                 new MySqlParameter("dayV", day),
                 new MySqlParameter("hourV", hour)};
-                DataTable dt = MysqlHelper.getDataTableOfSQL("insertMAddMul", CommandType.StoredProcedure, paramses, ref errmsg);
+                isok = MysqlHelper.ModifySingleSql("insertMAddMul", CommandType.StoredProcedure, paramses, ref errmsg);
                 return isok;
             }
             catch (Exception ex)

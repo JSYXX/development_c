@@ -45,7 +45,7 @@ namespace PSLCalcu.Module
                 return _inputDescsCN;
             }
         }
-        private string _algorithms = "MAddMul";
+        private string _algorithms = "NewMAddMul";
         public string algorithms
         {
             get
@@ -229,7 +229,10 @@ namespace PSLCalcu.Module
                     //应当是每个输入只有一个值
                     for (int j = 0; j < inputs.Length; j++)
                     {
-                        input.Add(inputs[j][0]);
+                        if (inputs[j].Count() > 0)
+                        {
+                            input.Add(inputs[j][0]);
+                        }
                     }
 
                 }
@@ -293,7 +296,7 @@ namespace PSLCalcu.Module
                 else
                 {
                     _fatalFlag = true;
-                    _fatalInfo = "MDeviationS数据录入数据库是失败";
+                    _fatalInfo = "MAddMul数据录入数据库是失败";
                     return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
                 }
 

@@ -230,7 +230,7 @@ namespace PSLCalcu.Module.BLL
                 }
                 else
                 {
-                    string sqlStr = "select * from " + tableName + " where `tagId`=" + type + " and `yearvalue`=\"" + year + "\"";
+                    string sqlStr = "select * from psldb." + tableName + " where `tagId`=" + type + " and `yearvalue`=\"" + year + "\"";
                     if (string.IsNullOrWhiteSpace(month))
                     {
                         sqlStr += " and `monthvalue`=\"\" and `dayvalue`=\"\" and `hourvalue`=\"\"";
