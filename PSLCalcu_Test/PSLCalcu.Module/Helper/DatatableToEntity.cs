@@ -56,12 +56,41 @@ namespace PSLCalcu.Module.Helper
             {
                 //T model = (T)Activator.CreateInstance(typeof(T));  
                 T model = new T();
+                string typename = string.Empty;
                 for (int i = 0; i < dr.Table.Columns.Count; i++)
                 {
                     PropertyInfo propertyInfo = model.GetType().GetProperty(dr.Table.Columns[i].ColumnName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                     if (propertyInfo != null && dr[i] != DBNull.Value)
                     {
-                        string value = dr[i] == null ? "" : dr[i].ToString();
+                        object value = new object();
+                        if (propertyInfo.PropertyType.Name.ToString() == "Int32")
+                        {
+                            int testint = 0;
+                            if (int.TryParse(dr[i] == null ? "0" : dr[i].ToString(), out testint))
+                            {
+                                value = testint;
+                            }
+                            else
+                            {
+                                value = 0;
+                            }
+                        }
+                        else if (propertyInfo.PropertyType.Name.ToString() == "Double")
+                        {
+                            double testdouble = 0;
+                            if (Double.TryParse(dr[i] == null ? "0" : dr[i].ToString(), out testdouble))
+                            {
+                                value = testdouble;
+                            }
+                            else
+                            {
+                                value = 0;
+                            }
+                        }
+                        else if (propertyInfo.PropertyType.Name.ToString() == "String")
+                        {
+                            value = dr[i] == null ? "" : dr[i].ToString();
+                        }
                         //string typestr = dr[i].GetType().Name;
                         //if(typestr.Equals("DateTime"))
                         //value = dr[i].ToString();

@@ -128,7 +128,7 @@ namespace PSLCalcu.Module.DAL
                 isok = Helper.MysqlHelper.ModifySingleSql("updateMPVBase", CommandType.StoredProcedure, paramses, ref errmsg);
 
                 int aid = getAID(type);
-                isok = deleteTime(id);
+                deleteTime(id);
                 isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBSDMaxTime }, aid, id, "PVBSDMaxTime", "MPVBase");
                 isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBStbTSLT }, aid, id, "PVBStbTSLT", "MPVBase");
                 isok = insertTimeValue(new List<D22STimeClass> { newClass.PVBNoStbTSLT }, aid, id, "PVBNoStbTSLT", "MPVBase");
@@ -288,7 +288,7 @@ namespace PSLCalcu.Module.DAL
             {
                 bool isok = false;
                 string errmsg = string.Empty;
-                if (value != null)
+                if (value != null && value.Count() > 0)
                 {
                     foreach (D22STimeClass item in value)
                     {

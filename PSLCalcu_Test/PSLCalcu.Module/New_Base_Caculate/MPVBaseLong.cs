@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PSLCalcu.Module
 {
-    public class MPVBaseLong
+    public class MPVBaseLong : BaseModule, IModule, IModuleExPara
     {
         #region 计算模块信息：
 
@@ -48,7 +48,7 @@ namespace PSLCalcu.Module
                 return _inputDescsCN;
             }
         }
-        private string _algorithms = "MPVBaseShort";
+        private string _algorithms = "MPVBaseLong";
         public string algorithms
         {
             get
@@ -356,11 +356,11 @@ namespace PSLCalcu.Module
                 //tagId
                 string tagid = calcuinfo.fsourtagids[0].ToString();
                 //获取短周期数据
-                DataSet ds = BLL.AlgorithmBLL.getShortData("psl_mvpbase", tagid, year, month, day);
+                DataSet ds = BLL.AlgorithmBLL.getShortData("psl_mpvbase", tagid, year, month, day);
                 //0.1、输入处理：过滤后结果。
                 //——如果去除了截止时刻点，过滤后长度小于1（计算要求至少有一个有效数据），则直接返回null
                 //——如果没取除截止时刻点，过滤后长度小于2（计算要求至少有一个有效数据和一个截止时刻值）
-                if (ds.Tables[0] == null || ds.Tables[0].Rows.Count < 1)
+                if (ds == null || ds.Tables.Count == 0 || ds.Tables[0] == null || ds.Tables[0].Rows.Count < 1)
                 {
                     _warningFlag = true;
                     _warningInfo = "对应时间段内的源数据状态位全部异常。";

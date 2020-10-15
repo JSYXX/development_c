@@ -135,20 +135,23 @@ namespace PSLCalcu.Module.BLL
                 }
                 if (!string.IsNullOrWhiteSpace(day))
                 {
-                    sqlstr += " and `day`=\"" + day + "\"";
+                    sqlstr += " and `dayvalue`=\"" + day + "\"";
                 }
                 sqlstr += ";";
                 DataTable dt = DAL.AlgorithmDAL.getData(sqlstr);
                 string pidList = string.Empty;
-                foreach (DataRow item in dt.Rows)
+                if (dt != null && dt.Rows.Count > 0)
                 {
-                    pidList += item["id"].ToString() + ",";
+                    foreach (DataRow item in dt.Rows)
+                    {
+                        pidList += item["id"].ToString() + ",";
+                    }
+                    pidList = pidList.Substring(0, pidList.Length - 1);
+                    string sqlChildStr = "select a.*,(select b.`columnName` from psl_columndata as b where a.AlgorithmId=b.id) as columnName from psl_timedata as a where a.`parentid` in (" + pidList + ")";
+                    DataTable dtTime = DAL.AlgorithmDAL.getData(sqlChildStr);
+                    ds.Tables.Add(dt);
+                    ds.Tables.Add(dtTime);
                 }
-                pidList = pidList.Substring(0, pidList.Length - 1);
-                string sqlChildStr = "select a.*,(select b.`columnName` from psl_columndata as b where a.AlgorithmId=b.id) as columnName from psl_timedata as a where a.`parentid` in (" + pidList + ")";
-                DataTable dtTime = DAL.AlgorithmDAL.getData(sqlChildStr);
-                ds.Tables.Add(dt);
-                ds.Tables.Add(dtTime);
                 return ds;
             }
             catch (Exception ex)

@@ -125,11 +125,20 @@ namespace PSLCalcu.Module.NewCaculate
                 }
 
                 List<D22STimeClass> PVBSDMaxList = new List<D22STimeClass>();
-                PVBSDMaxList.AddRange(valueList[0].PVBSDMaxTimeG);
+                if (valueList[0].PVBSDMaxTimeG != null)
+                {
+                    PVBSDMaxList.AddRange(valueList[0].PVBSDMaxTimeG);
+                }
                 List<D22STimeClass> PVBStbTList = new List<D22STimeClass>();
-                PVBStbTList.AddRange(valueList[0].PVBStbT);
+                if (valueList[0].PVBStbT != null)
+                {
+                    PVBStbTList.AddRange(valueList[0].PVBStbT);
+                }
                 List<D22STimeClass> PVBNoStbTList = new List<D22STimeClass>();
-                PVBNoStbTList.AddRange(valueList[0].PVBNoStbT);
+                if (valueList[0].PVBNoStbT != null)
+                {
+                    PVBNoStbTList.AddRange(valueList[0].PVBNoStbT);
+                }
                 for (int i = 1; i < valueList.Count(); i++)
                 {
                     List<D22STimeClass> newSDlist = new List<D22STimeClass>();
@@ -139,9 +148,12 @@ namespace PSLCalcu.Module.NewCaculate
                         PVBSDMaxList.RemoveAt(PVBSDMaxList.Count() - 1);
                     }
                     PVBSDMaxList.AddRange(newSDlist);
-                    for (int l = 1; l < valueList[i].PVBSDMaxTimeG.Count(); l++)
+                    if (valueList[i].PVBSDMaxTimeG != null)
                     {
-                        PVBSDMaxList.Add(valueList[i].PVBSDMaxTimeG[l]);
+                        for (int l = 1; l < valueList[i].PVBSDMaxTimeG.Count(); l++)
+                        {
+                            PVBSDMaxList.Add(valueList[i].PVBSDMaxTimeG[l]);
+                        }
                     }
 
                     List<D22STimeClass> newStblist = new List<D22STimeClass>();
@@ -151,9 +163,12 @@ namespace PSLCalcu.Module.NewCaculate
                         PVBStbTList.RemoveAt(PVBStbTList.Count() - 1);
                     }
                     PVBStbTList.AddRange(newStblist);
-                    for (int l = 1; l < valueList[i].PVBStbT.Count(); l++)
+                    if (valueList[i].PVBStbT != null)
                     {
-                        PVBStbTList.Add(valueList[i].PVBStbT[l]);
+                        for (int l = 1; l < valueList[i].PVBStbT.Count(); l++)
+                        {
+                            PVBStbTList.Add(valueList[i].PVBStbT[l]);
+                        }
                     }
 
                     List<D22STimeClass> newNoStblist = new List<D22STimeClass>();
@@ -163,39 +178,45 @@ namespace PSLCalcu.Module.NewCaculate
                         PVBNoStbTList.RemoveAt(PVBNoStbTList.Count() - 1);
                     }
                     PVBNoStbTList.AddRange(newNoStblist);
-                    for (int l = 1; l < valueList[i].PVBNoStbT.Count(); l++)
+                    if (valueList[i].PVBNoStbT != null)
                     {
-                        PVBNoStbTList.Add(valueList[i].PVBNoStbT[l]);
+                        for (int l = 1; l < valueList[i].PVBNoStbT.Count(); l++)
+                        {
+                            PVBNoStbTList.Add(valueList[i].PVBNoStbT[l]);
+                        }
                     }
 
 
                 }
-
-                double SDMaxPVB = PVBSDMaxList[0].valueAmount;
+                double SDMaxPVB = 0;
                 int sumPVBDN1Num = 0;
                 int sumPVBDN2Num = 0;
                 int sumPVBDN3Num = 0;
-                foreach (D22STimeClass item in PVBSDMaxList)
+                if (PVBSDMaxList != null && PVBSDMaxList.Count > 0)
                 {
-                    if (SDMaxPVB < item.valueAmount)
+                    SDMaxPVB = PVBSDMaxList[0].valueAmount;
+                    
+                    foreach (D22STimeClass item in PVBSDMaxList)
                     {
-                        SDMaxPVB = item.valueAmount;
-                        returnClass.PVBSDMaxTime = item;
-                    }
-                    if (item.valueAmount > N1)
-                    {
-                        sumPVBDN1Num += 1;
-                    }
-                    if (item.valueAmount > N2)
-                    {
-                        sumPVBDN2Num += 1;
-                    }
-                    if (item.valueAmount > N3)
-                    {
-                        sumPVBDN3Num += 1;
+                        if (SDMaxPVB < item.valueAmount)
+                        {
+                            SDMaxPVB = item.valueAmount;
+                            returnClass.PVBSDMaxTime = item;
+                        }
+                        if (item.valueAmount > N1)
+                        {
+                            sumPVBDN1Num += 1;
+                        }
+                        if (item.valueAmount > N2)
+                        {
+                            sumPVBDN2Num += 1;
+                        }
+                        if (item.valueAmount > N3)
+                        {
+                            sumPVBDN3Num += 1;
+                        }
                     }
                 }
-
                 returnClass.PVBMin = Math.Round(minValue, 3);
                 returnClass.PVBMinTime = minPVBTime;
                 returnClass.PVBAvg = Math.Round((avgSumPVB / (double)(valueList.Count())), 3);

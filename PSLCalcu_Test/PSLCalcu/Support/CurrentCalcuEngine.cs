@@ -160,38 +160,45 @@ namespace PSLCalcu
                     }//endOPC数据读取
                     else if (pslcalcuitem.sourcetagdb == "rdb")
                     {
-                        //概化库概化数据读取
-                        for (int i = 0; i < pslcalcuitem.fsourtagids.Length; i++)
+                        //概化库概化数据读取//新版长周期算法去短周期数据
+                        if (APPConfig.caculateLongFunction.Contains(pslcalcuitem.fmodulename))
                         {
-                            inputs[i] = PSLDataDAO.Read(pslcalcuitem.fsourtagids[i], pslcalcuitem.fstarttime, pslcalcuitem.fendtime);               //获取概化数据
-                                                                                                                                                    //读取数据时发生错误
-                            if (null == inputs[i])
+                            goto CURRENTCalcu;
+                        }
+                        else
+                        {
+                            for (int i = 0; i < pslcalcuitem.fsourtagids.Length; i++)
                             {
-                                Interlocked.Increment(ref errorCount); //错误计数+1
-                                                                       //记录LOG
-                                string errInfo;
-                                errInfo = string.Format("计算引擎错误{0}：读取概化数据错误，PSLDataDAO层出错!", errorCount.ToString()) + Environment.NewLine;
-                                errInfo += string.Format("——计算模块的名称是：{0}-{1}，计算起始时间是：{2}，计算结束时间是：{3}。", pslcalcuitem.fid, pslcalcuitem.fmodulename, pslcalcuitem.fstarttime.ToString(), pslcalcuitem.fendtime.ToString());
-                                logHelper.Fatal(errInfo);
-                                goto CURRENTCalcu;
+                                inputs[i] = PSLDataDAO.Read(pslcalcuitem.fsourtagids[i], pslcalcuitem.fstarttime, pslcalcuitem.fendtime);               //获取概化数据
+                                                                                                                                                        //读取数据时发生错误
+                                if (null == inputs[i])
+                                {
+                                    Interlocked.Increment(ref errorCount); //错误计数+1
+                                                                           //记录LOG
+                                    string errInfo;
+                                    errInfo = string.Format("计算引擎错误{0}：读取概化数据错误，PSLDataDAO层出错!", errorCount.ToString()) + Environment.NewLine;
+                                    errInfo += string.Format("——计算模块的名称是：{0}-{1}，计算起始时间是：{2}，计算结束时间是：{3}。", pslcalcuitem.fid, pslcalcuitem.fmodulename, pslcalcuitem.fstarttime.ToString(), pslcalcuitem.fendtime.ToString());
+                                    logHelper.Fatal(errInfo);
+                                    goto CURRENTCalcu;
 
-                            }
-                            //读取标签数据，如果标签没有数据，则应该记录报警。但是前提是该标签本身在配置时被配置为保存数据，即pslcalcuitem.fsourtagflags[i]==true。
-                            //如果标签本身在配置时被配置为不保存，则该标签一定没有数据。没有数据即为正常状态。不记录log。在并行计算下，这种情况仍然报警。
-                            else if (pslcalcuitem.fsourtagflags[i] && inputs[i].Count == 0)   //多个源数据标签，如果有一个标签读取的数据为空，则跳过当前标签，去循环读取下一个标签
-                            {
-                                //2018.1.2修改
-                                //——在PSLDataDAO未发生错误的情况下返回空数据，记录报警，读取下一个标签                        
-                                //更新UI
-                                Interlocked.Increment(ref warningCount); //警告计数+1
-                                                                         //UpdateCalcuWarning(string.Format("计算过程中发生{0}次警告!", warningCount.ToString()));
-                                                                         //记录LOG
-                                string warningInfo;
-                                warningInfo = string.Format("计算引擎警告{0}：读取概化数据为空，第{1}个标签对应时间段内没有概化数据！", warningCount.ToString(), i.ToString()) + Environment.NewLine;
-                                warningInfo += string.Format("——计算模块的名称是：{0}-{1}，计算起始时间是：{2}，计算结束时间是：{3}。", pslcalcuitem.fid, pslcalcuitem.fmodulename, pslcalcuitem.fstarttime.ToString(), pslcalcuitem.fendtime.ToString());
-                                logHelper.Warn(warningInfo);
-                            }
-                        }//end for
+                                }
+                                //读取标签数据，如果标签没有数据，则应该记录报警。但是前提是该标签本身在配置时被配置为保存数据，即pslcalcuitem.fsourtagflags[i]==true。
+                                //如果标签本身在配置时被配置为不保存，则该标签一定没有数据。没有数据即为正常状态。不记录log。在并行计算下，这种情况仍然报警。
+                                else if (pslcalcuitem.fsourtagflags[i] && inputs[i].Count == 0)   //多个源数据标签，如果有一个标签读取的数据为空，则跳过当前标签，去循环读取下一个标签
+                                {
+                                    //2018.1.2修改
+                                    //——在PSLDataDAO未发生错误的情况下返回空数据，记录报警，读取下一个标签                        
+                                    //更新UI
+                                    Interlocked.Increment(ref warningCount); //警告计数+1
+                                                                             //UpdateCalcuWarning(string.Format("计算过程中发生{0}次警告!", warningCount.ToString()));
+                                                                             //记录LOG
+                                    string warningInfo;
+                                    warningInfo = string.Format("计算引擎警告{0}：读取概化数据为空，第{1}个标签对应时间段内没有概化数据！", warningCount.ToString(), i.ToString()) + Environment.NewLine;
+                                    warningInfo += string.Format("——计算模块的名称是：{0}-{1}，计算起始时间是：{2}，计算结束时间是：{3}。", pslcalcuitem.fid, pslcalcuitem.fmodulename, pslcalcuitem.fstarttime.ToString(), pslcalcuitem.fendtime.ToString());
+                                    logHelper.Warn(warningInfo);
+                                }
+                            }//end for
+                        }
                     }
                     else if (pslcalcuitem.sourcetagdb == "rdbset")
                     {
