@@ -19,10 +19,11 @@ namespace PSLCalcu.Module
         public DateTime fendtime { get; set; }              //当次计算对应的结束时间。
         public double sourcetagmrb { get; set; }            //量程下限
         public double sourcetagmre { get; set; }            //量程上限
-        
+        public System.UInt32[] foutputpsltagids { get; set; }
+
         public CalcuInfo()
         {
-            this.sourcetagname = "";            
+            this.sourcetagname = "";
             this.fmodulename = "";
             this.fparas = "";
             this.fstarttime = DateTime.Now;
@@ -30,18 +31,31 @@ namespace PSLCalcu.Module
             this.sourcetagmrb = 0;
             this.sourcetagmre = 100;
         }
-        public CalcuInfo(string sourcetagname, System.UInt32[] tagids, bool[] tagflags,string fmodulename, string fparas, DateTime fstarttime, DateTime fendtime,double mrb,double mre)
+        public CalcuInfo(string sourcetagname, System.UInt32[] tagids, bool[] tagflags, string fmodulename, string fparas, DateTime fstarttime, DateTime fendtime, double mrb, double mres)
         {
-            this.sourcetagname =sourcetagname;
+            this.sourcetagname = sourcetagname;
             this.fsourtagids = tagids;
             this.fsourtagflags = tagflags;
-            this.fmodulename=fmodulename;
-            this.fparas=fparas;
-            this.fstarttime=fstarttime;
-            this.fendtime=fendtime;
+            this.fmodulename = fmodulename;
+            this.fparas = fparas;
+            this.fstarttime = fstarttime;
+            this.fendtime = fendtime;
+            this.sourcetagmrb = mrb;
+            this.sourcetagmre = mres;
+        }
+        public CalcuInfo(string sourcetagname, System.UInt32[] tagids, bool[] tagflags, string fmodulename, string fparas, DateTime fstarttime, DateTime fendtime, double mrb, double mre, System.UInt32[] foutputpsltagids)
+        {
+            this.sourcetagname = sourcetagname;
+            this.fsourtagids = tagids;
+            this.fsourtagflags = tagflags;
+            this.fmodulename = fmodulename;
+            this.fparas = fparas;
+            this.fstarttime = fstarttime;
+            this.fendtime = fendtime;
             this.sourcetagmrb = mrb;
             this.sourcetagmre = mre;
-        }       
+            this.foutputpsltagids = foutputpsltagids;
+        }
     }
 
 }

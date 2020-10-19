@@ -180,7 +180,6 @@ namespace PSLCalcu
                                     errInfo += string.Format("——计算模块的名称是：{0}-{1}，计算起始时间是：{2}，计算结束时间是：{3}。", pslcalcuitem.fid, pslcalcuitem.fmodulename, pslcalcuitem.fstarttime.ToString(), pslcalcuitem.fendtime.ToString());
                                     logHelper.Fatal(errInfo);
                                     goto CURRENTCalcu;
-
                                 }
                                 //读取标签数据，如果标签没有数据，则应该记录报警。但是前提是该标签本身在配置时被配置为保存数据，即pslcalcuitem.fsourtagflags[i]==true。
                                 //如果标签本身在配置时被配置为不保存，则该标签一定没有数据。没有数据即为正常状态。不记录log。在并行计算下，这种情况仍然报警。
@@ -196,6 +195,10 @@ namespace PSLCalcu
                                     warningInfo = string.Format("计算引擎警告{0}：读取概化数据为空，第{1}个标签对应时间段内没有概化数据！", warningCount.ToString(), i.ToString()) + Environment.NewLine;
                                     warningInfo += string.Format("——计算模块的名称是：{0}-{1}，计算起始时间是：{2}，计算结束时间是：{3}。", pslcalcuitem.fid, pslcalcuitem.fmodulename, pslcalcuitem.fstarttime.ToString(), pslcalcuitem.fendtime.ToString());
                                     logHelper.Warn(warningInfo);
+                                }
+                                if (APPConfig.mpvBasePlusSftName.Contains(pslcalcuitem.fmodulename))
+                                {
+
                                 }
                             }//end for
                         }
@@ -435,7 +438,8 @@ namespace PSLCalcu
                                                             pslcalcuitem.fstarttime,
                                                             pslcalcuitem.fendtime,
                                                             pslcalcuitem.sourcetagmrb,
-                                                            pslcalcuitem.sourcetagmre));     //将当前计算信息给入算法
+                                                            pslcalcuitem.sourcetagmre,
+                                                            pslcalcuitem.foutputpsltagids));     //将当前计算信息给入算法
                     Results Results = (Results)Calcu.Invoke(null, null);
                     if (Results.fatalFlag == true)
                     {

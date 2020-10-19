@@ -1216,7 +1216,8 @@ namespace PSLCalcu
             string tablename = "psl_dutyconst";
             string[] filedname ={
                                   "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
-                                  "`dutyTime` varchar(45) DEFAULT NULL"
+                                  "`dutyTimeStart` varchar(45) DEFAULT NULL",
+                                  "`dutyTimeEnd` varchar(45) DEFAULT NULL"
                                 };
 
 

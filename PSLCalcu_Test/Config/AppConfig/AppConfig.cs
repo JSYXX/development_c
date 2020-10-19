@@ -73,6 +73,7 @@ namespace Config
 
         public static List<string> caculateFunction { get; set; }
         public static List<string> caculateLongFunction { get; set; }
+        public static List<string> mpvBasePlusSftName { get; set; }
 
 
         static APPConfig()

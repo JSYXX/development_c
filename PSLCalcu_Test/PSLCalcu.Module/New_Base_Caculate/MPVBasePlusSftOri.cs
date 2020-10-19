@@ -1,7 +1,7 @@
 ﻿using PCCommon;
 using PCCommon.NewCaculateCommand;
+using PSLCalcu.Module.BLL;
 using PSLCalcu.Module.Helper;
-using PSLCalcu.Module.NewCaculate;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace PSLCalcu.Module
 {
-    public class MPVBasePlusSft : BaseModule, IModule, IModuleExPara
+    public class MPVBasePlusSftOri : BaseModule, IModule, IModuleExPara
     {
         #region 计算模块信息：
 
-        private string _moduleName = "MPVBasePlusSft";
+        private string _moduleName = "MPVBasePlusSftOri";
         public string moduleName
         {
             get
@@ -48,7 +48,7 @@ namespace PSLCalcu.Module
                 return _inputDescsCN;
             }
         }
-        private string _algorithms = "MPVBasePlusSft";
+        private string _algorithms = "MPVBasePlusSftOri";
         public string algorithms
         {
             get
@@ -56,7 +56,7 @@ namespace PSLCalcu.Module
                 return _algorithms;
             }
         }
-        private string _algorithmsflag = "YYYYYYYYYYYYYYYY";
+        private string _algorithmsflag = "YYYYYYYYYYYYYYYYYYYYY";
         public string algorithmsflag
         {
             get
@@ -90,7 +90,7 @@ namespace PSLCalcu.Module
         }
 
 
-        private int _outputNumber = 16;
+        private int _outputNumber = 21;
         public int outputNumber
         {
             get
@@ -108,13 +108,17 @@ namespace PSLCalcu.Module
                                     "PVBAbsSum;" +
                                     "PVBStbTR;" +
                                     "PVBNoStbTR;" +
+                                    "UpdateTime;" +
+                                    "EffectiveCount;" +
                                     "PVBSDMax;" +
                                     "PVBSDMaxTime;" +
                                     "PVBDN1Num;" +
                                     "PVBDN2Num;" +
                                     "PVBDN3Num;" +
-                                    "PVBTNum";
-
+                                    "PVBTNum;" +
+                                    "PVBSDSingle;" +
+                                    "PVBSDSingleTime;" +
+                                    "PVBSDSingleType";
 
 
 
@@ -135,12 +139,17 @@ namespace PSLCalcu.Module
                                          "绝对值和;" +
                                          "稳定时间占比，稳定：|Δxi| ≤ StbL;" +
                                          "不稳定时间占比，稳定：|Δxi| ＞ NoStbL;" +
+                                         "更新时间;" +
+                                         "有效数据个数;" +
                                          "单次极差最大值。Max(|Δxi|)。极差：指 x 所经历的全部峰 - 谷差的绝对值。计算新的 | Δx |，与原 TΔx 比较;" +
                                          "单次极差最大值，发生时刻;" +
                                          "极差大于 N1 次数。若 x > N1，Tx = Tx + 1;" +
                                          "极差大于 N2 次数，包含 N1。若 x > N2，Tx = Tx + 1;" +
                                          "极差大于 N3 次数，包含 N2、N1，若 x > N3，Tx = Tx + 1;" +
-                                         "翻转次数。标准：xi-1 < xi >xi+1，或 xi-1 > xi <xi+1";
+                                         "翻转次数。标准：xi-1 < xi >xi+1，或 xi-1 > xi <xi+1;" +
+                                         "上一次翻转到当前的绝对值的和;" +
+                                         "上一次翻转时间;" +
+                                         "上一次趋势";
 
         public string outputDescsCN
         {
@@ -227,11 +236,10 @@ namespace PSLCalcu.Module
             int i;
 
             //0输出初始化：该算法如果没有有效输入值（inputs为null）或者输入值得有效值为null，给出的计算结果。值为0，计算标志位为StatusConst.InputIsNull
-            List<PValue>[] results = new List<PValue>[16];
+            List<PValue>[] results = new List<PValue>[21];
             for (i = 0; i < results.Length; i++)
             {
                 results[i] = new List<PValue>();
-                results[i].Add(new PValue(0, calcuinfo.fstarttime, calcuinfo.fendtime, (long)StatusConst.InputIsNull));
             }
 
             try
@@ -252,17 +260,12 @@ namespace PSLCalcu.Module
                 nostbl = double.Parse(paras[6]);
                 //tagId
                 string type = calcuInfo.fsourtagids[0].ToString();
-                DataSet ds = BLL.AlgorithmBLL.getSftData("psl_mpvbaseplussft", type, calcuinfo.fstarttime);
+
                 List<PValue> input = new List<PValue>();
                 input = inputs[0];
-                for (int l = 0; l < ds.Tables[1].Rows.Count; l++)
-                {
-                    PValue newClass = new PValue();
 
-                }
-                //0.1、输入处理：截止时刻值。该算法不需要截止时刻点参与计算。 
-                if (input.Count > 1) input.RemoveAt(input.Count - 1);
-                //0.2、输入处理：过滤后结果。
+
+                //0.1、输入处理：过滤后结果。
                 //——如果去除了截止时刻点，过滤后长度小于1（计算要求至少有一个有效数据），则直接返回null
                 //——如果没取除截止时刻点，过滤后长度小于2（计算要求至少有一个有效数据和一个截止时刻值）
                 if (input.Count < 1)
@@ -273,21 +276,34 @@ namespace PSLCalcu.Module
                 }
 
 
+                string dutyTime = AlgorithmBLL.getDutyTime(input[0].Timestamp);
+                uint[] foutputpsltagids = calcuinfo.foutputpsltagids;
+                DataTable dt = AlgorithmBLL.getMPVBasePlusSftOriOldData(dutyTime, foutputpsltagids);
                 mpvMessageInClass.type = type;
                 bool isNewAdd = false;
-                if (ds.Tables[0] == null || ds.Tables[0].Rows.Count == 0)
+                if (dt == null || dt.Rows.Count == 0)
                 {
                     isNewAdd = true;
-                    mpvMessageInClass.dutyTime = input[input.Count() - 1].Endtime.ToString("yyyy-MM-dd HH:mm");
-                    mpvMessageInClass.PVBMin = input[input.Count() - 1].Value.ToString();
-                    mpvMessageInClass.PVBMinTime = input[input.Count() - 1].Endtime.ToString();
-                    mpvMessageInClass.PVBAvg = input[input.Count() - 1].Value.ToString();
-                    mpvMessageInClass.PVBMax = input[input.Count() - 1].Value.ToString();
-                    mpvMessageInClass.PVBMaxTime = input[input.Count() - 1].Endtime.ToString();
-                    mpvMessageInClass.PVBSum = input[input.Count() - 1].Value.ToString();
-                    mpvMessageInClass.PVBSumkb = (input[input.Count() - 1].Value * k + b).ToString();
-                    mpvMessageInClass.PVBAbsSum = Math.Abs(input[input.Count() - 1].Value).ToString();
-                    double Xi = Math.Abs(input[input.Count() - 1].Value - input[input.Count() - 2].Value);
+                    mpvMessageInClass.dutyTime = dutyTime;
+                    if (input[1].Value >= input[0].Value)
+                    {
+                        mpvMessageInClass.PVBMin = input[0].Value.ToString();
+                        mpvMessageInClass.PVBMinTime = input[0].Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+                        mpvMessageInClass.PVBMax = input[1].Value.ToString();
+                        mpvMessageInClass.PVBMaxTime = input[1].Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+                    }
+                    else
+                    {
+                        mpvMessageInClass.PVBMin = input[1].Value.ToString();
+                        mpvMessageInClass.PVBMinTime = input[1].Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+                        mpvMessageInClass.PVBMax = input[0].Value.ToString();
+                        mpvMessageInClass.PVBMaxTime = input[0].Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+                    }
+                    mpvMessageInClass.PVBAvg = Math.Round((input[0].Value + input[1].Value) / (double)2, 3).ToString();
+                    mpvMessageInClass.PVBSum = (input[0].Value + input[1].Value).ToString();
+                    mpvMessageInClass.PVBSumkb = ((input[0].Value + input[1].Value) * k + b).ToString();
+                    mpvMessageInClass.PVBAbsSum = Math.Abs((input[0].Value + input[1].Value)).ToString();
+                    double Xi = Math.Abs(input[1].Value - input[0].Value);
                     if (Xi <= stbl)
                     {
                         mpvMessageInClass.PVBStbTR = "1";
@@ -305,11 +321,11 @@ namespace PSLCalcu.Module
                     }
                     mpvMessageInClass.PVBSDMax = Xi.ToString();
                     mpvMessageInClass.PVBSDSingle = Xi.ToString();
-                    if (input[input.Count() - 1].Value - input[input.Count() - 2].Value < 0)
+                    if (input[1].Value - input[0].Value < 0)
                     {
                         mpvMessageInClass.PVBSDSingleType = "2";
                     }
-                    else if (input[input.Count() - 1].Value - input[input.Count() - 2].Value > 0)
+                    else if (input[1].Value - input[0].Value > 0)
                     {
                         mpvMessageInClass.PVBSDSingleType = "1";
                     }
@@ -321,55 +337,55 @@ namespace PSLCalcu.Module
                     mpvMessageInClass.PVBDN2Num = "0";
                     mpvMessageInClass.PVBDN3Num = "0";
                     mpvMessageInClass.PVBTNum = "0";
-                    mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Endtime.ToString("yyyy-MM-dd HH:mm");
-                    mpvMessageInClass.UpdateTime = input[input.Count() - 1].Endtime.ToString("yyyy-MM-dd HH:mm");
+                    mpvMessageInClass.PVBSDSingleTime = input[0].Timestamp.ToString("yyyy-MM-dd HH:mm");
+                    mpvMessageInClass.UpdateTime = input[1].Timestamp.ToString("yyyy-MM-dd HH:mm");
                     mpvMessageInClass.EffectiveCount = "2";
                 }
                 else
                 {
                     MPVBasePlusSftClass mpvClass = new MPVBasePlusSftClass();
-                    mpvClass.PVBMin = ds.Tables[0].Rows[0]["PVBMin"].ToString();
-                    mpvClass.PVBMinTime = ds.Tables[0].Rows[0]["PVBMinTime"].ToString();
-                    mpvClass.PVBAvg = ds.Tables[0].Rows[0]["PVBAvg"].ToString();
-                    mpvClass.PVBMax = ds.Tables[0].Rows[0]["PVBMax"].ToString();
-                    mpvClass.PVBMaxTime = ds.Tables[0].Rows[0]["PVBMaxTime"].ToString();
-                    mpvClass.PVBSum = ds.Tables[0].Rows[0]["PVBSum"].ToString();
-                    mpvClass.PVBSumkb = ds.Tables[0].Rows[0]["PVBSumkb"].ToString();
-                    mpvClass.PVBAbsSum = ds.Tables[0].Rows[0]["PVBAbsSum"].ToString();
-                    mpvClass.PVBStbTR = ds.Tables[0].Rows[0]["PVBStbTR"].ToString();
-                    mpvClass.PVBNoStbTR = ds.Tables[0].Rows[0]["PVBNoStbTR"].ToString();
-                    mpvClass.UpdateTime = ds.Tables[0].Rows[0]["UpdateTime"].ToString();
-                    mpvClass.EffectiveCount = ds.Tables[0].Rows[0]["EffectiveCount"].ToString();
-                    mpvClass.PVBSDMax = ds.Tables[0].Rows[0]["PVBSDMax"].ToString();
-                    mpvClass.PVBSDMaxTime = ds.Tables[0].Rows[0]["PVBSDMaxTime"].ToString();
-                    mpvClass.PVBDN1Num = ds.Tables[0].Rows[0]["PVBDN1Num"].ToString();
-                    mpvClass.PVBDN2Num = ds.Tables[0].Rows[0]["PVBDN2Num"].ToString();
-                    mpvClass.PVBDN3Num = ds.Tables[0].Rows[0]["PVBDN3Num"].ToString();
-                    mpvClass.PVBTNum = ds.Tables[0].Rows[0]["PVBTNum"].ToString();
-                    mpvClass.PVBSDSingle = ds.Tables[0].Rows[0]["PVBSDSingle"].ToString();
-                    mpvClass.PVBSDSingleTime = ds.Tables[0].Rows[0]["PVBSDSingleTime"].ToString();
-                    mpvClass.PVBSDSingleType = ds.Tables[0].Rows[0]["PVBSDSingleType"].ToString();
+                    mpvClass.PVBMin = dt.Rows[0]["tagvalue"].ToString();
+                    mpvClass.PVBMinTime = MathHelper.returnAllStr(dt.Rows[1]["tagvalue"].ToString());
+                    mpvClass.PVBAvg = dt.Rows[2]["tagvalue"].ToString();
+                    mpvClass.PVBMax = dt.Rows[3]["tagvalue"].ToString();
+                    mpvClass.PVBMaxTime = MathHelper.returnAllStr(dt.Rows[4]["tagvalue"].ToString());
+                    mpvClass.PVBSum = dt.Rows[5]["tagvalue"].ToString();
+                    mpvClass.PVBSumkb = dt.Rows[6]["tagvalue"].ToString();
+                    mpvClass.PVBAbsSum = dt.Rows[7]["tagvalue"].ToString();
+                    mpvClass.PVBStbTR = dt.Rows[8]["tagvalue"].ToString();
+                    mpvClass.PVBNoStbTR = dt.Rows[9]["tagvalue"].ToString();
+                    mpvClass.UpdateTime = MathHelper.returnAllStr(dt.Rows[10]["tagvalue"].ToString());
+                    mpvClass.EffectiveCount = dt.Rows[11]["tagvalue"].ToString();
+                    mpvClass.PVBSDMax = dt.Rows[12]["tagvalue"].ToString();
+                    mpvClass.PVBSDMaxTime = MathHelper.returnAllStr(dt.Rows[13]["tagvalue"].ToString());
+                    mpvClass.PVBDN1Num = dt.Rows[14]["tagvalue"].ToString();
+                    mpvClass.PVBDN2Num = dt.Rows[15]["tagvalue"].ToString();
+                    mpvClass.PVBDN3Num = dt.Rows[16]["tagvalue"].ToString();
+                    mpvClass.PVBTNum = dt.Rows[17]["tagvalue"].ToString();
+                    mpvClass.PVBSDSingle = dt.Rows[18]["tagvalue"].ToString();
+                    mpvClass.PVBSDSingleTime = MathHelper.returnAllStr(dt.Rows[19]["tagvalue"].ToString());
+                    mpvClass.PVBSDSingleType = dt.Rows[20]["tagvalue"].ToString();
 
                     if (Convert.ToDouble(mpvClass.PVBMin) > input[input.Count() - 1].Value)
                     {
                         mpvMessageInClass.PVBMin = input[input.Count() - 1].Value.ToString();
-                        mpvMessageInClass.PVBMinTime = input[input.Count() - 1].Endtime.ToString("yyyy-MM-dd HH:mm");
+                        mpvMessageInClass.PVBMinTime = input[input.Count() - 1].Timestamp.ToString("yyyy-MM-dd HH:mm");
                     }
                     else
                     {
                         mpvMessageInClass.PVBMin = mpvClass.PVBMin;
-                        mpvMessageInClass.PVBMinTime = mpvClass.PVBMinTime;
+                        mpvMessageInClass.PVBMinTime = (new DateTime(long.Parse(mpvClass.PVBMinTime))).ToString("yyyy-MM-dd HH:mm");
                     }
                     mpvMessageInClass.PVBAvg = Math.Round((Convert.ToDouble(mpvClass.PVBAvg) * Convert.ToDouble(mpvClass.EffectiveCount)) / (Convert.ToDouble(mpvClass.EffectiveCount) + (double)1), 3).ToString();
                     if (Convert.ToDouble(mpvClass.PVBMax) < input[input.Count() - 1].Value)
                     {
                         mpvMessageInClass.PVBMax = input[input.Count() - 1].Value.ToString();
-                        mpvMessageInClass.PVBMaxTime = input[input.Count() - 1].Endtime.ToString("yyyy-MM-dd HH:mm");
+                        mpvMessageInClass.PVBMaxTime = input[input.Count() - 1].Timestamp.ToString("yyyy-MM-dd HH:mm");
                     }
                     else
                     {
                         mpvMessageInClass.PVBMax = mpvClass.PVBMax;
-                        mpvMessageInClass.PVBMaxTime = mpvClass.PVBMaxTime;
+                        mpvMessageInClass.PVBMaxTime = (new DateTime(long.Parse(mpvClass.PVBMaxTime))).ToString("yyyy-MM-dd HH:mm");
                     }
                     mpvMessageInClass.PVBSum = (Convert.ToDouble(mpvClass.PVBSum) + input[input.Count() - 1].Value).ToString();
                     mpvMessageInClass.PVBSumkb = (Convert.ToDouble(mpvMessageInClass.PVBSum) * k + b).ToString();
@@ -409,38 +425,38 @@ namespace PSLCalcu.Module
                             }
                             mpvMessageInClass.PVBTNum = (Convert.ToInt32(mpvClass.PVBTNum) + 1).ToString();
                             mpvMessageInClass.PVBSDSingle = Xi.ToString();
-                            mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Endtime.ToString("yyyy-MM-dd HH:mm");
+                            mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Timestamp.ToString("yyyy-MM-dd HH:mm");
                             if (Convert.ToDouble(mpvMessageInClass.PVBSDSingle) > Convert.ToDouble(mpvMessageInClass.PVBSDMax))
                             {
                                 mpvMessageInClass.PVBSDMax = Xi.ToString();
-                                mpvMessageInClass.PVBSDMaxTime = input[input.Count() - 2].Endtime.ToString("yyyy-MM-dd HH:mm");
+                                mpvMessageInClass.PVBSDMaxTime = input[input.Count() - 2].Timestamp.ToString("yyyy-MM-dd HH:mm");
                             }
                             else
                             {
                                 mpvMessageInClass.PVBSDMax = mpvClass.PVBSDMax;
-                                mpvMessageInClass.PVBSDMaxTime = mpvClass.PVBSDMaxTime;
+                                mpvMessageInClass.PVBSDMaxTime = (new DateTime(long.Parse(mpvClass.PVBSDMaxTime))).ToString("yyyy-MM-dd HH:mm");
                             }
                         }
                         else if (mpvClass.PVBSDSingleType == "2")
                         {
                             mpvMessageInClass.PVBSDSingle = (Convert.ToDouble(mpvClass.PVBSDSingle) + Xi).ToString();
-                            mpvMessageInClass.PVBSDSingleTime = mpvClass.PVBSDSingleTime;
+                            mpvMessageInClass.PVBSDSingleTime = (new DateTime(long.Parse(mpvClass.PVBSDSingleTime))).ToString("yyyy-MM-dd HH:mm");
                             if (mpvClass.PVBSDSingleTime == mpvClass.PVBSDMaxTime)
                             {
                                 mpvMessageInClass.PVBSDMax = (Convert.ToDouble(mpvClass.PVBSDSingle) + Xi).ToString();
-                                mpvMessageInClass.PVBSDMaxTime = mpvClass.PVBSDMaxTime;
+                                mpvMessageInClass.PVBSDMaxTime = (new DateTime(long.Parse(mpvClass.PVBSDMaxTime))).ToString("yyyy-MM-dd HH:mm");
                             }
                             else
                             {
                                 if (Convert.ToDouble(mpvMessageInClass.PVBSDSingle) > Convert.ToDouble(mpvMessageInClass.PVBSDMax))
                                 {
                                     mpvMessageInClass.PVBSDMax = (Convert.ToDouble(mpvClass.PVBSDSingle) + Xi).ToString();
-                                    mpvMessageInClass.PVBSDMaxTime = mpvClass.PVBSDSingleTime;
+                                    mpvMessageInClass.PVBSDMaxTime = (new DateTime(long.Parse(mpvClass.PVBSDSingleTime))).ToString("yyyy-MM-dd HH:mm");
                                 }
                                 else
                                 {
                                     mpvMessageInClass.PVBSDMax = mpvClass.PVBSDMax;
-                                    mpvMessageInClass.PVBSDMaxTime = mpvClass.PVBSDMaxTime;
+                                    mpvMessageInClass.PVBSDMaxTime = (new DateTime(long.Parse(mpvClass.PVBSDMaxTime))).ToString("yyyy-MM-dd HH:mm");
                                 }
                             }
                             mpvMessageInClass.PVBDN1Num = mpvClass.PVBDN1Num;
@@ -456,10 +472,10 @@ namespace PSLCalcu.Module
                             mpvMessageInClass.PVBTNum = mpvClass.PVBTNum;
 
                             mpvMessageInClass.PVBSDSingle = Xi.ToString();
-                            mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Endtime.ToString("yyyy-MM-dd HH:mm");
+                            mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Timestamp.ToString("yyyy-MM-dd HH:mm");
 
                             mpvMessageInClass.PVBSDMax = mpvMessageInClass.PVBSDSingle;
-                            mpvMessageInClass.PVBSDMaxTime = mpvMessageInClass.PVBSDSingleTime;
+                            mpvMessageInClass.PVBSDMaxTime = (new DateTime(long.Parse(mpvClass.PVBSDSingleTime))).ToString("yyyy-MM-dd HH:mm");
 
                         }
                         mpvMessageInClass.PVBSDSingleType = "2";
@@ -469,23 +485,23 @@ namespace PSLCalcu.Module
                         if (mpvClass.PVBSDSingleType == "1")
                         {
                             mpvMessageInClass.PVBSDSingle = (Convert.ToDouble(mpvClass.PVBSDSingle) + Xi).ToString();
-                            mpvMessageInClass.PVBSDSingleTime = mpvClass.PVBSDSingleTime;
+                            mpvMessageInClass.PVBSDSingleTime = (new DateTime(long.Parse(mpvClass.PVBSDSingleTime))).ToString("yyyy-MM-dd HH:mm");
                             if (mpvClass.PVBSDSingleTime == mpvClass.PVBSDMaxTime)
                             {
                                 mpvMessageInClass.PVBSDMax = (Convert.ToDouble(mpvClass.PVBSDSingle) + Xi).ToString();
-                                mpvMessageInClass.PVBSDMaxTime = mpvClass.PVBSDMaxTime;
+                                mpvMessageInClass.PVBSDMaxTime = (new DateTime(long.Parse(mpvClass.PVBSDMaxTime))).ToString("yyyy-MM-dd HH:mm");
                             }
                             else
                             {
                                 if (Convert.ToDouble(mpvMessageInClass.PVBSDSingle) > Convert.ToDouble(mpvMessageInClass.PVBSDMax))
                                 {
                                     mpvMessageInClass.PVBSDMax = (Convert.ToDouble(mpvClass.PVBSDSingle) + Xi).ToString();
-                                    mpvMessageInClass.PVBSDMaxTime = mpvClass.PVBSDSingleTime;
+                                    mpvMessageInClass.PVBSDMaxTime = (new DateTime(long.Parse(mpvClass.PVBSDSingleTime))).ToString("yyyy-MM-dd HH:mm");
                                 }
                                 else
                                 {
                                     mpvMessageInClass.PVBSDMax = mpvClass.PVBSDMax;
-                                    mpvMessageInClass.PVBSDMaxTime = mpvClass.PVBSDMaxTime;
+                                    mpvMessageInClass.PVBSDMaxTime = (new DateTime(long.Parse(mpvClass.PVBSDMaxTime))).ToString("yyyy-MM-dd HH:mm");
                                 }
                             }
                             mpvMessageInClass.PVBDN1Num = mpvClass.PVBDN1Num;
@@ -509,16 +525,16 @@ namespace PSLCalcu.Module
                             }
                             mpvMessageInClass.PVBTNum = (Convert.ToInt32(mpvClass.PVBTNum) + 1).ToString();
                             mpvMessageInClass.PVBSDSingle = Xi.ToString();
-                            mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Endtime.ToString("yyyy-MM-dd HH:mm");
+                            mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Timestamp.ToString("yyyy-MM-dd HH:mm");
                             if (Convert.ToDouble(mpvMessageInClass.PVBSDSingle) > Convert.ToDouble(mpvMessageInClass.PVBSDMax))
                             {
                                 mpvMessageInClass.PVBSDMax = Xi.ToString();
-                                mpvMessageInClass.PVBSDMaxTime = input[input.Count() - 2].Endtime.ToString("yyyy-MM-dd HH:mm");
+                                mpvMessageInClass.PVBSDMaxTime = input[input.Count() - 2].Timestamp.ToString("yyyy-MM-dd HH:mm");
                             }
                             else
                             {
                                 mpvMessageInClass.PVBSDMax = mpvClass.PVBSDMax;
-                                mpvMessageInClass.PVBSDMaxTime = mpvClass.PVBSDMaxTime;
+                                mpvMessageInClass.PVBSDMaxTime = (new DateTime(long.Parse(mpvClass.PVBSDMaxTime))).ToString("yyyy-MM-dd HH:mm");
                             }
                         }
                         else
@@ -529,10 +545,10 @@ namespace PSLCalcu.Module
                             mpvMessageInClass.PVBTNum = mpvClass.PVBTNum;
 
                             mpvMessageInClass.PVBSDSingle = Xi.ToString();
-                            mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Endtime.ToString("yyyy-MM-dd HH:mm");
+                            mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Timestamp.ToString("yyyy-MM-dd HH:mm");
 
                             mpvMessageInClass.PVBSDMax = mpvMessageInClass.PVBSDSingle;
-                            mpvMessageInClass.PVBSDMaxTime = mpvMessageInClass.PVBSDSingleTime;
+                            mpvMessageInClass.PVBSDMaxTime = (new DateTime(long.Parse(mpvClass.PVBSDSingleTime))).ToString("yyyy-MM-dd HH:mm");
                         }
                         mpvMessageInClass.PVBSDSingleType = "1";
                     }
@@ -546,10 +562,10 @@ namespace PSLCalcu.Module
                             mpvMessageInClass.PVBTNum = mpvClass.PVBTNum;
 
                             mpvMessageInClass.PVBSDSingle = "0";
-                            mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Endtime.ToString("yyyy-MM-dd HH:mm");
+                            mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Timestamp.ToString("yyyy-MM-dd HH:mm");
 
                             mpvMessageInClass.PVBSDMax = mpvClass.PVBSDMax;
-                            mpvMessageInClass.PVBSDMaxTime = mpvClass.PVBSDMaxTime;
+                            mpvMessageInClass.PVBSDMaxTime = (new DateTime(long.Parse(mpvClass.PVBSDMaxTime))).ToString("yyyy-MM-dd HH:mm");
                         }
                         else
                         {
@@ -567,7 +583,7 @@ namespace PSLCalcu.Module
                             }
                             mpvMessageInClass.PVBTNum = (Convert.ToInt32(mpvClass.PVBTNum) + 1).ToString();
                             mpvMessageInClass.PVBSDSingle = "0";
-                            mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Endtime.ToString("yyyy-MM-dd HH:mm");
+                            mpvMessageInClass.PVBSDSingleTime = input[input.Count() - 2].Timestamp.ToString("yyyy-MM-dd HH:mm");
 
                             mpvMessageInClass.PVBSDMax = mpvClass.PVBSDMax;
                         }
@@ -578,42 +594,40 @@ namespace PSLCalcu.Module
                     mpvMessageInClass.EffectiveCount = (Convert.ToInt32(mpvClass.EffectiveCount) + 1).ToString();
                 }
                 //初始化
-                //results[0].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBMin), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[1].Add(new PValue(UniverHelper.ConvertDateTimeTolong(mpvMessageInClass.dutyTime), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[2].Add(new PValue(Convert.ToDouble(mpvMessageInClass.type), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[3].Add(new PValue(UniverHelper.ConvertDateTimeTolong(mpvMessageInClass.PVBMinTime), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[4].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBAvg), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[5].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBMax), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[6].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBMaxTime), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[7].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSum), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[8].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSumkb), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[9].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBAbsSum), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[10].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBStbTR), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[11].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBNoStbTR), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[12].Add(new PValue(UniverHelper.ConvertDateTimeTolong(mpvMessageInClass.UpdateTime), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[13].Add(new PValue(Convert.ToDouble(mpvMessageInClass.EffectiveCount), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[14].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDMax), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[15].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDMaxTime), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[16].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBDN1Num), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[17].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBDN2Num), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[18].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBDN3Num), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[19].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBTNum), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[20].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDSingle), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[21].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDSingleTime), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //results[22].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDSingleType), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                //return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                results[0].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBMin), Convert.ToDateTime(dutyTime), 0));
+                results[1].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.PVBMinTime).Ticks, Convert.ToDateTime(dutyTime), 0));
+                results[2].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBAvg), Convert.ToDateTime(dutyTime), 0));
+                results[3].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBMax), Convert.ToDateTime(dutyTime), 0));
+                results[4].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.PVBMaxTime).Ticks, Convert.ToDateTime(dutyTime), 0));
+                results[5].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSum), Convert.ToDateTime(dutyTime), 0));
+                results[6].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSumkb), Convert.ToDateTime(dutyTime), 0));
+                results[7].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBAbsSum), Convert.ToDateTime(dutyTime), 0));
+                results[8].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBStbTR), Convert.ToDateTime(dutyTime), 0));
+                results[9].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBNoStbTR), Convert.ToDateTime(dutyTime), 0));
+                results[10].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.UpdateTime).Ticks, Convert.ToDateTime(dutyTime), 0));
+                results[11].Add(new PValue(Convert.ToDouble(mpvMessageInClass.EffectiveCount), Convert.ToDateTime(dutyTime), 0));
+                results[12].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDMax), Convert.ToDateTime(dutyTime), 0));
+                results[13].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.PVBSDMaxTime).Ticks, Convert.ToDateTime(dutyTime), 0));
+                results[14].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBDN1Num), Convert.ToDateTime(dutyTime), 0));
+                results[15].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBDN2Num), Convert.ToDateTime(dutyTime), 0));
+                results[16].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBDN3Num), Convert.ToDateTime(dutyTime), 0));
+                results[17].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBTNum), Convert.ToDateTime(dutyTime), 0));
+                results[18].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDSingle), Convert.ToDateTime(dutyTime), 0));
+                results[19].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.PVBSDSingleTime).Ticks, Convert.ToDateTime(dutyTime), 0));
+                results[20].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDSingleType), Convert.ToDateTime(dutyTime), 0));
+                return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
                 //计算结果存入数据库
-                bool isok = BLL.AlgorithmBLL.insertMPVBasePlusSft(mpvMessageInClass, isNewAdd);
-                if (isok)
-                {
-                    return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
-                }
-                else
-                {
-                    _fatalFlag = true;
-                    _fatalInfo = "MPVBasePlusSft录入数据失败";
-                    return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
-                }
+                //bool isok = BLL.AlgorithmBLL.insertMPVBasePlusSft(mpvMessageInClass, isNewAdd);
+                //if (isok)
+                //{
+                //    return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                //}
+                //else
+                //{
+                //    _fatalFlag = true;
+                //    _fatalInfo = "MPVBasePlusSft录入数据失败";
+                //    return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                //}
 
 
 

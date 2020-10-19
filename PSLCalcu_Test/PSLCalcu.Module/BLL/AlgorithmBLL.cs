@@ -41,6 +41,40 @@ namespace PSLCalcu.Module.BLL
                 throw ex;
             }
         }
+        public static string getDutyTime(DateTime nowDate)
+        {
+            try
+            {
+                string dutyStr = getDutyConst(nowDate);
+                return dutyStr;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public static DataTable getMPVBasePlusSftOriOldData(string dutyTime, uint[] foutputpsltagids)
+        {
+            try
+            {
+                string tableName = "psldb.psldata" + Convert.ToDateTime(dutyTime).ToString("yyyyMM");
+                string ids = string.Empty;
+                foreach (uint item in foutputpsltagids)
+                {
+                    ids += item.ToString() + ",";
+                }
+                ids = ids.Substring(0, ids.Length - 1);
+                string sqlstr = "select * from " + tableName + " where `tagId` in (" + ids + ") and `tagstarttime`=" + Convert.ToDateTime(dutyTime).Ticks + ";";
+                DataTable dt = DAL.AlgorithmDAL.getData(sqlstr);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -90,30 +124,20 @@ namespace PSLCalcu.Module.BLL
                 string sqlStr = "select * from psldb.psl_dutyconst;";
                 DataTable dutyTime = DAL.AlgorithmDAL.getData(sqlStr);
                 string dutyNow = nowDate.ToString("HH:mm");
-                for (int i = 1; i < dutyTime.Rows.Count - 1; i++)
+                for (int i = 0; i < dutyTime.Rows.Count; i++)
                 {
-                    string dt1 = dutyTime.Rows[i - 1]["dutyTime"].ToString();
-                    string dt2 = dutyTime.Rows[i]["dutyTime"].ToString() == "00:00" ? "24:00" : dutyTime.Rows[i]["dutyTime"].ToString();
-                    if (DateTime.Compare(Convert.ToDateTime(dt2), Convert.ToDateTime(dt1)) >= 0)
+                    string dt1 = nowDate.ToString("yyyy-MM-dd") + " " + dutyTime.Rows[i]["dutyTimeStart"].ToString();
+                    string dt2 = nowDate.ToString("yyyy-MM-dd") + " " + dutyTime.Rows[i]["dutyTimeEnd"].ToString();
+                    DateTime t1 = Convert.ToDateTime(dt1);
+                    DateTime t2 = Convert.ToDateTime(dt2);
+                    if (DateTime.Compare(t1, t2) >= 0)
                     {
-                        if (DateTime.Compare(Convert.ToDateTime(dutyTime), Convert.ToDateTime(dt1)) >= 0 && DateTime.Compare(Convert.ToDateTime(dutyTime), Convert.ToDateTime(dt2)) < 0)
-                        {
-                            dutyStr = nowDate.ToString("yyyy-MM-dd") + " " + dt1;
-                            break;
-                        }
+                        t2 = t2.AddDays(1);
                     }
-                    else
+                    if (DateTime.Compare(nowDate, t1) >= 0 && DateTime.Compare(nowDate, t2) <= 0)
                     {
-                        if (DateTime.Compare(Convert.ToDateTime(dutyTime), Convert.ToDateTime(dt1)) >= 0 && DateTime.Compare(Convert.ToDateTime(dutyTime), Convert.ToDateTime("24:00")) < 0)
-                        {
-                            dutyStr = nowDate.ToString("yyyy-MM-dd") + " " + dt1;
-                            break;
-                        }
-                        else if (DateTime.Compare(Convert.ToDateTime(dutyTime), Convert.ToDateTime("00:00")) >= 0 && DateTime.Compare(Convert.ToDateTime(dutyTime), Convert.ToDateTime(dt2)) < 0)
-                        {
-                            dutyStr = nowDate.ToString("yyyy-MM-dd") + " " + dt1;
-                            break;
-                        }
+                        dutyStr = dt1;
+                        break;
                     }
                 }
                 return dutyStr;

@@ -1058,6 +1058,50 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
+        public static bool insertMPVBasePlusSftNew(MPVBasePlusSftClass newClass, DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                List<String> sqlList = new List<string>();
+                string table = "psldb.psldata" + startDate.ToString("yyyyMM");
+                string tagid = newClass.type;
+                string sqlstr1 = "INSERT INTO `psldb`.`psldata202203`(`tagid`,`tagstarttime`,`tagendtime`,`tagvalue`,`tagstatus`)VALUES(" + tagid + "," + UniverHelper.ConvertDateTimeTolong(startDate.ToString("yyyy-MM-dd HH:mm:ss")) + "," + UniverHelper.ConvertDateTimeTolong(endDate.ToString("yyyy-MM-dd HH:mm:ss")) + "," + newClass.PVBMin + ",0);";
+                sqlList.Add(sqlstr1);
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("PVBMinV", newClass.PVBMin),
+                new MySqlParameter("PVBMinTimeV", newClass.PVBMinTime),
+                new MySqlParameter("PVBAvgV", newClass.PVBAvg),
+                new MySqlParameter("PVBMaxV", newClass.PVBMax),
+                new MySqlParameter("PVBMaxTimeV", newClass.PVBMaxTime),
+                new MySqlParameter("PVBSumV", newClass.PVBSum),
+                new MySqlParameter("PVBSumkbV", newClass.PVBSumkb),
+                new MySqlParameter("PVBAbsSumV", newClass.PVBAbsSum),
+                new MySqlParameter("PVBStbTRV", newClass.PVBStbTR),
+                new MySqlParameter("PVBNoStbTRV", newClass.PVBNoStbTR),
+                new MySqlParameter("UpdateTimeV", newClass.UpdateTime),
+                new MySqlParameter("EffectiveCountV", newClass.EffectiveCount),
+                new MySqlParameter("dutyTimeV", newClass.dutyTime),
+                new MySqlParameter("typeV", newClass.type),
+                new MySqlParameter("PVBSDMaxV", newClass.PVBSDMax),
+                new MySqlParameter("PVBSDMaxTimeV", newClass.PVBSDMaxTime),
+                new MySqlParameter("PVBDN1NumV", newClass.PVBDN1Num),
+                new MySqlParameter("PVBDN2NumV", newClass.PVBDN2Num),
+                new MySqlParameter("PVBDN3NumV", newClass.PVBDN3Num),
+                new MySqlParameter("PVBTNumV", newClass.PVBTNum),
+                new MySqlParameter("PVBSDSingleV", newClass.PVBSDSingle),
+                new MySqlParameter("PVBSDSingleTimeV", newClass.PVBSDSingleTime),
+                new MySqlParameter("PVBSDSingleTypeV", newClass.PVBSDSingleType)};
+                isok = Helper.MysqlHelper.ModifySingleSql("insertMPVBasePlusSft", CommandType.StoredProcedure, paramses, ref errmsg);
+
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static bool insertMPVBasePlusSft(MPVBasePlusSftClass newClass)
         {
             try

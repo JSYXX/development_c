@@ -135,7 +135,49 @@ namespace PSLCalcu.Module.Helper
             }
             return isSuccess;
         }
+        public static bool TranscationCommit(List<String> sqlList)
+        {
+            bool isSuccess = false;
+            string sqlstr = getConnectStr();
+            using (MySqlConnection sqlcon = new MySqlConnection(sqlstr))
+            {
+                sqlcon.Open();
+                MySqlCommand cmd = sqlcon.CreateCommand();
+                //创建事务 并且启动
+                MySqlTransaction transaction = sqlcon.BeginTransaction();
 
+                cmd.Transaction = transaction;
+                try
+                {
+                    int i = 0;
+                    foreach (string item in sqlList)
+                    {
+                        cmd.CommandText = item;
+                        i = cmd.ExecuteNonQuery();
+                        if (i == 0)
+                        {
+                            break;
+                        }
+                    }
+                    if (i == 0)
+                    {
+                        transaction.Rollback();
+                        isSuccess = false;
+                    }
+                    else
+                    {
+                        transaction.Commit();
+                        isSuccess = true;
+                    }
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    isSuccess = false;
+                }
+            }
+            return isSuccess;
+        }
         public static DataTable InsertAndReportDataTable(string sqltext, CommandType type, MySqlParameter[] parames, ref string errmsg)
         {
             DataTable dt = new DataTable();

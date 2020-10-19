@@ -115,7 +115,9 @@
     <Compile Include="DAL\AlgorithmDAL.cs" />
     <Compile Include="Helper\AlgorithmHelper.cs" />
     <Compile Include="Helper\DatatableToEntity.cs" />
+    <Compile Include="Helper\MathHelper.cs" />
     <Compile Include="Helper\MysqlHelper.cs" />
+    <Compile Include="Helper\UniverHelper.cs" />
     <Compile Include="Interface_RTDB\MReadPVOPC.cs" />
     <Compile Include="Interface_RTDB\MOPCSegmentFilter.cs" />
     <Compile Include="Adv_Deviation\MDeviation2DSpan.cs" />
@@ -180,6 +182,7 @@
     <Compile Include="New_Base_Caculate\MDevLimitShort.cs" />
     <Compile Include="New_Base_Caculate\MPVBaseLong.cs" />
     <Compile Include="New_Base_Caculate\MPVBasePlusSft.cs" />
+    <Compile Include="New_Base_Caculate\MPVBasePlusSftOri.cs" />
     <Compile Include="New_Base_Caculate\MPVBaseShort.cs" />
     <Content Include="Interface_RTDB\关于读取实时数据周期的选择问题.txt" />
     <Compile Include="NewBase\BaseCalcu.cs" />

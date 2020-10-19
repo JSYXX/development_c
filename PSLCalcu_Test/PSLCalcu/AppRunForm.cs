@@ -669,7 +669,7 @@ namespace PSLCalcu
             if (runflag) runflag = IniTable.createTable_pslmaddmul();
             if (runflag) runflag = IniTable.createTable_pslmpvbaseplussft();
             if (runflag) runflag = IniTable.createTable_psldutyconst();
-            
+
 
             string sqlFilePath = AppDomain.CurrentDomain.BaseDirectory + "procedures.sql";
             string MysqlConStr = System.Configuration.ConfigurationManager.AppSettings["Local"].ToString();
@@ -1915,6 +1915,7 @@ namespace PSLCalcu
                 APPConfig.caculateFunction = PSLTagNameIdMapDAO.ReadCaculateFunction();
                 //加载新版长周期算法名称
                 APPConfig.caculateLongFunction = PSLTagNameIdMapDAO.ReadLongCaculateFunction();
+                APPConfig.mpvBasePlusSftName = PSLTagNameIdMapDAO.ReadMPVBasePlusSft();
                 if (PSLTagNameIdMapDAO.ErrorFlag)
                 {
                     string strMsg = String.Format("读取概化计算标签字典！" + Environment.NewLine +

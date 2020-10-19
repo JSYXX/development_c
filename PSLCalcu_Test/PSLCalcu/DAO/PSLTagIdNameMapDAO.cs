@@ -737,6 +737,29 @@ namespace PSLCalcu
                 return null;
             }
         }
+        public static List<string> ReadMPVBasePlusSft()
+        {
+            ErrorFlag = false;
+            string sqlStr = "";
+            try
+            {
+                List<string> caculateFunctions = new List<string>();
+                string functions = System.Configuration.ConfigurationManager.AppSettings["PlusSft"].ToString();
+                caculateFunctions = functions.Split(';').ToList();
+                return caculateFunctions;
+            }
+            catch (Exception ex)
+            {
+                ErrorFlag = true;
+                string messageStr;
+                messageStr = String.Format("DAO层PSLTagNameIdMapDAO.ReadCaculateFunction()错误：读取MPVBasePlusSft名称是出错---------->");
+                logHelper.Error(messageStr);
+                messageStr = String.Format("错误信息：{0}", ex.ToString());
+                logHelper.Error(messageStr);
+                return null;
+            }
+        }
+
         public static List<string> ReadLongCaculateFunction()
         {
             ErrorFlag = false;

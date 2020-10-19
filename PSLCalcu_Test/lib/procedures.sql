@@ -2208,8 +2208,8 @@ WHERE `id` = pid;
 
 END ;;
 sqlSplit
-INSERT INTO `psldb`.`psl_dutyconst` (`dutyTime`) VALUES ('8:00');
+INSERT INTO `psldb`.`psl_dutyconst` (`dutyTimeStart`,`dutyTimeEnd`) VALUES ('00:00','7:59');
 sqlSplit
-INSERT INTO `psldb`.`psl_dutyconst` (`dutyTime`) VALUES ('16:00');
+INSERT INTO `psldb`.`psl_dutyconst` (`dutyTimeStart`,`dutyTimeEnd`) VALUES ('8:00','15:59');
 sqlSplit
-INSERT INTO `psldb`.`psl_dutyconst` (`dutyTime`) VALUES ('00:00');
+INSERT INTO `psldb`.`psl_dutyconst` (`dutyTimeStart`,`dutyTimeEnd`) VALUES ('16:00','23:59');
