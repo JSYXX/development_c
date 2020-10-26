@@ -55,6 +55,7 @@
     <Compile Include="NewCaculateCommand\MDevLimitMessageOutBadClass.cs" />
     <Compile Include="NewCaculateCommand\MDevLimitMessageOutClass.cs" />
     <Compile Include="NewCaculateCommand\MDevLimitMultiMessageInClass.cs" />
+    <Compile Include="NewCaculateCommand\MetalTemperatureClass.cs" />
     <Compile Include="NewCaculateCommand\MPVBaseMessageInBadClass.cs" />
     <Compile Include="NewCaculateCommand\MPVBaseMessageInClass.cs" />
     <Compile Include="NewCaculateCommand\MPVBaseMessageOutBadClass.cs" />

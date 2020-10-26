@@ -27,7 +27,7 @@ namespace PSLCalcu.Module.BLL
             try
             {
                 DataSet ds = new DataSet();
-                string dutyStr = getDutyConst(nowDate);
+                string dutyStr = getOldDutyConst(nowDate);
                 string sqlstr = "select * from " + tableName + " where `tagId`=" + tagid + " and `dutytime`=" + dutyStr + ";";
                 DataTable dt = DAL.AlgorithmDAL.getData(sqlstr);
                 //string sqlChildStr = "select * from psldata" + nowDate.ToString("yyyyMM") + " where `tagid`=" + tagid + " and tagstarttime<=" + nowDate.ToString("yyyy-MM-dd HH:mm") + " limit 2";
@@ -110,6 +110,22 @@ namespace PSLCalcu.Module.BLL
 
                 return isbig;
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static string getOldDutyConst(DateTime nowDate)
+        {
+            try
+            {
+                string dutyStr = string.Empty;
+                string sqlStr = "select * from psldb.psldata" + nowDate.ToString("yyyyMM") + " where `tagid`=10001 and `tagstarttime` <= " + nowDate.Ticks.ToString() + " and `tagendtime` >=" + nowDate.Ticks.ToString() + ";";
+                DataTable dutyTime = DAL.AlgorithmDAL.getData(sqlStr);
+                string dutyNow = Convert.ToDateTime(dutyTime.Rows[0]["tagstarttime"].ToString()).ToString("yyyy-MM-dd HH:mm");
+
+                return dutyStr;
             }
             catch (Exception ex)
             {
