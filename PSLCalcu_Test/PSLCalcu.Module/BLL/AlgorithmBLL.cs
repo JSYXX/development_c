@@ -27,7 +27,8 @@ namespace PSLCalcu.Module.BLL
             try
             {
                 DataSet ds = new DataSet();
-                string dutyStr = getOldDutyConst(nowDate);
+                string endtime = string.Empty;
+                string dutyStr = getOldDutyConst(nowDate, ref endtime);
                 string sqlstr = "select * from " + tableName + " where `tagId`=" + tagid + " and `dutytime`=" + dutyStr + ";";
                 DataTable dt = DAL.AlgorithmDAL.getData(sqlstr);
                 //string sqlChildStr = "select * from psldata" + nowDate.ToString("yyyyMM") + " where `tagid`=" + tagid + " and tagstarttime<=" + nowDate.ToString("yyyy-MM-dd HH:mm") + " limit 2";
@@ -41,11 +42,11 @@ namespace PSLCalcu.Module.BLL
                 throw ex;
             }
         }
-        public static string getDutyTime(DateTime nowDate)
+        public static string getDutyTime(DateTime nowDate, ref string EndTime)
         {
             try
             {
-                string dutyStr = getDutyConst(nowDate);
+                string dutyStr = getOldDutyConst(nowDate, ref EndTime);
                 return dutyStr;
             }
             catch (Exception ex)
@@ -116,16 +117,20 @@ namespace PSLCalcu.Module.BLL
                 throw ex;
             }
         }
-        public static string getOldDutyConst(DateTime nowDate)
+        public static string getOldDutyConst(DateTime nowDate, ref string endTime)
         {
             try
             {
-                string dutyStr = string.Empty;
+                //string dutyStr = string.Empty;
                 string sqlStr = "select * from psldb.psldata" + nowDate.ToString("yyyyMM") + " where `tagid`=10001 and `tagstarttime` <= " + nowDate.Ticks.ToString() + " and `tagendtime` >=" + nowDate.Ticks.ToString() + ";";
                 DataTable dutyTime = DAL.AlgorithmDAL.getData(sqlStr);
-                string dutyNow = Convert.ToDateTime(dutyTime.Rows[0]["tagstarttime"].ToString()).ToString("yyyy-MM-dd HH:mm");
-
-                return dutyStr;
+                if (dutyTime == null || dutyTime.Rows.Count == 0)
+                {
+                    throw new Exception("值次信息缺失。");
+                }
+                string dutyNow = (new DateTime(long.Parse(dutyTime.Rows[0]["tagstarttime"].ToString()))).ToString("yyyy-MM-dd HH:mm");
+                endTime = (new DateTime(long.Parse(dutyTime.Rows[0]["tagendtime"].ToString()))).ToString("yyyy-MM-dd HH:mm");
+                return dutyNow;
             }
             catch (Exception ex)
             {

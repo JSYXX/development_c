@@ -275,8 +275,8 @@ namespace PSLCalcu.Module
                     return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
                 }
 
-
-                string dutyTime = AlgorithmBLL.getDutyTime(input[0].Timestamp);
+                string dutyEndTime = string.Empty;
+                string dutyTime = AlgorithmBLL.getDutyTime(input[0].Timestamp, ref dutyEndTime);
                 uint[] foutputpsltagids = calcuinfo.foutputpsltagids;
                 DataTable dt = AlgorithmBLL.getMPVBasePlusSftOriOldData(dutyTime, foutputpsltagids);
                 mpvMessageInClass.type = type;

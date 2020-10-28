@@ -26,5 +26,23 @@ namespace PCCommon.NewCaculateCommand
         public string qc { get; set; }
         public string qr { get; set; }
 
+        public string Bulge { get; set; }
+        public string BulgeN { get; set; }
+        public string Cave { get; set; }
+        public string CaveN { get; set; }
+        public string HHG { get; set; }
+        public string HHHB { get; set; }
+        public string HRPB { get; set; }
+        public string RP0B { get; set; }
+        public string RM0B { get; set; }
+        public string RMLB { get; set; }
+        public string LLLB { get; set; }
+        public string LLL { get; set; }
+        public string RPRMB { get; set; }
+        public string HLB { get; set; }
+        public string HHHLLLB { get; set; }
+        public string HHLLGL { get; set; }
+
+
     }
 }
