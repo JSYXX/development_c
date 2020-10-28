@@ -30,5 +30,46 @@ namespace PSLCalcu.Module.Helper
                 throw ex;
             }
         }
+        public static string returnProportionStr(double molecule, int denominator)
+        {
+            try
+            {
+                string returnStr = string.Empty;
+                if (molecule == 0)
+                {
+                    returnStr = "0";
+                }
+                else
+                {
+                    returnStr = (Math.Round(molecule / (double)denominator, 5) * 100).ToString();
+                }
+                return returnStr;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static string returnProportionUpdateStr(double molecule, int denominator, string oldData)
+        {
+            try
+            {
+                string returnStr = string.Empty;
+                double oData = Convert.ToDouble(oldData);
+                if (molecule == 0 && oData == 0)
+                {
+                    returnStr = "0";
+                }
+                else
+                {
+                    returnStr = (Math.Round((oData / (double)100 * denominator + molecule) / (double)(denominator + 1), 5) * 100).ToString();
+                }
+                return returnStr;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
