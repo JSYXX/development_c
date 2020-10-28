@@ -594,27 +594,27 @@ namespace PSLCalcu.Module
                     mpvMessageInClass.EffectiveCount = (Convert.ToInt32(mpvClass.EffectiveCount) + 1).ToString();
                 }
                 //初始化
-                results[0].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBMin), Convert.ToDateTime(dutyTime), 0));
-                results[1].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.PVBMinTime).Ticks, Convert.ToDateTime(dutyTime), 0));
-                results[2].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBAvg), Convert.ToDateTime(dutyTime), 0));
-                results[3].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBMax), Convert.ToDateTime(dutyTime), 0));
-                results[4].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.PVBMaxTime).Ticks, Convert.ToDateTime(dutyTime), 0));
-                results[5].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSum), Convert.ToDateTime(dutyTime), 0));
-                results[6].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSumkb), Convert.ToDateTime(dutyTime), 0));
-                results[7].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBAbsSum), Convert.ToDateTime(dutyTime), 0));
-                results[8].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBStbTR), Convert.ToDateTime(dutyTime), 0));
-                results[9].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBNoStbTR), Convert.ToDateTime(dutyTime), 0));
-                results[10].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.UpdateTime).Ticks, Convert.ToDateTime(dutyTime), 0));
-                results[11].Add(new PValue(Convert.ToDouble(mpvMessageInClass.EffectiveCount), Convert.ToDateTime(dutyTime), 0));
-                results[12].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDMax), Convert.ToDateTime(dutyTime), 0));
-                results[13].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.PVBSDMaxTime).Ticks, Convert.ToDateTime(dutyTime), 0));
-                results[14].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBDN1Num), Convert.ToDateTime(dutyTime), 0));
-                results[15].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBDN2Num), Convert.ToDateTime(dutyTime), 0));
-                results[16].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBDN3Num), Convert.ToDateTime(dutyTime), 0));
-                results[17].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBTNum), Convert.ToDateTime(dutyTime), 0));
-                results[18].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDSingle), Convert.ToDateTime(dutyTime), 0));
-                results[19].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.PVBSDSingleTime).Ticks, Convert.ToDateTime(dutyTime), 0));
-                results[20].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDSingleType), Convert.ToDateTime(dutyTime), 0));
+                results[0].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBMin), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[1].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.PVBMinTime).Ticks, Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[2].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBAvg), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[3].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBMax), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[4].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.PVBMaxTime).Ticks, Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[5].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSum), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[6].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSumkb), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[7].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBAbsSum), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[8].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBStbTR), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[9].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBNoStbTR), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[10].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.UpdateTime).Ticks, Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[11].Add(new PValue(Convert.ToDouble(mpvMessageInClass.EffectiveCount), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[12].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDMax), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[13].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.PVBSDMaxTime).Ticks, Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[14].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBDN1Num), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[15].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBDN2Num), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[16].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBDN3Num), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[17].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBTNum), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[18].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDSingle), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[19].Add(new PValue(Convert.ToDateTime(mpvMessageInClass.PVBSDSingleTime).Ticks, Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
+                results[20].Add(new PValue(Convert.ToDouble(mpvMessageInClass.PVBSDSingleType), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
                 return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
                 //计算结果存入数据库
                 //bool isok = BLL.AlgorithmBLL.insertMPVBasePlusSft(mpvMessageInClass, isNewAdd);
