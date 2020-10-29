@@ -268,7 +268,7 @@ namespace PSLCalcu.Module
 
                 string dutyEndTime = string.Empty;
                 string dutyTime = AlgorithmBLL.getDutyTime(input[0].Timestamp, ref dutyEndTime);
-                if (Convert.ToDateTime(dutyEndTime).Ticks > input[0].Timestamp.Ticks)
+                if (Convert.ToDateTime(dutyTime).Ticks > input[0].Timestamp.Ticks)
                 {
                     _warningFlag = true;
                     _warningInfo = "数据对应时间小于值次时间。";
