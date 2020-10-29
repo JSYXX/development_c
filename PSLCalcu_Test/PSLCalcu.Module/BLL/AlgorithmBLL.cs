@@ -124,6 +124,19 @@ namespace PSLCalcu.Module.BLL
                 //string dutyStr = string.Empty;
                 string sqlStr = "select * from psldb.psldata" + nowDate.ToString("yyyyMM") + " where `tagid`=10001 and `tagstarttime` <= " + nowDate.Ticks.ToString() + " and `tagendtime` >=" + nowDate.Ticks.ToString() + ";";
                 DataTable dutyTime = DAL.AlgorithmDAL.getData(sqlStr);
+                string sqlStr1 = "select * from psldb.psldata" + nowDate.AddMonths(-1).ToString("yyyyMM") + " where `tagid`=10001 and `tagstarttime` <= " + nowDate.Ticks.ToString() + " and `tagendtime` >=" + nowDate.Ticks.ToString() + ";";
+                DataTable dutyTime1 = DAL.AlgorithmDAL.getData(sqlStr);
+                if (dutyTime1 != null && dutyTime1.Rows.Count > 0)
+                {
+                    if (dutyTime == null)
+                    {
+                        dutyTime = new DataTable();
+                    }
+                    foreach (DataRow item in dutyTime1.Rows)
+                    {
+                        dutyTime.Rows.Add(item);
+                    }
+                }
                 if (dutyTime == null || dutyTime.Rows.Count == 0)
                 {
                     throw new Exception("值次信息缺失。");

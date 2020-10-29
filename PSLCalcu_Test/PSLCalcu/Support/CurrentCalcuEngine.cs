@@ -169,8 +169,14 @@ namespace PSLCalcu
                         {
                             for (int i = 0; i < pslcalcuitem.fsourtagids.Length; i++)
                             {
-                                inputs[i] = PSLDataDAO.Read(pslcalcuitem.fsourtagids[i], pslcalcuitem.fstarttime, pslcalcuitem.fendtime);               //获取概化数据
-                                                                                                                                                        //读取数据时发生错误
+                                if (APPConfig.mpvBasePlusSftName.Contains(pslcalcuitem.fmodulename))
+                                {
+                                    inputs[i] = PSLDataDAO.Read(pslcalcuitem.fsourtagids[i], pslcalcuitem.fstarttime.AddMinutes(-1), pslcalcuitem.fendtime.AddMinutes(-1));
+                                }
+                                else
+                                {
+                                    inputs[i] = PSLDataDAO.Read(pslcalcuitem.fsourtagids[i], pslcalcuitem.fstarttime, pslcalcuitem.fendtime);               //获取概化数据
+                                }                                                   //读取数据时发生错误
                                 if (null == inputs[i])
                                 {
                                     Interlocked.Increment(ref errorCount); //错误计数+1

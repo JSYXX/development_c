@@ -277,6 +277,12 @@ namespace PSLCalcu.Module
 
                 string dutyEndTime = string.Empty;
                 string dutyTime = AlgorithmBLL.getDutyTime(input[0].Timestamp, ref dutyEndTime);
+                if (Convert.ToDateTime(dutyEndTime).Ticks > input[0].Timestamp.Ticks)
+                {
+                    _warningFlag = true;
+                    _warningInfo = "数据对应时间小于值次时间。";
+                    return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                }
                 uint[] foutputpsltagids = calcuinfo.foutputpsltagids;
                 DataTable dt = AlgorithmBLL.getMPVBasePlusSftOriOldData(dutyTime, foutputpsltagids);
                 mpvMessageInClass.type = type;
