@@ -125,7 +125,7 @@ namespace PSLCalcu.Module.BLL
                 string sqlStr = "select * from psldb.psldata" + nowDate.ToString("yyyyMM") + " where `tagid`=10001 and `tagstarttime` <= " + nowDate.Ticks.ToString() + " and `tagendtime` >=" + nowDate.Ticks.ToString() + ";";
                 DataTable dutyTime = DAL.AlgorithmDAL.getData(sqlStr);
                 string sqlStr1 = "select * from psldb.psldata" + nowDate.AddMonths(-1).ToString("yyyyMM") + " where `tagid`=10001 and `tagstarttime` <= " + nowDate.Ticks.ToString() + " and `tagendtime` >=" + nowDate.Ticks.ToString() + ";";
-                DataTable dutyTime1 = DAL.AlgorithmDAL.getData(sqlStr);
+                DataTable dutyTime1 = DAL.AlgorithmDAL.getData(sqlStr1);
                 if (dutyTime1 != null && dutyTime1.Rows.Count > 0)
                 {
                     if (dutyTime == null)
@@ -134,7 +134,9 @@ namespace PSLCalcu.Module.BLL
                     }
                     foreach (DataRow item in dutyTime1.Rows)
                     {
-                        dutyTime.Rows.Add(item);
+                        DataRow dr = dutyTime.NewRow();
+                        dr.ItemArray = item.ItemArray;
+                        dutyTime.Rows.Add(dr);
                     }
                 }
                 if (dutyTime == null || dutyTime.Rows.Count == 0)
