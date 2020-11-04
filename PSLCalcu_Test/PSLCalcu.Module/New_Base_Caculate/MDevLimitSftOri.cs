@@ -474,7 +474,7 @@ namespace PSLCalcu.Module
                     {
                         DevHLT++;
                     }
-                    int effectiveCount = Convert.ToInt32(mDevClass.EffectiveCount) + 1;
+                    int effectiveCount = Convert.ToInt32(mDevClass.EffectiveCount);
                     mDevMessageInClass.DevHLHHLLR = MathHelper.returnProportionUpdateStr(DevHLHHLLT, effectiveCount, mDevClass.DevHLHHLLR);
                     mDevMessageInClass.DevHHR = MathHelper.returnProportionUpdateStr(DevHHT, effectiveCount, mDevClass.DevHHR);
                     mDevMessageInClass.DevHR = MathHelper.returnProportionUpdateStr(DevHT, effectiveCount, mDevClass.DevHR);
@@ -491,7 +491,7 @@ namespace PSLCalcu.Module
                     mDevMessageInClass.Dev0RPRMTR = MathHelper.returnProportionUpdateStr(Dev0RPRMT, effectiveCount, mDevClass.Dev0RPRMTR);
                     mDevMessageInClass.DevHLTR = MathHelper.returnProportionUpdateStr(DevHLT, effectiveCount, mDevClass.DevHLTR);
                     mDevMessageInClass.UpdateTime = input[0].Timestamp.ToString("yyyy-MM-dd HH:mm");
-                    mDevMessageInClass.EffectiveCount = effectiveCount.ToString();
+                    mDevMessageInClass.EffectiveCount = (effectiveCount + 1).ToString();
                 }
                 //初始化
                 results[0].Add(new PValue(Convert.ToDouble(mDevMessageInClass.DevHLHHLLR), Convert.ToDateTime(dutyTime), Convert.ToDateTime(dutyEndTime), 0));
