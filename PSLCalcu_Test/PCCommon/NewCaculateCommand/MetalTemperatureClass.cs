@@ -43,6 +43,9 @@ namespace PCCommon.NewCaculateCommand
         public string HHHLLLB { get; set; }
         public string HHLLGL { get; set; }
 
+        public string HG { get; set; }
+        public string LL { get; set; }
+
 
     }
 }

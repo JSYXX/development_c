@@ -47,6 +47,8 @@ namespace PSLCalcu.Module.NewCaculate
                     double HLB = 0;
                     double HHHLLLB = 0;
                     double HHLLGL = 0;
+                    double HG = 0;
+                    double LL = 0;
 
                     foreach (CurveClass childItem in ccList)
                     {
@@ -65,6 +67,10 @@ namespace PSLCalcu.Module.NewCaculate
                         if (childItem.y > LimitHH)
                         {
                             HHG++;
+                        }
+                        if (childItem.y > LimitH)
+                        {
+                            HG++;
                         }
                         if (childItem.y <= LimitHH && childItem.y > LimitH)
                         {
@@ -89,6 +95,10 @@ namespace PSLCalcu.Module.NewCaculate
                         if (childItem.y <= LimitL && childItem.y > LimitLL)
                         {
                             LLLB++;
+                        }
+                        if (childItem.y <= LimitL)
+                        {
+                            LL++;
                         }
                         if (childItem.y <= LimitLL)
                         {
@@ -143,10 +153,31 @@ namespace PSLCalcu.Module.NewCaculate
                     AlgorithmHelper.LinearRegressionSolve(ccList, ref lk, ref lb);
                     newClass.lk = lk.ToString();
                     newClass.lb = lb.ToString();
+                    List<double> lY = new List<double>();
+                    List<double> lX = new List<double>();
+                    foreach (CurveClass lcItem in ccList)
+                    {
+                        lY.Add(lcItem.y);
+                        lX.Add(lcItem.x);
+                    }
+                    List<double> lYTest = new List<double>();
+                    foreach (double fdItem in lX)
+                    {
+                        lYTest.Add(lk * fdItem + lb);
+                    }
+                    double lR = GoodnessOfFit.RSquared(lY, lYTest);
+                    newClass.lr = lR.ToString();
                     double[] res = Fit.Polynomial(xList, yList, 2);
                     newClass.qa = Math.Round(res[2], 3).ToString();
                     newClass.qb = Math.Round(res[1], 3).ToString();
                     newClass.qc = Math.Round(res[0], 3).ToString();
+                    List<double> qYTest = new List<double>();
+                    foreach (double qdItem in xList)
+                    {
+                        qYTest.Add(res[2] * Math.Pow(qdItem, 2) + res[1] * qdItem + res[0]);
+                    }
+                    double qR = GoodnessOfFit.RSquared(yList, qYTest);
+                    newClass.qr = qR.ToString();
                     double Bulge = (ccList[1].y - ccList[0].y) * 2;
                     double BulgeN = 1;
                     double Cave = (ccList[1].y - ccList[0].y) * 2;
@@ -189,6 +220,8 @@ namespace PSLCalcu.Module.NewCaculate
                     newClass.HLB = Math.Round(HLB / (double)(ccList.Count), 3).ToString();
                     newClass.HHHLLLB = Math.Round(HHHLLLB / (double)(ccList.Count), 3).ToString();
                     newClass.HHLLGL = Math.Round(HHLLGL / (double)(ccList.Count), 3).ToString();
+                    newClass.HG = Math.Round(HG / (double)(ccList.Count), 3).ToString();
+                    newClass.LL = Math.Round(LL / (double)(ccList.Count), 3).ToString();
                     returnClass.Add(newClass);
                 }
                 return returnClass;
