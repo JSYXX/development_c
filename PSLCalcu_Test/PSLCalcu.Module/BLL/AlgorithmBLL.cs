@@ -66,7 +66,7 @@ namespace PSLCalcu.Module.BLL
                     ids += item.ToString() + ",";
                 }
                 ids = ids.Substring(0, ids.Length - 1);
-                string sqlstr = "select * from " + tableName + " where `tagId` in (" + ids + ") and `tagstarttime`=" + Convert.ToDateTime(dutyTime).Ticks + ";";
+                string sqlstr = "select * from " + tableName + " where `tagId` in (" + ids + ") and `tagstarttime`=" + Convert.ToDateTime(dutyTime).Ticks + " order by tagId asc;";
                 DataTable dt = DAL.AlgorithmDAL.getData(sqlstr);
                 return dt;
             }
