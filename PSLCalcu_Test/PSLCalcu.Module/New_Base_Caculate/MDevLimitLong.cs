@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PSLCalcu.Module
 {
-    public class MDevLimitLong
+    public class MDevLimitLong : BaseModule, IModule, IModuleExPara
     {
         #region 计算模块信息：
 

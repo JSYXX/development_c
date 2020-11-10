@@ -48,6 +48,7 @@
     <Compile Include="ISnapIn.cs" />
     <Compile Include="NewCaculateCommand\CurveClass.cs" />
     <Compile Include="NewCaculateCommand\D22STimeClass.cs" />
+    <Compile Include="NewCaculateCommand\EquBaseClass.cs" />
     <Compile Include="NewCaculateCommand\IndependentVariableClass.cs" />
     <Compile Include="NewCaculateCommand\MAddMulOutClass.cs" />
     <Compile Include="NewCaculateCommand\MDeviationSOutClass.cs" />

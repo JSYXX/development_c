@@ -175,10 +175,12 @@
     <Compile Include="Base\MWeightSumAvg.cs" />
     <Compile Include="Interface_RTDB\MRDFilter2One.cs" />
     <Compile Include="Interface_RTDB\MRDSegmentMaxMinAvg.cs" />
+    <Compile Include="NewCaculate\EquBaseCaculate.cs" />
     <Compile Include="NewCaculate\MDevLimitCaculate.cs" />
     <Compile Include="NewCaculate\MPVBaseCaculate.cs" />
     <Compile Include="NewCaculate\MultiMetalTemperature.cs" />
     <Compile Include="NewCaculate\MultipleRegressionAlgorithmCaculate.cs" />
+    <Compile Include="New_Base_Caculate\EquBase.cs" />
     <Compile Include="New_Base_Caculate\MDevLimitLong.cs" />
     <Compile Include="New_Base_Caculate\MDevLimitSftOri.cs" />
     <Compile Include="New_Base_Caculate\MDevLimitShort.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="NewBase\MLinearRegression.cs" />
     <Compile Include="NewBase\MPVBase.cs" />
     <Compile Include="NewBase\MSpecOutline.cs" />
+    <Compile Include="New_Base_Caculate\MultiMetalTemperatureC.cs" />
     <Compile Include="New_Base_Caculate\MultipleRegressionAlgorithm.cs" />
     <Compile Include="New_Base_Caculate\NewMAddMul.cs" />
     <Compile Include="New_Base_Caculate\NewMDeviation2DS.cs" />

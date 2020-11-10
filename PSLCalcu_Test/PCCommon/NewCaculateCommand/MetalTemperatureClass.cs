@@ -45,6 +45,7 @@ namespace PCCommon.NewCaculateCommand
 
         public string HG { get; set; }
         public string LL { get; set; }
+        public string effectiveDateTime { get; set; }
 
 
     }
