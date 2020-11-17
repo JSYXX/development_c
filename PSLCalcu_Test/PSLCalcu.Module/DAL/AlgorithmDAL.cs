@@ -1198,5 +1198,27 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
+        public static bool excuSqlStr(string sqlStr)
+        {
+            try
+            {
+                //bool isok = false;
+                string errmsg = string.Empty;
+                MySqlParameter[] parames = { };
+                int i = MysqlHelper.ExecuteNonQuery(CommandType.Text, sqlStr, parames);
+                if (i == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

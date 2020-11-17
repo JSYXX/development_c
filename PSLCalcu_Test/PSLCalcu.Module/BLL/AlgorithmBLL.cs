@@ -75,7 +75,26 @@ namespace PSLCalcu.Module.BLL
                 throw ex;
             }
         }
-
+        public static bool deleteOldData(string dutyTime, uint[] foutputpsltagids)
+        {
+            try
+            {
+                string tableName = "psldb.psldata" + Convert.ToDateTime(dutyTime).ToString("yyyyMM");
+                string ids = string.Empty;
+                foreach (uint item in foutputpsltagids)
+                {
+                    ids += item.ToString() + ",";
+                }
+                ids = ids.Substring(0, ids.Length - 1);
+                string sqlstr = "delete from " + tableName + " where `tagId` in (" + ids + ") and `tagstarttime`=" + Convert.ToDateTime(dutyTime).Ticks + ";";
+                bool isok = DAL.AlgorithmDAL.excuSqlStr(sqlstr);
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>

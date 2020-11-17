@@ -284,6 +284,10 @@ namespace PSLCalcu.Module
                     return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
                 }
                 uint[] foutputpsltagids = calcuinfo.foutputpsltagids;
+                if (dutyTime == input[0].Timestamp.ToString("yyyy-MM-dd HH:mm"))
+                {
+                    AlgorithmBLL.deleteOldData(dutyTime, foutputpsltagids);
+                }
                 DataTable dt = AlgorithmBLL.getMPVBasePlusSftOriOldData(dutyTime, foutputpsltagids);
                 mpvMessageInClass.type = type;
                 bool isNewAdd = false;
@@ -382,7 +386,7 @@ namespace PSLCalcu.Module
                         mpvMessageInClass.PVBMin = mpvClass.PVBMin;
                         mpvMessageInClass.PVBMinTime = (new DateTime(long.Parse(mpvClass.PVBMinTime))).ToString("yyyy-MM-dd HH:mm");
                     }
-                    mpvMessageInClass.PVBAvg = Math.Round((Convert.ToDouble(mpvClass.PVBAvg) * Convert.ToDouble(mpvClass.EffectiveCount)) / (Convert.ToDouble(mpvClass.EffectiveCount) + (double)1), 3).ToString();
+                    mpvMessageInClass.PVBAvg = Math.Round(((Convert.ToDouble(mpvClass.PVBAvg) * Convert.ToDouble(mpvClass.EffectiveCount)) + input[input.Count() - 1].Value) / (Convert.ToDouble(mpvClass.EffectiveCount) + (double)1), 3).ToString();
                     if (Convert.ToDouble(mpvClass.PVBMax) < input[input.Count() - 1].Value)
                     {
                         mpvMessageInClass.PVBMax = input[input.Count() - 1].Value.ToString();

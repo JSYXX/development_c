@@ -275,6 +275,10 @@ namespace PSLCalcu.Module
                     return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
                 }
                 uint[] foutputpsltagids = calcuinfo.foutputpsltagids;
+                if (dutyTime == input[0].Timestamp.ToString("yyyy-MM-dd HH:mm"))
+                {
+                    AlgorithmBLL.deleteOldData(dutyTime, foutputpsltagids);
+                }
                 DataTable dt = AlgorithmBLL.getMPVBasePlusSftOriOldData(dutyTime, foutputpsltagids);
                 mDevMessageInClass.type = type;
                 bool isNewAdd = false;

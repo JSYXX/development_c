@@ -262,21 +262,7 @@ namespace PSLCalcu.Module
 
                 string mode;
                 string[] paras = calcuinfo.fparas.Split(';');
-
                 mode = paras[0];
-
-
-
-
-                //0.1、输入处理：过滤后结果。
-                //——如果去除了截止时刻点，过滤后长度小于1（计算要求至少有一个有效数据），则直接返回null
-                //——如果没取除截止时刻点，过滤后长度小于2（计算要求至少有一个有效数据和一个截止时刻值）
-                if (input.Count < 1)
-                {
-                    _warningFlag = true;
-                    _warningInfo = "对应时间段内的源数据状态位全部异常。";
-                    return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
-                }
                 EquBaseClass newClass = new EquBaseClass();
                 if (mode == "S")
                 {
@@ -323,6 +309,12 @@ namespace PSLCalcu.Module
                         inClass.effectiveDateTime = item[36].Value.ToString();
                         valueList.Add(inClass);
                     }
+                    if (valueList.Count < 1)
+                    {
+                        _warningFlag = true;
+                        _warningInfo = "对应时间段内的源数据状态位全部异常。";
+                        return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
+                    }
                     newClass = EquBaseCaculate.shortEquBase(valueList);
                 }
                 else
@@ -359,6 +351,12 @@ namespace PSLCalcu.Module
                         inClass.equHHHLLLB = item[25].Value.ToString();
                         inClass.equHHLLGL = item[26].Value.ToString();
                         valueList.Add(inClass);
+                    }
+                    if (valueList.Count < 1)
+                    {
+                        _warningFlag = true;
+                        _warningInfo = "对应时间段内的源数据状态位全部异常。";
+                        return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
                     }
                     newClass = EquBaseCaculate.longEquBase(valueList);
                 }
