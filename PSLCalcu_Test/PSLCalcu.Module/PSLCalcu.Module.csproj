@@ -181,6 +181,7 @@
     <Compile Include="NewCaculate\MultiMetalTemperature.cs" />
     <Compile Include="NewCaculate\MultipleRegressionAlgorithmCaculate.cs" />
     <Compile Include="New_Base_Caculate\EquBase.cs" />
+    <Compile Include="New_Base_Caculate\EquSigma.cs" />
     <Compile Include="New_Base_Caculate\MDevLimitLong.cs" />
     <Compile Include="New_Base_Caculate\MDevLimitSftOri.cs" />
     <Compile Include="New_Base_Caculate\MDevLimitShort.cs" />
