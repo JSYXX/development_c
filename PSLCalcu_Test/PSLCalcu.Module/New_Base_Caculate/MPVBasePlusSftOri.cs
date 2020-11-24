@@ -260,7 +260,11 @@ namespace PSLCalcu.Module
                 nostbl = double.Parse(paras[6]);
                 //tagId
                 string type = calcuInfo.fsourtagids[0].ToString();
-
+                List<string> dutyList = new List<string>();
+                for (int l = 7; l < paras.Length; l += 2)
+                {
+                    dutyList.Add(paras[l] + ":" + paras[l + 1]);
+                }
                 List<PValue> input = new List<PValue>();
                 input = inputs[0];
 
@@ -276,7 +280,7 @@ namespace PSLCalcu.Module
                 }
 
                 string dutyEndTime = string.Empty;
-                string dutyTime = AlgorithmBLL.getDutyTime(input[0].Timestamp, ref dutyEndTime);
+                string dutyTime = AlgorithmBLL.getDutyConst(input[0].Timestamp, dutyList);
                 if (Convert.ToDateTime(dutyTime).Ticks > input[0].Timestamp.Ticks)
                 {
                     _warningFlag = true;

@@ -141,9 +141,9 @@ namespace PSLCalcu.Module.BLL
             try
             {
                 //string dutyStr = string.Empty;
-                string sqlStr = "select * from psldb.psldata" + nowDate.ToString("yyyyMM") + " where `tagid`=10001 and `tagstarttime` <= " + nowDate.Ticks.ToString() + " and `tagendtime` >=" + nowDate.Ticks.ToString() + ";";
+                string sqlStr = "select * from psldb.psldata" + nowDate.ToString("yyyyMM") + " where `tagid`=10001 and `tagstarttime` <= " + nowDate.Ticks.ToString() + " and `tagendtime` >" + nowDate.Ticks.ToString() + ";";
                 DataTable dutyTime = DAL.AlgorithmDAL.getData(sqlStr);
-                string sqlStr1 = "select * from psldb.psldata" + nowDate.AddMonths(-1).ToString("yyyyMM") + " where `tagid`=10001 and `tagstarttime` <= " + nowDate.Ticks.ToString() + " and `tagendtime` >=" + nowDate.Ticks.ToString() + ";";
+                string sqlStr1 = "select * from psldb.psldata" + nowDate.AddMonths(-1).ToString("yyyyMM") + " where `tagid`=10001 and `tagstarttime` <= " + nowDate.Ticks.ToString() + " and `tagendtime` >" + nowDate.Ticks.ToString() + ";";
                 DataTable dutyTime1 = DAL.AlgorithmDAL.getData(sqlStr1);
                 if (dutyTime1 != null && dutyTime1.Rows.Count > 0)
                 {
@@ -171,18 +171,18 @@ namespace PSLCalcu.Module.BLL
                 throw ex;
             }
         }
-        public static string getDutyConst(DateTime nowDate)
+        public static string getDutyConst(DateTime nowDate, List<string> dutyTime)
         {
             try
             {
                 string dutyStr = string.Empty;
-                string sqlStr = "select * from psldb.psl_dutyconst;";
-                DataTable dutyTime = DAL.AlgorithmDAL.getData(sqlStr);
+                //string sqlStr = "select * from psldb.psl_dutyconst;";
+                //DataTable dutyTime = DAL.AlgorithmDAL.getData(sqlStr);
                 string dutyNow = nowDate.ToString("HH:mm");
-                for (int i = 0; i < dutyTime.Rows.Count; i++)
+                for (int i = 0; i < dutyTime.Count; i++)
                 {
-                    string dt1 = nowDate.ToString("yyyy-MM-dd") + " " + dutyTime.Rows[i]["dutyTimeStart"].ToString();
-                    string dt2 = nowDate.ToString("yyyy-MM-dd") + " " + dutyTime.Rows[i]["dutyTimeEnd"].ToString();
+                    string dt1 = nowDate.ToString("yyyy-MM-dd") + " " + dutyTime[i];
+                    string dt2 = nowDate.ToString("yyyy-MM-dd") + " " + dutyTime[i];
                     DateTime t1 = Convert.ToDateTime(dt1);
                     DateTime t2 = Convert.ToDateTime(dt2);
                     if (DateTime.Compare(t1, t2) >= 0)
