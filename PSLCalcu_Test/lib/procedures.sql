@@ -2213,3 +2213,113 @@ sqlSplit
 INSERT INTO `psldb`.`psl_dutyconst` (`dutyTimeStart`,`dutyTimeEnd`) VALUES ('8:00','15:59');
 sqlSplit
 INSERT INTO `psldb`.`psl_dutyconst` (`dutyTimeStart`,`dutyTimeEnd`) VALUES ('16:00','23:59');
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMDevLimitSft`(
+    in DevHLHHLLRV varchar(45),
+    in DevHHRV varchar(45),
+    in DevHRV varchar(45),
+    in DevRPRV varchar(45),
+    in Dev0PRV varchar(45),
+    in Dev0NRV varchar(45),
+    in DevRNRV varchar(45),
+    in DevLRV varchar(45),
+    in DevLLRV varchar(45),
+    in Dev0HTRV varchar(45),
+    in Dev0LRV varchar(45),
+    in DevHHLLTRV varchar(45),
+    in DevRPRMHLTRV varchar(45),
+    in Dev0RPRMTRV varchar(45),
+    in DevHLTRV varchar(45),
+    in dutyTimeV varchar(45),
+    in typeV varchar(45),
+    in UpdateTimeV varchar(45),
+    in EffectiveCountV varchar(45)
+)
+BEGIN
+    INSERT INTO `psldb`.`psl_mdevlimitsft`
+( `tagId`,
+  `dutytime`,
+  `DevHLHHLLR`,
+  `DevHHR`,
+  `DevHR`,
+  `DevRPR`,
+  `Dev0PR`,
+  `Dev0NR`,
+  `DevRNR`,
+  `DevLR`,
+  `DevLLR`,
+  `Dev0HTR`,
+  `Dev0LR`,
+  `DevHHLLTR`,
+  `DevRPRMHLTR`,
+  `Dev0RPRMTR`,
+  `DevHLTR`,
+  `UpdateTime`,
+  `EffectiveCount`)
+VALUES
+(typeV,
+dutyTimeV,
+DevHLHHLLRV,
+DevHHRV,
+DevHRV,
+DevRPRV,
+Dev0PRV,
+Dev0NRV,
+DevRNRV,
+DevLRV,
+DevLLRV,
+Dev0HTRV,
+Dev0LRV,
+DevHHLLTRV,
+DevRPRMHLTRV,
+Dev0RPRMTRV,
+DevHLTRV,
+UpdateTimeV,
+EffectiveCountV);
+END ;;
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateMPVBasePlusSft`(
+    in pid int,
+    in DevHLHHLLRV varchar(45),
+    in DevHHRV varchar(45),
+    in DevHRV varchar(45),
+    in DevRPRV varchar(45),
+    in Dev0PRV varchar(45),
+    in Dev0NRV varchar(45),
+    in DevRNRV varchar(45),
+    in DevLRV varchar(45),
+    in DevLLRV varchar(45),
+    in Dev0HTRV varchar(45),
+    in Dev0LRV varchar(45),
+    in DevHHLLTRV varchar(45),
+    in DevRPRMHLTRV varchar(45),
+    in Dev0RPRMTRV varchar(45),
+    in DevHLTRV varchar(45),
+    in dutyTimeV varchar(45),
+    in typeV varchar(45),
+    in UpdateTimeV varchar(45),
+    in EffectiveCountV varchar(45)
+)
+BEGIN
+    UPDATE `psldb`.`psl_mdevlimitsft`
+SET
+  `DevHLHHLLR`= DevHLHHLLRV,
+  `DevHHR`= DevHHRV,
+  `DevHR`= DevHRV,
+  `DevRPR`= DevRPRV,
+  `Dev0PR`= Dev0PRV,
+  `Dev0NR`= Dev0NRV,
+  `DevRNR`= DevRNRV,
+  `DevLR`= DevLRV,
+  `DevLLR`= DevLLRV,
+  `Dev0HTR`= Dev0HTRV,
+  `Dev0LR`= Dev0LRV,
+  `DevHHLLTR`= DevHHLLTRV,
+  `DevRPRMHLTR`= DevRPRMHLTRV,
+  `Dev0RPRMTR`= Dev0RPRMTRV,
+  `DevHLTR`= DevHLTRV,
+  `UpdateTime`= UpdateTimeV,
+  `EffectiveCount`= EffectiveCountV
+WHERE `id` = pid;
+
+END ;;

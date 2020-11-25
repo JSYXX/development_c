@@ -1209,7 +1209,36 @@ namespace PSLCalcu
 
             return createTable(databasename, tablename, filedname);
         }
+        public static bool createTable_pslmdevlimitsft()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_mdevlimitsft";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`dutytime` datetime DEFAULT NULL",
+                                  "`DevHLHHLLR` varchar(45) DEFAULT NULL",
+                                  "`DevHHR` varchar(45) DEFAULT NULL",
+                                  "`DevHR` varchar(45) DEFAULT NULL",
+                                  "`DevRPR` varchar(45) DEFAULT NULL",
+                                  "`Dev0PR` varchar(45) DEFAULT NULL",
+                                  "`Dev0NR` varchar(45) DEFAULT NULL",
+                                  "`DevRNR` varchar(45) DEFAULT NULL",
+                                  "`DevLR` varchar(45) DEFAULT NULL",
+                                  "`DevLLR` varchar(45) DEFAULT NULL",
+                                  "`Dev0HTR` varchar(45) DEFAULT NULL",
+                                  "`Dev0LR` varchar(45) DEFAULT NULL",
+                                  "`DevHHLLTR` int(11) DEFAULT NULL",
+                                  "`DevRPRMHLTR` varchar(45) DEFAULT NULL",
+                                  "`Dev0RPRMTR` varchar(45) DEFAULT NULL",
+                                  "`DevHLTR` varchar(45) DEFAULT NULL",
+                                  "`UpdateTime` varchar(45) DEFAULT NULL",
+                                  "`EffectiveCount` varchar(45) DEFAULT NULL"
+                                };
 
+
+            return createTable(databasename, tablename, filedname);
+        }
         public static bool createTable_psldutyconst()
         {
             string databasename = "psldb";

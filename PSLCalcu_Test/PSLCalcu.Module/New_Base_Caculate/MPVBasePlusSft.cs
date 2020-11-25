@@ -1,5 +1,6 @@
 ﻿using PCCommon;
 using PCCommon.NewCaculateCommand;
+using PSLCalcu.Module.BLL;
 using PSLCalcu.Module.Helper;
 using PSLCalcu.Module.NewCaculate;
 using System;
@@ -252,14 +253,9 @@ namespace PSLCalcu.Module
                 nostbl = double.Parse(paras[6]);
                 //tagId
                 string type = calcuInfo.fsourtagids[0].ToString();
-                DataSet ds = BLL.AlgorithmBLL.getSftData("psl_mpvbaseplussft", type, calcuinfo.fstarttime);
+
                 List<PValue> input = new List<PValue>();
                 input = inputs[0];
-                for (int l = 0; l < ds.Tables[1].Rows.Count; l++)
-                {
-                    PValue newClass = new PValue();
-
-                }
                 //0.1、输入处理：截止时刻值。该算法不需要截止时刻点参与计算。 
                 if (input.Count > 1) input.RemoveAt(input.Count - 1);
                 //0.2、输入处理：过滤后结果。
@@ -271,7 +267,13 @@ namespace PSLCalcu.Module
                     _warningInfo = "对应时间段内的源数据状态位全部异常。";
                     return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
                 }
-
+                List<string> dutyList = new List<string>();
+                for (int l = 7; l < paras.Length; l += 2)
+                {
+                    dutyList.Add(paras[l] + ":" + paras[l + 1]);
+                }
+                string dutyTime = AlgorithmBLL.getDutyConst(input[0].Timestamp, dutyList);
+                DataSet ds = BLL.AlgorithmBLL.getSftData("psl_mpvbaseplussft", type, dutyTime);
 
                 mpvMessageInClass.type = type;
                 bool isNewAdd = false;

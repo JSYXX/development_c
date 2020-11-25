@@ -22,14 +22,13 @@ namespace PSLCalcu.Module.BLL
                 throw ex;
             }
         }
-        public static DataSet getSftData(string tableName, string tagid, DateTime nowDate)
+        public static DataSet getSftData(string tableName, string tagid, string duty)
         {
             try
             {
                 DataSet ds = new DataSet();
                 string endtime = string.Empty;
-                string dutyStr = getOldDutyConst(nowDate, ref endtime);
-                string sqlstr = "select * from " + tableName + " where `tagId`=" + tagid + " and `dutytime`=" + dutyStr + ";";
+                string sqlstr = "select * from " + tableName + " where `tagId`=" + tagid + " and `dutytime`=" + duty + ";";
                 DataTable dt = DAL.AlgorithmDAL.getData(sqlstr);
                 //string sqlChildStr = "select * from psldata" + nowDate.ToString("yyyyMM") + " where `tagid`=" + tagid + " and tagstarttime<=" + nowDate.ToString("yyyy-MM-dd HH:mm") + " limit 2";
                 //DataTable dtTime = DAL.AlgorithmDAL.getData(sqlChildStr);
@@ -271,6 +270,26 @@ namespace PSLCalcu.Module.BLL
                 else
                 {
                     isok = DAL.AlgorithmDAL.updateMPVBasePlusSft(newClass);
+                }
+                return isok;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static bool insertMDevLimitSft(MDevLimitShtClass newClass, bool isNew)
+        {
+            try
+            {
+                bool isok = false;
+                if (isNew)
+                {
+                    isok = DAL.AlgorithmDAL.insertMDevLimitSft(newClass);
+                }
+                else
+                {
+                    isok = DAL.AlgorithmDAL.updateMDevLimitSft(newClass);
                 }
                 return isok;
             }

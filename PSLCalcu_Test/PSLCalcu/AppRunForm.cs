@@ -668,6 +668,7 @@ namespace PSLCalcu
             if (runflag) runflag = IniTable.createTable_pslmdeviation2ds();
             if (runflag) runflag = IniTable.createTable_pslmaddmul();
             if (runflag) runflag = IniTable.createTable_pslmpvbaseplussft();
+            if (runflag) runflag = IniTable.createTable_pslmdevlimitsft();
             if (runflag) runflag = IniTable.createTable_psldutyconst();
 
 

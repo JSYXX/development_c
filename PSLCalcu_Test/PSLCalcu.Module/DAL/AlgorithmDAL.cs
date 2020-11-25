@@ -1058,6 +1058,42 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
+        public static bool updateMDevLimitSft(MDevLimitShtClass newClass)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("pid",newClass.id),
+                new MySqlParameter("DevHLHHLLRV",newClass.DevHLHHLLR),
+                new MySqlParameter("DevHHRV",newClass.DevHHR),
+                new MySqlParameter("DevHRV",newClass.DevHR),
+                new MySqlParameter("DevRPRV",newClass.DevRPR),
+                new MySqlParameter("Dev0PRV",newClass.Dev0PR),
+                new MySqlParameter("Dev0NRV",newClass.Dev0NR),
+                new MySqlParameter("DevRNRV",newClass.DevRNR),
+                new MySqlParameter("DevLRV",newClass.DevLR),
+                new MySqlParameter("DevLLRV",newClass.DevLLR),
+                new MySqlParameter("Dev0HTRV",newClass.Dev0HTR),
+                new MySqlParameter("Dev0LRV",newClass.Dev0LR),
+                new MySqlParameter("DevHHLLTRV",newClass.DevHHLLTR),
+                new MySqlParameter("DevRPRMHLTRV",newClass.DevRPRMHLTR),
+                new MySqlParameter("Dev0RPRMTRV",newClass.Dev0RPRMTR),
+                new MySqlParameter("DevHLTRV",newClass.DevHLTR),
+                new MySqlParameter("dutyTimeV",newClass.dutyTime),
+                new MySqlParameter("typeV",newClass.type),
+                new MySqlParameter("UpdateTimeV",newClass.UpdateTime),
+                new MySqlParameter("EffectiveCountV",newClass.EffectiveCount)};
+                isok = Helper.MysqlHelper.ModifySingleSql("updateMDevLimitSft", CommandType.StoredProcedure, paramses, ref errmsg);
+
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static bool insertMPVBasePlusSftNew(MPVBasePlusSftClass newClass, DateTime startDate, DateTime endDate)
         {
             try
@@ -1141,7 +1177,41 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
+        public static bool insertMDevLimitSft(MDevLimitShtClass newClass)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("DevHLHHLLRV",newClass.DevHLHHLLR),
+                new MySqlParameter("DevHHRV",newClass.DevHHR),
+                new MySqlParameter("DevHRV",newClass.DevHR),
+                new MySqlParameter("DevRPRV",newClass.DevRPR),
+                new MySqlParameter("Dev0PRV",newClass.Dev0PR),
+                new MySqlParameter("Dev0NRV",newClass.Dev0NR),
+                new MySqlParameter("DevRNRV",newClass.DevRNR),
+                new MySqlParameter("DevLRV",newClass.DevLR),
+                new MySqlParameter("DevLLRV",newClass.DevLLR),
+                new MySqlParameter("Dev0HTRV",newClass.Dev0HTR),
+                new MySqlParameter("Dev0LRV",newClass.Dev0LR),
+                new MySqlParameter("DevHHLLTRV",newClass.DevHHLLTR),
+                new MySqlParameter("DevRPRMHLTRV",newClass.DevRPRMHLTR),
+                new MySqlParameter("Dev0RPRMTRV",newClass.Dev0RPRMTR),
+                new MySqlParameter("DevHLTRV",newClass.DevHLTR),
+                new MySqlParameter("dutyTimeV",newClass.dutyTime),
+                new MySqlParameter("typeV",newClass.type),
+                new MySqlParameter("UpdateTimeV",newClass.UpdateTime),
+                new MySqlParameter("EffectiveCountV",newClass.EffectiveCount)};
+                isok = Helper.MysqlHelper.ModifySingleSql("insertMDevLimitSft", CommandType.StoredProcedure, paramses, ref errmsg);
 
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static DataTable isHaveData(string sql)
         {
             try

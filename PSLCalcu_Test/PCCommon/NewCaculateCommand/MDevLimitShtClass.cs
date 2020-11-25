@@ -7,6 +7,7 @@ namespace PCCommon.NewCaculateCommand
 {
     public class MDevLimitShtClass
     {
+        public int id { get; set; }
         public string DevHLHHLLR { get; set; }
         public string DevHHR { get; set; }
         public string DevHR { get; set; }
