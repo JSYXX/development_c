@@ -1239,6 +1239,39 @@ namespace PSLCalcu
 
             return createTable(databasename, tablename, filedname);
         }
+        public static bool createTable_pslmultipleregression()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_multipleregression";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`k` varchar(45) DEFAULT NULL",
+                                  "`b` varchar(45) DEFAULT NULL",
+                                  "`r2` varchar(45) DEFAULT NULL",
+                                  "`sey` varchar(45) DEFAULT NULL",
+                                  "`F` varchar(45) DEFAULT NULL",
+                                  "`df` varchar(45) DEFAULT NULL",
+                                  "`ssreg` varchar(45) DEFAULT NULL",
+                                  "`ssresid` varchar(45) DEFAULT NULL",
+                                  "`m1` varchar(45) DEFAULT NULL",
+                                  "`m2` varchar(45) DEFAULT NULL",
+                                  "`m3` varchar(45) DEFAULT NULL",
+                                  "`m4` varchar(45) DEFAULT NULL",
+                                  "`m5` varchar(45) DEFAULT NULL",
+                                  "`m6` varchar(45) DEFAULT NULL",
+                                  "`m7` varchar(45) DEFAULT NULL",
+                                  "`m8` varchar(45) DEFAULT NULL",
+                                  "`m9` varchar(45) DEFAULT NULL",
+                                  "`m10` varchar(45) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                };
+
+            return createTable(databasename, tablename, filedname);
+        }
         public static bool createTable_psldutyconst()
         {
             string databasename = "psldb";

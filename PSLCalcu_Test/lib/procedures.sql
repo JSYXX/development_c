@@ -2323,3 +2323,125 @@ SET
 WHERE `id` = pid;
 
 END ;;
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertMultipleRegressionAlgorithm`(
+    in kV varchar(45),
+    in bV varchar(45),
+    in r2V varchar(45),
+    in seyV varchar(45),
+    in FV varchar(45),
+    in dfV varchar(45),
+    in ssregV varchar(45),
+    in ssresidV varchar(45),
+    in m1V varchar(45),
+    in m2V varchar(45),
+    in m3V varchar(45),
+    in m4V varchar(45),
+    in m5V varchar(45),
+    in m6V varchar(45),
+    in m7V varchar(45),
+    in m8Vv
+    in m9V varchar(45),
+    in m10V varchar(45),
+    in typeV varchar(45),
+    in yearV varchar(45),
+    in monthV varchar(45),
+    in dayV varchar(45),
+    in hourV varchar(45)
+BEGIN
+    INSERT INTO `psldb`.`psl_multipleregression`
+(`k`,
+`b`,
+`r2`,
+`sey`,
+`F`,
+`df`,
+`ssreg`,
+`ssresid`,
+`m1`,
+`m2`,
+`m3`,
+`m4`,
+`m5`,
+`m6`,
+`m7`,
+`m8`,
+`m9`,
+`m10`,
+`yearvalue`,
+`monthvalue`,
+`dayvalue`,
+`hourvalue`,
+`tagId`)
+VALUES
+(kV,
+bV,
+r2V,
+seyV,
+FV,
+dfV,
+ssregV,
+ssresidV,
+m1V,
+m2V,
+m3V,
+m4V,
+m5V,
+m6V,
+m7V,
+m8V,
+m9V,
+m10V,
+yearV,
+monthV,
+dayV,
+hourV,
+typeV);
+SELECT last_insert_id() as `lastid`;
+END ;;
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateMultipleRegressionAlgorithm`(
+    in pid int,
+    in kV varchar(45),
+    in bV varchar(45),
+    in r2V varchar(45),
+    in seyV varchar(45),
+    in FV varchar(45),
+    in dfV varchar(45),
+    in ssregV varchar(45),
+    in ssresidV varchar(45),
+    in m1V varchar(45),
+    in m2V varchar(45),
+    in m3V varchar(45),
+    in m4V varchar(45),
+    in m5V varchar(45),
+    in m6V varchar(45),
+    in m7V varchar(45),
+    in m8Vv
+    in m9V varchar(45),
+    in m10V varchar(45)
+)
+BEGIN
+    UPDATE `psldb`.`psl_multipleregression`
+    SET
+		`k` = kV,
+		`b` = bV,
+		`r2` = r2V,
+		`sey` = seyV,
+		`F` = FV,
+		`df` = dfV,
+		`ssreg` = ssregV,
+		`ssresid` = ssresidV,
+		`m1` = m1V,
+		`m2` = m2V,
+		`m3` = m3V,
+		`m4` = m4V,
+		`m5` = m5V,
+		`m6` = m6V,
+		`m7` = m7V,
+		`m8` = m8V,
+		`m9` = m9V,
+		`m10` = m10V,
+    WHERE `id` = pid;
+
+END ;;

@@ -8,13 +8,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace PSLCalcu.Module.New_Base_Caculate
+namespace PSLCalcu.Module
 {
-    public class MultipleRegressionAlgorithm
+    public class MultipleRegressionAlgorithmOri : BaseModule, IModule, IModuleExPara
     {
         #region 计算模块信息：
 
-        private string _moduleName = "MultipleRegressionAlgorithm";
+        private string _moduleName = "MultipleRegressionAlgorithmOri";
         public string moduleName
         {
             get
@@ -46,7 +46,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 return _inputDescsCN;
             }
         }
-        private string _algorithms = "MultipleRegressionAlgorithm";
+        private string _algorithms = "MultipleRegressionAlgorithmOri";
         public string algorithms
         {
             get
@@ -230,7 +230,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
             string _fatalInfo = "";
 
             //0输出初始化：该算法如果没有有效输入值（inputs为null）或者输入值得有效值为null，给出的计算结果。值为0，计算标志位为StatusConst.InputIsNull
-            List<PValue>[] results = new List<PValue>[18];   //平均值;最小值;最小值所在的点号;最大值;最大值所在的点号;最均差;最大差(最大值与最小值得差);和;绝对值和
+            List<PValue>[] results = new List<PValue>[16];   //平均值;最小值;最小值所在的点号;最大值;最大值所在的点号;最均差;最大差(最大值与最小值得差);和;绝对值和
             for (int i = 0; i < results.Length; i++)
             {
                 results[i] = new List<PValue>();
@@ -313,7 +313,12 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 results[0].Add(kValue);
                 results[1] = new List<PValue>();
                 results[1].Add(pValue);
-                
+                for (int i = 0; i < mlist.Length - 1; i++)
+                {
+                    PValue mValue = new PValue(mlist[i], calcuinfo.fstarttime, calcuinfo.fendtime, 0);
+                    results[i + 2] = new List<PValue>();
+                    results[i + 2].Add(mValue);
+                }
                 //分别对应R2; sey; F;df;SSR;SSE;
                 for (int i = 0; i < resultlist.Length - 1; i++)
                 {
@@ -321,54 +326,18 @@ namespace PSLCalcu.Module.New_Base_Caculate
                     results[i + 2 + mlist.Length] = new List<PValue>();
                     results[i + 2 + mlist.Length].Add(rValue);
                 }
-                for (int i = 0; i < mlist.Length - 1; i++)
-                {
-                    PValue mValue = new PValue(mlist[i], calcuinfo.fstarttime, calcuinfo.fendtime, 0);
-                    results[i + 2] = new List<PValue>();
-                    results[i + 2].Add(mValue);
-                }
                 //不够16位的0补齐
-                if (results.Length < 18)
+                if (results.Length < 16)
                 {
                     int l = results.Length;
-                    for (int i = 0; i < 18 - results.Length; i++)
+                    for (int i = 0; i < 16 - results.Length; i++)
                     {
                         PValue rValue = new PValue(0, calcuinfo.fstarttime, calcuinfo.fendtime, 0);
                         results[i + l] = new List<PValue>();
                         results[i + l].Add(rValue);
                     }
                 }
-                string year = string.Empty;
-                string month = string.Empty;
-                string day = string.Empty;
-                string hour = string.Empty;
-                DateTime dt = Convert.ToDateTime(inputs[0][0].Timestamp);
-                year = dt.Year.ToString();
-                month = dt.Month.ToString();
-                day = dt.Day.ToString();
-                hour = dt.Hour.ToString();
-                string type = calcuInfo.fsourtagids[0].ToString();
-                MultipleRegressionAlgorithmOutClass messageIn = new MultipleRegressionAlgorithmOutClass();
-                messageIn.k = results[0][0].Value.ToString();
-                messageIn.b = results[1][0].Value.ToString();
-                messageIn.r2 = results[2][0].Value.ToString();
-                messageIn.sey = results[3][0].Value.ToString();
-                messageIn.F = results[4][0].Value.ToString();
-                messageIn.df = results[5][0].Value.ToString();
-                messageIn.ssreg = results[6][0].Value.ToString();
-                messageIn.ssresid = results[7][0].Value.ToString();
-                messageIn.m1 = results[8][0].Value.ToString();
-                messageIn.m2 = results[9][0].Value.ToString();
-                messageIn.m3 = results[10][0].Value.ToString();
-                messageIn.m4 = results[11][0].Value.ToString();
-                messageIn.m5 = results[12][0].Value.ToString();
-                messageIn.m6 = results[13][0].Value.ToString();
-                messageIn.m7 = results[14][0].Value.ToString();
-                messageIn.m8 = results[15][0].Value.ToString();
-                messageIn.m9 = results[16][0].Value.ToString();
-                messageIn.m10 = results[17][0].Value.ToString();
-                //计算结果存入数据库
-                bool isok = BLL.AlgorithmBLL.InsertMultipleRegressionAlgorithm(messageIn, type, year, month, day, hour);
+                
                 //计算结果初始化
                 return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
 

@@ -282,6 +282,8 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
+
+
         private static bool insertTimeValue(List<D22STimeClass> value, int aid, int pid, string columnName, string caculateName)
         {
             try
@@ -1205,6 +1207,80 @@ namespace PSLCalcu.Module.DAL
                 new MySqlParameter("EffectiveCountV",newClass.EffectiveCount)};
                 isok = Helper.MysqlHelper.ModifySingleSql("insertMDevLimitSft", CommandType.StoredProcedure, paramses, ref errmsg);
 
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool InsertMultipleRegressionAlgorithm(MultipleRegressionAlgorithmOutClass newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("kV", newClass.k),
+                new MySqlParameter("bV", newClass.b),
+                new MySqlParameter("r2V", newClass.r2),
+                new MySqlParameter("seyV", newClass.sey),
+                new MySqlParameter("FV", newClass.F),
+                new MySqlParameter("dfV", newClass.df),
+                new MySqlParameter("ssregV", newClass.ssreg),
+                new MySqlParameter("ssresidV", newClass.ssresid),
+                new MySqlParameter("m1V", newClass.m1),
+                new MySqlParameter("m2V", newClass.m2),
+                new MySqlParameter("m3V", newClass.m3),
+                new MySqlParameter("m4V", newClass.m4),
+                new MySqlParameter("m5V", newClass.m5),
+                new MySqlParameter("m6V", newClass.m6),
+                new MySqlParameter("m7V", newClass.m7),
+                new MySqlParameter("m8V", newClass.m8),
+                new MySqlParameter("m9V", newClass.m9),
+                new MySqlParameter("m10V", newClass.m10),
+                new MySqlParameter("typeV", type),
+                new MySqlParameter("yearV", year),
+                new MySqlParameter("monthV", month),
+                new MySqlParameter("dayV", day),
+                new MySqlParameter("hourV", hour)};
+                DataTable dt = MysqlHelper.getDataTableOfSQL("InsertMultipleRegressionAlgorithm", CommandType.StoredProcedure, paramses, ref errmsg);
+                return isok;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public static bool UpdateMultipleRegressionAlgorithm(int id, MultipleRegressionAlgorithmOutClass newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                MySqlParameter[] paramses = {
+                new MySqlParameter("pid",id),
+                new MySqlParameter("kV", newClass.k),
+                new MySqlParameter("bV", newClass.b),
+                new MySqlParameter("r2V", newClass.r2),
+                new MySqlParameter("seyV", newClass.sey),
+                new MySqlParameter("FV", newClass.F),
+                new MySqlParameter("dfV", newClass.df),
+                new MySqlParameter("ssregV", newClass.ssreg),
+                new MySqlParameter("ssresidV", newClass.ssresid),
+                new MySqlParameter("m1V", newClass.m1),
+                new MySqlParameter("m2V", newClass.m2),
+                new MySqlParameter("m3V", newClass.m3),
+                new MySqlParameter("m4V", newClass.m4),
+                new MySqlParameter("m5V", newClass.m5),
+                new MySqlParameter("m6V", newClass.m6),
+                new MySqlParameter("m7V", newClass.m7),
+                new MySqlParameter("m8V", newClass.m8),
+                new MySqlParameter("m9V", newClass.m9),
+                new MySqlParameter("m10V", newClass.m10)};
+                isok = Helper.MysqlHelper.ModifySingleSql("UpdateMultipleRegressionAlgorithm", CommandType.StoredProcedure, paramses, ref errmsg);
                 return isok;
             }
             catch (Exception ex)

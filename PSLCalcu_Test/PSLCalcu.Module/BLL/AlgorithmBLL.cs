@@ -473,7 +473,27 @@ namespace PSLCalcu.Module.BLL
                 throw;
             }
         }
-
-
+        public static bool InsertMultipleRegressionAlgorithm(MultipleRegressionAlgorithmOutClass newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                bool isok = false;
+                DataTable dt = isHaveData(year, month, day, hour, type, "psldb.psl_multipleregression");
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    isok = DAL.AlgorithmDAL.UpdateMultipleRegressionAlgorithm(Convert.ToInt32(dt.Rows[0]["id"].ToString()), newClass, type, year, month, day, hour);
+                }
+                else
+                {
+                    isok = DAL.AlgorithmDAL.InsertMultipleRegressionAlgorithm(newClass, type, year, month, day, hour);
+                }
+                return isok;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        
     }
 }

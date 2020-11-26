@@ -66,6 +66,7 @@
     <Compile Include="NewCaculateCommand\MPVBasePlusSftClass.cs" />
     <Compile Include="NewCaculateCommand\MultiEffectMessageInClass.cs" />
     <Compile Include="NewCaculateCommand\MultiMessageInClass.cs" />
+    <Compile Include="NewCaculateCommand\MultipleRegressionAlgorithmOutClass.cs" />
     <Compile Include="NewCaculateCommand\StartEndDateClass.cs" />
     <Compile Include="NewCaculateCommand\XFClass.cs" />
     <Compile Include="PCModule.cs" />
