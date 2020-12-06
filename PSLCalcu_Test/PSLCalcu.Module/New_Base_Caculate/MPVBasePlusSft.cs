@@ -272,7 +272,8 @@ namespace PSLCalcu.Module
                 {
                     dutyList.Add(paras[l] + ":" + paras[l + 1]);
                 }
-                string dutyTime = AlgorithmBLL.getDutyConst(input[0].Timestamp, dutyList);
+                string dutyEndTime = string.Empty;
+                string dutyTime = AlgorithmBLL.getDutyConst(input[0].Timestamp, dutyList, ref dutyEndTime);
                 DataSet ds = BLL.AlgorithmBLL.getSftData("psl_mpvbaseplussft", type, dutyTime);
 
                 mpvMessageInClass.type = type;

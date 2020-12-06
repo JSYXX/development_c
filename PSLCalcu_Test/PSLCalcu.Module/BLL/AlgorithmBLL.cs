@@ -170,7 +170,7 @@ namespace PSLCalcu.Module.BLL
                 throw ex;
             }
         }
-        public static string getDutyConst(DateTime nowDate, List<string> dutyTime)
+        public static string getDutyConst(DateTime nowDate, List<string> dutyTime, ref string dutyEndTime)
         {
             try
             {
@@ -178,19 +178,39 @@ namespace PSLCalcu.Module.BLL
                 //string sqlStr = "select * from psldb.psl_dutyconst;";
                 //DataTable dutyTime = DAL.AlgorithmDAL.getData(sqlStr);
                 string dutyNow = nowDate.ToString("HH:mm");
+                string dateStr = string.Empty;
+                if (DateTime.Compare(nowDate, Convert.ToDateTime(nowDate.ToString("yyyy-MM-dd") + " " + dutyTime[0])) < 0)
+                {
+                    dateStr = nowDate.AddDays(-1).ToString("yyyy-MM-dd");
+                }
+                else
+                {
+                    dateStr = nowDate.ToString("yyyy-MM-dd");
+                }
                 for (int i = 0; i < dutyTime.Count; i++)
                 {
-                    string dt1 = nowDate.ToString("yyyy-MM-dd") + " " + dutyTime[i];
-                    string dt2 = nowDate.ToString("yyyy-MM-dd") + " " + dutyTime[i];
+                    string dt1 = string.Empty;
+                    string dt2 = string.Empty;
+                    if (i < dutyTime.Count - 1)
+                    {
+                        dt1 = dateStr + " " + dutyTime[i];
+                        dt2 = dateStr + " " + dutyTime[i + 1];
+                    }
+                    else
+                    {
+                        dt1 = dateStr + " " + dutyTime[i];
+                        dt2 = dateStr + " " + dutyTime[0];
+                    }
                     DateTime t1 = Convert.ToDateTime(dt1);
                     DateTime t2 = Convert.ToDateTime(dt2);
                     if (DateTime.Compare(t1, t2) >= 0)
                     {
                         t2 = t2.AddDays(1);
                     }
-                    if (DateTime.Compare(nowDate, t1) >= 0 && DateTime.Compare(nowDate, t2) <= 0)
+                    if (DateTime.Compare(nowDate, t1) >= 0 && DateTime.Compare(nowDate, t2) < 0)
                     {
                         dutyStr = dt1;
+                        dutyEndTime = t2.ToString("yyyy-MM-dd HH:mm");
                         break;
                     }
                 }
@@ -494,6 +514,6 @@ namespace PSLCalcu.Module.BLL
                 throw;
             }
         }
-        
+
     }
 }

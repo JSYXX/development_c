@@ -271,7 +271,7 @@ namespace PSLCalcu.Module
                 }
 
                 string dutyEndTime = string.Empty;
-                string dutyTime = AlgorithmBLL.getDutyConst(input[0].Timestamp, dutyList);
+                string dutyTime = AlgorithmBLL.getDutyConst(input[0].Timestamp, dutyList, ref dutyEndTime);
                 if (Convert.ToDateTime(dutyTime).Ticks > input[0].Timestamp.Ticks)
                 {
                     _warningFlag = true;

@@ -195,7 +195,7 @@ namespace PSLCalcu.Module.NewCaculate
                 if (PVBSDMaxList != null && PVBSDMaxList.Count > 0)
                 {
                     SDMaxPVB = PVBSDMaxList[0].valueAmount;
-                    
+
                     foreach (D22STimeClass item in PVBSDMaxList)
                     {
                         if (SDMaxPVB < item.valueAmount)
@@ -800,35 +800,39 @@ namespace PSLCalcu.Module.NewCaculate
                     returnClass.PVBStdev = StandardDeviationSolve(xyList).ToString();//标准差
 
                     #endregion
-                    double sdMax = rangeList[0].valueAmount;
                     int n1Num = 0;
                     int n2Num = 0;
                     int n3Num = 0;
-
+                    double sdMax = 0;
                     int PVBTNum = 0;
-                    #region 用极差分段集合得出数据
-                    foreach (D22STimeClass item in rangeList)
+                    if (rangeList != null && rangeList.Count > 0)
                     {
-                        if (item.valueAmount > sdMax)
-                        {
-                            sdMax = item.valueAmount;
-                            returnClass.PVBSDMaxTime = item;//单次极差发生时刻
-                        }
-                        if (item.valueAmount > N1)
-                        {
-                            n1Num += 1;
-                        }
-                        if (item.valueAmount > N2)
-                        {
-                            n2Num += 1;
-                        }
-                        if (item.valueAmount > N3)
-                        {
-                            n3Num += 1;
-                        }
+                        sdMax = rangeList[0].valueAmount;
 
+                        #region 用极差分段集合得出数据
+                        foreach (D22STimeClass item in rangeList)
+                        {
+                            if (item.valueAmount > sdMax)
+                            {
+                                sdMax = item.valueAmount;
+                                returnClass.PVBSDMaxTime = item;//单次极差发生时刻
+                            }
+                            if (item.valueAmount > N1)
+                            {
+                                n1Num += 1;
+                            }
+                            if (item.valueAmount > N2)
+                            {
+                                n2Num += 1;
+                            }
+                            if (item.valueAmount > N3)
+                            {
+                                n3Num += 1;
+                            }
+
+                        }
+                        #endregion
                     }
-                    #endregion
                     #region 用有效时间段退出反转次数以及有效数据分段集合
                     List<List<MPVBaseMessageInClass>> effectValueListList = new List<List<MPVBaseMessageInClass>>();
                     int effectIndex = 0;

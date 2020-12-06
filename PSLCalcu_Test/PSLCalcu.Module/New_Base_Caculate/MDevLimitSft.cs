@@ -276,8 +276,8 @@ namespace PSLCalcu.Module
                     _warningInfo = "对应时间段内的源数据状态位全部异常。";
                     return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
                 }
-
-                string dutyTime = AlgorithmBLL.getDutyConst(input[0].Timestamp, dutyList);
+                string dutyEndTime = string.Empty;
+                string dutyTime = AlgorithmBLL.getDutyConst(input[0].Timestamp, dutyList, ref dutyEndTime);
                 DataSet ds = BLL.AlgorithmBLL.getSftData("psl_mdevlimitsft", type, dutyTime);
                 for (int l = 0; l < ds.Tables[1].Rows.Count; l++)
                 {
