@@ -839,11 +839,14 @@ namespace PSLCalcu.Module.NewCaculate
                     foreach (var dateItem in effectDateRegion)
                     {
                         int TT = 0;
-                        foreach (D22STimeClass item in rangeList)
+                        if (rangeList != null && rangeList.Count > 0)
                         {
-                            if (Convert.ToDateTime(dateItem.startDate) <= Convert.ToDateTime(item.startDate) && Convert.ToDateTime(dateItem.endDate) >= Convert.ToDateTime(item.endDate))
+                            foreach (D22STimeClass item in rangeList)
                             {
-                                TT += 1;
+                                if (Convert.ToDateTime(dateItem.startDate) <= Convert.ToDateTime(item.startDate) && Convert.ToDateTime(dateItem.endDate) >= Convert.ToDateTime(item.endDate))
+                                {
+                                    TT += 1;
+                                }
                             }
                         }
                         PVBTNum = PVBTNum + (TT == 0 ? 0 : TT - 1);
@@ -1165,40 +1168,43 @@ namespace PSLCalcu.Module.NewCaculate
                     D22STimeClass PVBDownTSLT = new D22STimeClass();
                     double PVBUpTSL = 0;
                     double PVBDownTSL = 0;
-                    foreach (D22STimeClass item in rangeList)
+                    if (rangeList != null && rangeList.Count > 0)
                     {
-                        if (item.valueType.Equals("up"))
+                        foreach (D22STimeClass item in rangeList)
                         {
-                            PVBUpTSL = item.valueCount;
-                            PVBUpTSLT = item;
-                            break;
-                        }
-                    }
-                    foreach (D22STimeClass item in rangeList)
-                    {
-                        if (item.valueType.Equals("down"))
-                        {
-                            PVBDownTSL = item.valueCount;
-                            PVBDownTSLT = item;
-                            break;
-                        }
-                    }
-                    foreach (D22STimeClass item in rangeList)
-                    {
-                        if (item.valueType.Equals("up"))
-                        {
-                            if (PVBUpTSL < item.valueCount)
+                            if (item.valueType.Equals("up"))
                             {
                                 PVBUpTSL = item.valueCount;
                                 PVBUpTSLT = item;
+                                break;
                             }
                         }
-                        else if (item.valueType.Equals("down"))
+                        foreach (D22STimeClass item in rangeList)
                         {
-                            if (PVBDownTSL < item.valueCount)
+                            if (item.valueType.Equals("down"))
                             {
                                 PVBDownTSL = item.valueCount;
                                 PVBDownTSLT = item;
+                                break;
+                            }
+                        }
+                        foreach (D22STimeClass item in rangeList)
+                        {
+                            if (item.valueType.Equals("up"))
+                            {
+                                if (PVBUpTSL < item.valueCount)
+                                {
+                                    PVBUpTSL = item.valueCount;
+                                    PVBUpTSLT = item;
+                                }
+                            }
+                            else if (item.valueType.Equals("down"))
+                            {
+                                if (PVBDownTSL < item.valueCount)
+                                {
+                                    PVBDownTSL = item.valueCount;
+                                    PVBDownTSLT = item;
+                                }
                             }
                         }
                     }
@@ -1213,18 +1219,20 @@ namespace PSLCalcu.Module.NewCaculate
                     returnClass.PVBQa = Math.Round(res[2], 3).ToString();
                     returnClass.PVBQb = Math.Round(res[1], 3).ToString();
                     returnClass.PVBQc = Math.Round(res[0], 3).ToString();
-
-                    foreach (D22STimeClass item in rangeList)
+                    if (rangeList != null && rangeList.Count > 0)
                     {
-                        foreach (MPVBaseMessageInClass effItem in effectValueList)
+                        foreach (D22STimeClass item in rangeList)
                         {
-                            if (item.startDate == effItem.valueDate)
+                            foreach (MPVBaseMessageInClass effItem in effectValueList)
                             {
-                                item.startValue = effItem.valueAmount;
-                            }
-                            if (item.endDate == effItem.valueDate)
-                            {
-                                item.endValue = effItem.valueAmount;
+                                if (item.startDate == effItem.valueDate)
+                                {
+                                    item.startValue = effItem.valueAmount;
+                                }
+                                if (item.endDate == effItem.valueDate)
+                                {
+                                    item.endValue = effItem.valueAmount;
+                                }
                             }
                         }
                     }
