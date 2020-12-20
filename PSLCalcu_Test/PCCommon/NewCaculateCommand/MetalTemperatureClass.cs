@@ -7,6 +7,7 @@ namespace PCCommon.NewCaculateCommand
 {
     public class MetalTemperatureClass
     {
+        public int point { get; set; }
         public string Min { get; set; }
         public string MinN { get; set; }
         public string Max { get; set; }

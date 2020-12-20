@@ -3,6 +3,7 @@ using PCCommon.NewCaculateCommand;
 using PSLCalcu.Module.Helper;
 using PSLCalcu.Module.NewCaculate;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -97,7 +98,9 @@ namespace PSLCalcu.Module
                 return _outputNumber;
             }
         }
-        private string _outputDescs = "equSigma"
+        private string _outputDescs = "equSigma;" +
+                                      "equSigmaMaxP;" +
+                                      "equSigmaMinP"
 ;
 
 
@@ -212,30 +215,62 @@ namespace PSLCalcu.Module
                 string mode;
                 string[] paras = calcuinfo.fparas.Split(';');
                 mode = paras[0];
-                EquBaseClass newClass = new EquBaseClass();
-                double returnDouble = 0;
+                double equSigma = 0;
+                int equSigmaMaxP = 0;
+                int equSigmaMinP = 0;
+                ArrayList equSigmaList = new ArrayList();
                 if (mode == "S")
                 {
                     int l = 1;
                     List<CurveClass> MessageInList = new List<CurveClass>();
+                    int point = 1;
                     foreach (List<PValue> item in inputs)
                     {
+                        List<CurveClass> childList = new List<CurveClass>();
+                        int childL = 1;
                         foreach (PValue childItem in item)
                         {
                             CurveClass cClass = new CurveClass();
                             cClass.x = l;
                             cClass.y = childItem.Value;
                             MessageInList.Add(cClass);
+                            CurveClass childClass = new CurveClass();
+                            childClass.x = childL++;
+                            childClass.y = childItem.Value;
+                            childList.Add(childClass);
                             l++;
                         }
+                        equSigmaList.Add(new DictionaryEntry(point++, AlgorithmHelper.StandardDeviationSolve(childList)));
                     }
-                    returnDouble = AlgorithmHelper.StandardDeviationSolve(MessageInList);
+                    equSigma = AlgorithmHelper.StandardDeviationSolve(MessageInList);
+                    equSigmaMaxP = Convert.ToInt32(((DictionaryEntry)equSigmaList[0]).Key);
+                    equSigmaMinP = Convert.ToInt32(((DictionaryEntry)equSigmaList[0]).Key);
+                    double equSigmaMax = Convert.ToDouble(((DictionaryEntry)equSigmaList[0]).Value);
+                    double equSigmaMin = Convert.ToDouble(((DictionaryEntry)equSigmaList[0]).Value);
+                    foreach (var item in equSigmaList)
+                    {
+                        if (equSigmaMax < Convert.ToDouble(((DictionaryEntry)item).Value))
+                        {
+                            equSigmaMax = Convert.ToDouble(((DictionaryEntry)item).Value);
+                            equSigmaMaxP = Convert.ToInt32(((DictionaryEntry)item).Key);
+                        }
+                        if (equSigmaMin > Convert.ToDouble(((DictionaryEntry)item).Value))
+                        {
+                            equSigmaMin = Convert.ToDouble(((DictionaryEntry)item).Value);
+                            equSigmaMinP = Convert.ToInt32(((DictionaryEntry)item).Key);
+                        }
+                    }
+
                 }
                 else
                 {
                     double maxSigma = inputs[0][0].Value;
+                    List<int> equSigmaMaxPList = new List<int>();
+                    List<int> equSigmaMinPList = new List<int>();
                     foreach (List<PValue> item in inputs)
                     {
+                        equSigmaMaxPList.Add(Convert.ToInt32(item[1].Value));
+                        equSigmaMinPList.Add(Convert.ToInt32(item[2].Value));
                         foreach (PValue childItem in item)
                         {
                             if (maxSigma < childItem.Value)
@@ -244,9 +279,13 @@ namespace PSLCalcu.Module
                             }
                         }
                     }
-                    returnDouble = maxSigma * 0.75;
+                    equSigma = maxSigma * 0.75;
+                    equSigmaMaxP= equSigmaMaxPList.GroupBy(x => x).OrderBy(y => y.Count()).First().Key;
+                    equSigmaMinP = equSigmaMinPList.GroupBy(x => x).OrderBy(y => y.Count()).First().Key;
                 }
-                results[0].Add(new PValue(returnDouble, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(equSigma, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(equSigmaMaxP, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(equSigmaMinP, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
 
                 return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
             }

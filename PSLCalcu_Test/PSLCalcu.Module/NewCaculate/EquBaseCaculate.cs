@@ -40,7 +40,14 @@ namespace PSLCalcu.Module.NewCaculate
                 double equHLB = 0;
                 double equHHHLLLB = 0;
                 double equHHLLGL = 0;
-
+                int equHHRMaxP = valueList[0].point;
+                int equLLRMaxP = valueList[0].point;
+                int equHHLLRMaxP = valueList[0].point;
+                double equHHRMax = Convert.ToDouble(valueList[0].HHG);
+                double equLLRMax = Convert.ToDouble(valueList[0].LLL);
+                double equHHLLRMax = Convert.ToDouble(valueList[0].HHLLGL);
+                int equSDMaxP= valueList[0].point;
+                double equSDMax= Convert.ToDouble(valueList[0].dX);
                 foreach (MetalTemperatureClass item in valueList)
                 {
                     if (equMin > Convert.ToDouble(item.Min))
@@ -81,21 +88,44 @@ namespace PSLCalcu.Module.NewCaculate
                     equHLB += Convert.ToDouble(item.HLB);
                     equHHHLLLB += Convert.ToDouble(item.HHHLLLB);
                     equHHLLGL += Convert.ToDouble(item.HHLLGL);
+                    if (equHHRMax < Convert.ToDouble(item.HHG))
+                    {
+                        equHHRMax = Convert.ToDouble(item.HHG);
+                        equHHRMaxP = item.point;
+                    }
+                    if (equLLRMax < Convert.ToDouble(item.LLL))
+                    {
+                        equLLRMax = Convert.ToDouble(item.LLL);
+                        equLLRMaxP = item.point;
+                    }
+                    if (equHHLLRMax < Convert.ToDouble(item.HHLLGL))
+                    {
+                        equHHLLRMax = Convert.ToDouble(item.HHLLGL);
+                        equHHLLRMaxP = item.point;
+                    }
+                    if (equSDMax < Convert.ToDouble(item.dX))
+                    {
+                        equSDMax = Convert.ToDouble(item.dX);
+                        equSDMaxP = item.point;
+                    }
 
                 }
                 returnClass.equMin = equMin.ToString();
-                returnClass.equMinN = equMinN;
+                returnClass.equMinP = equMinN;
                 returnClass.equMinT = equMinT;
                 returnClass.equMax = equMax.ToString();
-                returnClass.equMaxN = equMaxN;
+                returnClass.equMaxP = equMaxN;
                 returnClass.equMaxT = equMaxT;
                 returnClass.equAvg = Math.Round(equAvgSum / Convert.ToDouble(valueList.Count), 3).ToString();
-                returnClass.equAvgN = equAvgNList.GroupBy(x => x).OrderBy(y => y.Count()).First().Key;
+                returnClass.equAvgCP = equAvgNList.GroupBy(x => x).OrderBy(y => y.Count()).First().Key;
+                returnClass.equAvgFP = equAvgNList.GroupBy(x => x).OrderByDescending(y => y.Count()).First().Key;
                 returnClass.equdX = (equMax - equMin).ToString();
+                returnClass.equSDMaxP = equSDMaxP.ToString();
+                returnClass.equdXR = ((equMax - equMin) / (Math.Abs(Convert.ToDouble(equMaxN) - Convert.ToDouble(equMinN)) + 1)).ToString();
                 returnClass.equBulge = equBulge.ToString();
-                returnClass.equBulgeN = equBulgeN;
+                returnClass.equBulgeP = equBulgeN;
                 returnClass.equCave = equCave.ToString();
-                returnClass.equCaveN = equCaveN;
+                returnClass.equCaveP = equCaveN;
                 returnClass.equHHG = Math.Round(equHHG / Convert.ToDouble(valueList.Count), 3).ToString();
                 returnClass.equHG = Math.Round(equHG / Convert.ToDouble(valueList.Count), 3).ToString();
                 returnClass.equHHHB = Math.Round(equHHHB / Convert.ToDouble(valueList.Count), 3).ToString();
@@ -110,6 +140,9 @@ namespace PSLCalcu.Module.NewCaculate
                 returnClass.equHLB = Math.Round(equHLB / Convert.ToDouble(valueList.Count), 3).ToString();
                 returnClass.equHHHLLLB = Math.Round(equHHHLLLB / Convert.ToDouble(valueList.Count), 3).ToString();
                 returnClass.equHHLLGL = Math.Round(equHHLLGL / Convert.ToDouble(valueList.Count), 3).ToString();
+                returnClass.equHHRMaxP = equHHRMaxP.ToString();
+                returnClass.equLLRMaxP = equLLRMaxP.ToString();
+                returnClass.equHHLLRMaxP = equHHLLRMaxP.ToString();
                 return returnClass;
 
             }
@@ -124,17 +157,17 @@ namespace PSLCalcu.Module.NewCaculate
             {
                 EquBaseClass returnClass = new EquBaseClass();
                 double equMin = Convert.ToDouble(valueList[0].equMin);
-                string equMinN = valueList[0].equMinN;
+                string equMinN = valueList[0].equMinP;
                 string equMinT = valueList[0].equMinT;
                 double equMax = Convert.ToDouble(valueList[0].equMax);
-                string equMaxN = valueList[0].equMaxN;
+                string equMaxN = valueList[0].equMaxP;
                 string equMaxT = valueList[0].equMaxT;
                 double equAvgSum = 0;
                 List<string> equAvgNList = new List<string>();
                 double equBulge = Convert.ToDouble(valueList[0].equBulge);
-                string equBulgeN = valueList[0].equBulgeN;
+                string equBulgeN = valueList[0].equBulgeP;
                 double equCave = Convert.ToDouble(valueList[0].equCave);
-                string equCaveN = valueList[0].equCaveN;
+                string equCaveN = valueList[0].equCaveP;
                 double equHHG = 0;
                 double equHG = 0;
                 double equHHHB = 0;
@@ -155,26 +188,25 @@ namespace PSLCalcu.Module.NewCaculate
                     if (equMin > Convert.ToDouble(item.equMin))
                     {
                         equMin = Convert.ToDouble(item.equMin);
-                        equMinN = item.equMinN;
+                        equMinN = item.equMinP;
                         equMinT = item.equMinT;
                     }
                     if (equMax < Convert.ToDouble(item.equMax))
                     {
                         equMax = Convert.ToDouble(item.equMax);
-                        equMaxN = item.equMaxN;
+                        equMaxN = item.equMaxP;
                         equMaxT = item.equMaxT;
                     }
                     equAvgSum += Convert.ToDouble(item.equAvg);
-                    equAvgNList.Add(item.equAvgN);
                     if (equBulge < Convert.ToDouble(item.equBulge))
                     {
                         equBulge = Convert.ToDouble(item.equBulge);
-                        equBulgeN = item.equBulgeN;
+                        equBulgeN = item.equBulgeP;
                     }
                     if (equCave > Convert.ToDouble(item.equCave))
                     {
                         equCave = Convert.ToDouble(item.equCave);
-                        equCaveN = item.equCaveN;
+                        equCaveN = item.equCaveP;
                     }
                     equHHG += Convert.ToDouble(item.equHHG);
                     equHG += Convert.ToDouble(item.equHG);
@@ -193,18 +225,20 @@ namespace PSLCalcu.Module.NewCaculate
 
                 }
                 returnClass.equMin = equMin.ToString();
-                returnClass.equMinN = equMinN;
+                returnClass.equMinP = equMinN;
                 returnClass.equMinT = equMinT;
                 returnClass.equMax = equMax.ToString();
-                returnClass.equMaxN = equMaxN;
+                returnClass.equMaxP = equMaxN;
                 returnClass.equMaxT = equMaxT;
                 returnClass.equAvg = Math.Round(equAvgSum / Convert.ToDouble(valueList.Count), 3).ToString();
-                returnClass.equAvgN = equAvgNList.GroupBy(x => x).OrderBy(y => y.Count()).First().Key;
+                returnClass.equAvgCP = valueList.GroupBy(x => x.equAvgCP).OrderBy(y => y.Count()).First().Key;
+                returnClass.equAvgFP = valueList.GroupBy(x => x.equAvgFP).OrderBy(y => y.Count()).First().Key;
                 returnClass.equdX = (equMax - equMin).ToString();
+                returnClass.equSDMaxP = valueList.GroupBy(x => x.equSDMaxP).OrderBy(y => y.Count()).First().Key;
                 returnClass.equBulge = equBulge.ToString();
-                returnClass.equBulgeN = equBulgeN;
+                returnClass.equBulgeP = equBulgeN;
                 returnClass.equCave = equCave.ToString();
-                returnClass.equCaveN = equCaveN;
+                returnClass.equCaveP = equCaveN;
                 returnClass.equHHG = Math.Round(equHHG / Convert.ToDouble(valueList.Count), 3).ToString();
                 returnClass.equHG = Math.Round(equHG / Convert.ToDouble(valueList.Count), 3).ToString();
                 returnClass.equHHHB = Math.Round(equHHHB / Convert.ToDouble(valueList.Count), 3).ToString();

@@ -54,7 +54,7 @@ namespace PSLCalcu.Module
                 return _algorithms;
             }
         }
-        private string _algorithmsflag = "YYYYYYYYYYYYYYYYYYYYYYYYYYY";
+        private string _algorithmsflag = "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY";
         public string algorithmsflag
         {
             get
@@ -88,7 +88,7 @@ namespace PSLCalcu.Module
         }
 
 
-        private int _outputNumber = 27;
+        private int _outputNumber = 32;
         public int outputNumber
         {
             get
@@ -97,18 +97,20 @@ namespace PSLCalcu.Module
             }
         }
         private string _outputDescs = "equMin;" +
-                                    "equMinN;" +
+                                    "equMinP;" +
                                     "equMinT;" +
                                     "equMax;" +
-                                    "equMaxN;" +
+                                    "equMaxP;" +
                                     "equMaxT;" +
                                     "equAvg;" +
-                                    "equAvgN;" +
+                                    "equAvgCP;" +
+                                    "equAvgFP;" +
                                     "equdX;" +
+                                    "equdXR;" +
                                     "equBulge;" +
-                                    "equBulgeN;" +
+                                    "equBulgeP;" +
                                     "equCave;" +
-                                    "equCaveN;" +
+                                    "equCaveP;" +
                                     "equHHG;" +
                                     "equHG;" +
                                     "equHHHB;" +
@@ -122,8 +124,12 @@ namespace PSLCalcu.Module
                                     "equRPRMB;" +
                                     "equHLB;" +
                                     "equHHHLLLB;" +
-                                    "equHHLLGL"
-;
+                                    "equHHLLGL;" +
+                                    "equHHRMaxP;" +
+                                    "equLLRMaxP;" +
+                                    "equHHLLRMaxP";
+
+
 
 
 
@@ -142,7 +148,8 @@ namespace PSLCalcu.Module
                                         "上面最大值所在点号;" +
                                         "上面最大值发生时间;" +
                                         "MultiPVBase_Avg 在 1 小时内的平均值;" +
-                                        "MultiPVBase_AvgN 在 1 小时内出现次数最多的点号;" +
+                                        "距平均值最近的点号;" +
+                                        "距平均值最远的点号;" +
                                         "上面的最大值 - 最小值;" +
                                         "MultiPVBase_Bulge 在 1 小时内的最大值;" +
                                         "上面最大值所在点号;" +
@@ -161,7 +168,10 @@ namespace PSLCalcu.Module
                                         "左边 MultiPVBase_RPRMB 平均值;" +
                                         "左边 MultiPVBase_HLB 平均值;" +
                                         "左边 MultiPVBase_HHHLLLB 平均值;" +
-                                        "左边 MultiPVBase_HHLLGL 平均值";
+                                        "左边 MultiPVBase_HHLLGL 平均值;" +
+                                        "由 DevLimits 计算的超 HH 时间占比最大点;" +
+                                        "由 DevLimits 计算的超 LL 时间占比最大点;" +
+                                        "由 DevLimits 计算的超 HH 和 LL 时间占比之和最大点";
 
 
 
@@ -267,9 +277,11 @@ namespace PSLCalcu.Module
                 if (mode == "S")
                 {
                     List<MetalTemperatureClass> valueList = new List<MetalTemperatureClass>();
+                    int l = 1;
                     foreach (List<PValue> item in inputs)
                     {
                         MetalTemperatureClass inClass = new MetalTemperatureClass();
+                        inClass.point = l++;
                         inClass.Min = item[0].Value.ToString();
                         inClass.MinN = item[1].Value.ToString();
                         inClass.Max = item[2].Value.ToString();
@@ -324,32 +336,38 @@ namespace PSLCalcu.Module
                     {
                         EquBaseClass inClass = new EquBaseClass();
                         inClass.equMin = item[0].Value.ToString();
-                        inClass.equMinN = item[1].Value.ToString();
+                        inClass.equMinP = item[1].Value.ToString();
                         inClass.equMinT = item[2].Value.ToString();
                         inClass.equMax = item[3].Value.ToString();
-                        inClass.equMaxN = item[4].Value.ToString();
+                        inClass.equMaxP = item[4].Value.ToString();
                         inClass.equMaxT = item[5].Value.ToString();
                         inClass.equAvg = item[6].Value.ToString();
-                        inClass.equAvgN = item[7].Value.ToString();
-                        inClass.equdX = item[8].Value.ToString();
-                        inClass.equBulge = item[9].Value.ToString();
-                        inClass.equBulgeN = item[10].Value.ToString();
-                        inClass.equCave = item[11].Value.ToString();
-                        inClass.equCaveN = item[12].Value.ToString();
-                        inClass.equHHG = item[13].Value.ToString();
-                        inClass.equHG = item[14].Value.ToString();
-                        inClass.equHHHB = item[15].Value.ToString();
-                        inClass.equHRPB = item[16].Value.ToString();
-                        inClass.equRP0B = item[17].Value.ToString();
-                        inClass.equRM0B = item[18].Value.ToString();
-                        inClass.equRMLB = item[19].Value.ToString();
-                        inClass.equLLLB = item[20].Value.ToString();
-                        inClass.equLL = item[21].Value.ToString();
-                        inClass.equLLL = item[22].Value.ToString();
-                        inClass.equRPRMB = item[23].Value.ToString();
-                        inClass.equHLB = item[24].Value.ToString();
-                        inClass.equHHHLLLB = item[25].Value.ToString();
-                        inClass.equHHLLGL = item[26].Value.ToString();
+                        inClass.equAvgCP= item[7].Value.ToString();
+                        inClass.equAvgFP = item[8].Value.ToString();
+                        inClass.equdX = item[9].Value.ToString();
+                        inClass.equSDMaxP = item[10].Value.ToString();
+                        inClass.equBulge = item[11].Value.ToString();
+                        inClass.equBulgeP = item[12].Value.ToString();
+                        inClass.equCave = item[13].Value.ToString();
+                        inClass.equCaveP = item[14].Value.ToString();
+                        inClass.equHHG = item[15].Value.ToString();
+                        inClass.equHG = item[16].Value.ToString();
+                        inClass.equHHHB = item[17].Value.ToString();
+                        inClass.equHRPB = item[18].Value.ToString();
+                        inClass.equRP0B = item[19].Value.ToString();
+                        inClass.equRM0B = item[20].Value.ToString();
+                        inClass.equRMLB = item[21].Value.ToString();
+                        inClass.equLLLB = item[22].Value.ToString();
+                        inClass.equLL = item[23].Value.ToString();
+                        inClass.equLLL = item[24].Value.ToString();
+                        inClass.equRPRMB = item[25].Value.ToString();
+                        inClass.equHLB = item[26].Value.ToString();
+                        inClass.equHHHLLLB = item[27].Value.ToString();
+                        inClass.equHHLLGL = item[28].Value.ToString();
+                        inClass.equHHRMaxP = item[29].Value.ToString();
+                        inClass.equLLRMaxP = item[30].Value.ToString();
+                        inClass.equHHLLRMaxP = item[31].Value.ToString();
+
                         valueList.Add(inClass);
                     }
                     if (valueList.Count < 1)
@@ -361,18 +379,20 @@ namespace PSLCalcu.Module
                     newClass = EquBaseCaculate.longEquBase(valueList);
                 }
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equMin), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                results[0].Add(new PValue(Convert.ToDouble(newClass.equMinN), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(Convert.ToDouble(newClass.equMinP), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equMinT), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equMax), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                results[0].Add(new PValue(Convert.ToDouble(newClass.equMaxN), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(Convert.ToDouble(newClass.equMaxP), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equMaxT), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equAvg), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                results[0].Add(new PValue(Convert.ToDouble(newClass.equAvgN), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(Convert.ToDouble(newClass.equAvgCP), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(Convert.ToDouble(newClass.equAvgFP), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equdX), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(Convert.ToDouble(newClass.equSDMaxP), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equBulge), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                results[0].Add(new PValue(Convert.ToDouble(newClass.equBulgeN), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(Convert.ToDouble(newClass.equBulgeP), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equCave), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                results[0].Add(new PValue(Convert.ToDouble(newClass.equCaveN), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(Convert.ToDouble(newClass.equCaveP), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equHHG), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equHG), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equHHHB), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
@@ -387,6 +407,10 @@ namespace PSLCalcu.Module
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equHLB), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equHHHLLLB), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 results[0].Add(new PValue(Convert.ToDouble(newClass.equHHLLGL), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(Convert.ToDouble(newClass.equHHRMaxP), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(Convert.ToDouble(newClass.equLLRMaxP), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                results[0].Add(new PValue(Convert.ToDouble(newClass.equHHLLRMaxP), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                
 
                 return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
             }

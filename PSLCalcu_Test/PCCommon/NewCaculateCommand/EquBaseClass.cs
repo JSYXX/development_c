@@ -8,18 +8,21 @@ namespace PCCommon.NewCaculateCommand
     public class EquBaseClass
     {
         public string equMin { get; set; }
-        public string equMinN { get; set; }
+        public string equMinP { get; set; }
         public string equMinT { get; set; }
         public string equMax { get; set; }
-        public string equMaxN { get; set; }
+        public string equMaxP { get; set; }
         public string equMaxT { get; set; }
         public string equAvg { get; set; }
-        public string equAvgN { get; set; }
+        public string equAvgCP { get; set; }
+        public string equAvgFP { get; set; }
         public string equdX { get; set; }
+        public string equSDMaxP { get; set; }
+        public string equdXR { get; set; }
         public string equBulge { get; set; }
-        public string equBulgeN { get; set; }
+        public string equBulgeP { get; set; }
         public string equCave { get; set; }
-        public string equCaveN { get; set; }
+        public string equCaveP { get; set; }
         public string equHHG { get; set; }
         public string equHG { get; set; }
         public string equHHHB { get; set; }
@@ -34,6 +37,10 @@ namespace PCCommon.NewCaculateCommand
         public string equHLB { get; set; }
         public string equHHHLLLB { get; set; }
         public string equHHLLGL { get; set; }
+        public string equHHRMaxP { get; set; }
+        public string equLLRMaxP { get; set; }
+        public string equHHLLRMaxP { get; set; }
+
 
     }
 }
