@@ -72,7 +72,7 @@ namespace PSLCalcu.Module
             }
         }
 
-        private string _algorithmsflag = "Y";
+        private string _algorithmsflag = "YYY";
         public string algorithmsflag
         {
             get
@@ -80,7 +80,7 @@ namespace PSLCalcu.Module
                 return _algorithmsflag;
             }
         }
-        private string _moduleParaExample = "0;1;0;L";// 注意：如果计算模块需要参数，则该属性必须有值，不能为空。检查程序依据此属性是否为空来决定是否对配置项进行正则检查
+        private string _moduleParaExample = "0;1;0;L;1";// 注意：如果计算模块需要参数，则该属性必须有值，不能为空。检查程序依据此属性是否为空来决定是否对配置项进行正则检查
         public string moduleParaExample
         {
             get
@@ -112,7 +112,9 @@ namespace PSLCalcu.Module
                 return _outputNumber;
             }
         }
-        private string _outputDescs = "FOPC2WAvg";
+        private string _outputDescs = "FOPC2WAvg;" +
+                                      "NOC;" +
+                                      "AbsAvg";
         public string outputDescs
         {
             get
@@ -120,7 +122,9 @@ namespace PSLCalcu.Module
                 return _outputDescs;
             }
         }
-        private string _outputDescsCN = "OPC数据加权均值";
+        private string _outputDescsCN = "OPC数据加权均值;" +
+                                        "变化次数;" +
+                                        "变化绝对值求平均";
         public string outputDescsCN
         {
             get
@@ -219,6 +223,8 @@ namespace PSLCalcu.Module
             List<PValue>[] results = new List<PValue>[1];
             results[0] = new List<PValue>();
             results[0].Add(new PValue(0, calcuinfo.fstarttime, calcuinfo.fendtime, (long)StatusConst.InputIsNull));
+            results[0].Add(new PValue(0, calcuinfo.fstarttime, calcuinfo.fendtime, (long)StatusConst.InputIsNull));
+            results[0].Add(new PValue(0, calcuinfo.fstarttime, calcuinfo.fendtime, (long)StatusConst.InputIsNull));
 
             try
             {
@@ -255,6 +261,7 @@ namespace PSLCalcu.Module
                 double A = double.Parse(para[0]);
                 double B = double.Parse(para[1]);
                 double C = double.Parse(para[2]);
+                double limitValue = double.Parse(para[4]);
                 string FilterWithLimit = "";
                 if (para.Length > 3) FilterWithLimit = para[3].ToString();
 
@@ -262,10 +269,21 @@ namespace PSLCalcu.Module
                 double WSum = 0;//加权累加值
                 double WTotalSpan = 0;
                 double WAvg = 0;//加权平均值
+                int changeCount = 0;
+                double changeSum = 0;
                 for (i = 0; i < input.Count; i++)
                 {
                     WSum = WSum + input[i].Value * input[i].Timespan;
                     WTotalSpan = WTotalSpan + input[i].Timespan;
+                    if (i < input.Count - 1)
+                    {
+                        double changeValue = Math.Abs(input[i + 1].Value - input[i].Value);
+                        if (changeValue > limitValue)
+                        {
+                            changeCount += 1;
+                        }
+                        changeSum += changeValue;
+                    }
                 }
 
                 WAvg = WSum / WTotalSpan;
@@ -273,14 +291,15 @@ namespace PSLCalcu.Module
 
 
                 //组织计算结果
-                results[0] = new List<PValue>();               
-              
+                results[0] = new List<PValue>();
+
                 //对均值进行线性变换
                 double filtervalue = A * WAvg * WAvg + B * WAvg + C;  //对平均值进行变换。注意一般情况是A=0；B=1；B=0；D=0，即filtervalue=ave
 
                 //如果参数中含有第四个变量，且变量值为L，则对计算结果用上下限进行过滤
                 if (FilterWithLimit == "L")
                 {
+                    results[0].RemoveRange(1, 2);
                     if (filtervalue < calcuinfo.sourcetagmrb)
                         results[0].Add(new PValue(filtervalue, calcuinfo.fstarttime, calcuinfo.fendtime, (long)StatusConst.InputOverLimit));
                     else if (filtervalue > calcuinfo.sourcetagmre)
@@ -291,12 +310,14 @@ namespace PSLCalcu.Module
                 else//没有参数L，不过滤
                 {
                     results[0].Add(new PValue(filtervalue, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                    results[0].Add(new PValue(changeCount, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                    results[0].Add(new PValue(Math.Round((changeSum / (double)(input.Count)), 2), calcuinfo.fstarttime, calcuinfo.fendtime, 0));
                 }
 
 
 
                 return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
-               
+
             }
             catch (Exception ex)
             {
