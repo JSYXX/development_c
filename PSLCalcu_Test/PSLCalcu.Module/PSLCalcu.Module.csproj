@@ -196,6 +196,7 @@
     <Compile Include="NewBase\MLinearRegression.cs" />
     <Compile Include="NewBase\MPVBase.cs" />
     <Compile Include="NewBase\MSpecOutline.cs" />
+    <Compile Include="New_Base_Caculate\MReadStatus.cs" />
     <Compile Include="New_Base_Caculate\MultiMetalTemperatureC.cs" />
     <Compile Include="New_Base_Caculate\MultipleRegressionAlgorithm.cs" />
     <Compile Include="New_Base_Caculate\MultipleRegressionAlgorithmOri.cs" />

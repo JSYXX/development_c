@@ -671,6 +671,7 @@ namespace PSLCalcu
             if (runflag) runflag = IniTable.createTable_pslmdevlimitsft();
             if (runflag) runflag = IniTable.createTable_pslmultipleregression();
             if (runflag) runflag = IniTable.createTable_psldutyconst();
+            if (runflag) runflag = IniTable.createTable_pslMReadStatus();
 
 
             string sqlFilePath = AppDomain.CurrentDomain.BaseDirectory + "procedures.sql";

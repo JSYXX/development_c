@@ -213,6 +213,39 @@ namespace PSLCalcu.Module.DAL
                 throw ex;
             }
         }
+        public static bool insertMReadStatus(List<DoubleTimeListClass> newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                string errmsg = string.Empty;
+                bool isok = false;
+                foreach (DoubleTimeListClass item in newClass)
+                {
+                    if (item.timeList != null && item.timeList.Count > 0)
+                    {
+                        foreach (DoubleTimeClass childItem in item.timeList)
+                        {
+                            MySqlParameter[] paramses = {
+                                new MySqlParameter("startTimeV", childItem.startTime),
+                                new MySqlParameter("endTimeV", childItem.endTime),
+                                new MySqlParameter("areaStrV", item.areaStr),
+                                new MySqlParameter("typeV", type),
+                                new MySqlParameter("yearV", year),
+                                new MySqlParameter("monthV", month),
+                                new MySqlParameter("dayV", day),
+                                new MySqlParameter("hourV", hour)};
+                            isok = MysqlHelper.ModifySingleSql("insertMReadStatus", CommandType.StoredProcedure, paramses, ref errmsg);
+                        }
+
+                    }
+                }
+                return isok;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static bool insertMPVBase(MPVBaseMessageOutBadClass newClass, string type, string year, string month, string day, string hour)
         {
             try

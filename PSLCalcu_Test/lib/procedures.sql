@@ -2340,7 +2340,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertMultipleRegressionAlgorithm`(
     in m5V varchar(45),
     in m6V varchar(45),
     in m7V varchar(45),
-    in m8Vv
+    in m8V varchar(45),
     in m9V varchar(45),
     in m10V varchar(45),
     in typeV varchar(45),
@@ -2417,7 +2417,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateMultipleRegressionAlgorithm`(
     in m5V varchar(45),
     in m6V varchar(45),
     in m7V varchar(45),
-    in m8Vv
+    in m8V varchar(45),
     in m9V varchar(45),
     in m10V varchar(45)
 )
@@ -2444,4 +2444,35 @@ BEGIN
 		`m10` = m10V,
     WHERE `id` = pid;
 
+END ;;
+sqlSplit
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertMReadStatus`(
+    in startTimeV varchar(45),
+    in endTimeV varchar(45),
+    in areaStrV varchar(45),
+    in typeV varchar(45),
+    in yearV varchar(45),
+    in monthV varchar(45),
+    in dayV varchar(45),
+    in hourV varchar(45)
+BEGIN
+    INSERT INTO `psldb`.`psl_readstatus`
+(`startTime`,
+`endTime`,
+`areaStr`,
+`tagId`,
+`yearvalue`,
+`monthvalue`,
+`dayvalue`,
+`hourvalue`
+)
+VALUES
+(startTimeV,
+endTimeV,
+areaStrV,
+typeV,
+yearV,
+monthV,
+dayV,
+hourV);
 END ;;

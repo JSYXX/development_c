@@ -48,6 +48,8 @@
     <Compile Include="ISnapIn.cs" />
     <Compile Include="NewCaculateCommand\CurveClass.cs" />
     <Compile Include="NewCaculateCommand\D22STimeClass.cs" />
+    <Compile Include="NewCaculateCommand\DoubleTimeClass.cs" />
+    <Compile Include="NewCaculateCommand\DoubleTimeListClass.cs" />
     <Compile Include="NewCaculateCommand\EquBaseClass.cs" />
     <Compile Include="NewCaculateCommand\IndependentVariableClass.cs" />
     <Compile Include="NewCaculateCommand\MAddMulOutClass.cs" />

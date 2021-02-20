@@ -1285,6 +1285,25 @@ namespace PSLCalcu
 
             return createTable(databasename, tablename, filedname);
         }
+        public static bool createTable_pslMReadStatus()
+        {
+            string databasename = "psldb";
+            string tablename = "psl_readstatus";
+            string[] filedname ={
+                                  "`id` int(11) primary key NOT NULL AUTO_INCREMENT",
+                                  "`startTime` varchar(45) DEFAULT NULL",
+                                  "`endTime` varchar(45) DEFAULT NULL",
+                                  "`tagId` int(11) DEFAULT NULL",
+                                  "`hourvalue` varchar(45) DEFAULT NULL",
+                                  "`dayvalue` varchar(45) DEFAULT NULL",
+                                  "`monthvalue` varchar(45) DEFAULT NULL",
+                                  "`yearvalue` varchar(45) DEFAULT NULL",
+                                  "`areaStr` varchar(45) DEFAULT NULL"
+                                };
+
+
+            return createTable(databasename, tablename, filedname);
+        }
 
         //概化计算时间记录表
         public static bool createTable_psltimerecord()

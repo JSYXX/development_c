@@ -340,6 +340,20 @@ namespace PSLCalcu.Module.BLL
             }
         }
 
+        public static bool insertMReadStatus(List<DoubleTimeListClass> newClass, string type, string year, string month, string day, string hour)
+        {
+            try
+            {
+                bool isok = false;
+                isok = DAL.AlgorithmDAL.insertMReadStatus(newClass, type, year, month, day, hour);
+                return isok;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         private static DataTable isHaveData(string year, string month, string day, string hour, string type, string tableName)
         {
             try
