@@ -310,10 +310,10 @@ namespace PSLCalcu.Module
                     sumVagueDifference = vagueDifferenceList.Sum(a => Math.Abs(a.Value));
                     sumAccurateDifference = accurateDifferenceList.Sum(a => Math.Abs(a.Value));
                     //组织输出 
-                    results[2] = new List<PValue>();
-                    results[2].Add(new PValue(sumVagueDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                    results[3] = new List<PValue>();
-                    results[3].Add(new PValue(sumAccurateDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                    results[0] = new List<PValue>();
+                    results[0].Add(new PValue(sumVagueDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                    results[1] = new List<PValue>();
+                    results[1].Add(new PValue(sumAccurateDifference, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
 
 
                 }
