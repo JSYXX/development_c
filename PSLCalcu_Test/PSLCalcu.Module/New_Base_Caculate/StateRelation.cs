@@ -211,13 +211,15 @@ namespace PSLCalcu.Module.New_Base_Caculate
                 List<int> resultList = new List<int>();
                 for (int i = 0; i < inputs.Count() - 1; i++)
                 {
-                    int resultAmount = 1;
+                    int resultA = 1;
+                    int resultB = 1;
                     double amount = inputs[i][0].Value;
                     string[] childParas = paras[i].Split(',');
                     double A = Convert.ToDouble(childParas[0]);
                     double B = Convert.ToDouble(childParas[1]);
                     int pa = Convert.ToInt32(childParas[2]);
                     int pb = Convert.ToInt32(childParas[3]);
+                    int pr = Convert.ToInt32(childParas[4]);
                     if (pa == 0)
                     {
                         if (amount > A)
@@ -226,7 +228,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                         }
                         else
                         {
-                            resultAmount = 0;
+                            resultA = 0;
                         }
                     }
                     else if (pa == 1)
@@ -237,7 +239,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                         }
                         else
                         {
-                            resultAmount = 0;
+                            resultA = 0;
                         }
                     }
                     else if (pa == 2)
@@ -248,7 +250,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                         }
                         else
                         {
-                            resultAmount = 0;
+                            resultA = 0;
                         }
                     }
                     else if (pa == 3)
@@ -259,7 +261,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                         }
                         else
                         {
-                            resultAmount = 0;
+                            resultA = 0;
                         }
                     }
 
@@ -272,7 +274,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                         }
                         else
                         {
-                            resultAmount = 0;
+                            resultB = 0;
                         }
                     }
                     else if (pb == 1)
@@ -283,7 +285,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                         }
                         else
                         {
-                            resultAmount = 0;
+                            resultB = 0;
                         }
                     }
                     else if (pb == 2)
@@ -294,7 +296,7 @@ namespace PSLCalcu.Module.New_Base_Caculate
                         }
                         else
                         {
-                            resultAmount = 0;
+                            resultB = 0;
                         }
                     }
                     else if (pb == 3)
@@ -305,7 +307,30 @@ namespace PSLCalcu.Module.New_Base_Caculate
                         }
                         else
                         {
+                            resultB = 0;
+                        }
+                    }
+                    int resultAmount = 0;
+                    if (pr == 0)
+                    {
+                        if (resultA == 1 && resultB == 1)
+                        {
+                            resultAmount = 1;
+                        }
+                        else
+                        {
                             resultAmount = 0;
+                        }
+                    }
+                    else if (pr == 1)
+                    {
+                        if (resultA == 0 && resultB == 0)
+                        {
+                            resultAmount = 0;
+                        }
+                        else
+                        {
+                            resultAmount = 1;
                         }
                     }
                     resultList.Add(resultAmount);
