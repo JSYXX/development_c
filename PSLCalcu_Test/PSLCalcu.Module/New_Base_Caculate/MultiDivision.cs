@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace PSLCalcu.Module.New_Base_Caculate
+namespace PSLCalcu.Module
 {
     public class MultiDivision : BaseModule, IModule, IModuleExPara
     {
