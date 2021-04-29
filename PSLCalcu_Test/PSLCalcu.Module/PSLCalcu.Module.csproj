@@ -186,6 +186,7 @@
     <Compile Include="New_Base_Caculate\MDevLimitSft.cs" />
     <Compile Include="New_Base_Caculate\MDevLimitSftOri.cs" />
     <Compile Include="New_Base_Caculate\MDevLimitShort.cs" />
+    <Compile Include="New_Base_Caculate\MHisOp.cs" />
     <Compile Include="New_Base_Caculate\MPVBaseLong.cs" />
     <Compile Include="New_Base_Caculate\MPVBasePlusSft.cs" />
     <Compile Include="New_Base_Caculate\MPVBasePlusSftOri.cs" />

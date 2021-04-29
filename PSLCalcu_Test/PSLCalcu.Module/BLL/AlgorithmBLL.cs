@@ -400,6 +400,20 @@ namespace PSLCalcu.Module.BLL
                 throw ex;
             }
         }
+        public static DataTable getMHisOpHistory(string type, List<DateTime> seDate)
+        {
+            try
+            {
+                string sqlStr = "select * from psldb.psldata" + seDate[0].ToString("yyyyMM") + " where `tagId`=" + type + " and `tagstarttime`=" + seDate[0].Ticks.ToString() + " and `tagendtime`=" + seDate[1].Ticks.ToString();
+                DataTable dt = DAL.AlgorithmDAL.isHaveData(sqlStr);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static bool insertLongMDevLimit(MDevLimitMessageOutClass newClass, string type, string year, string month, string day, string hour)
         {
             try
@@ -528,6 +542,39 @@ namespace PSLCalcu.Module.BLL
                 throw;
             }
         }
+        public static bool UpdateMHisOp(string type, double value, List<DateTime> seDate)
+        {
+            try
+            {
+                bool isok = false;
+
+                string sqlStr = "Update psldb.psldata" + seDate[0].ToString("yyyyMM") + " set `tagvalue`= " + value.ToString() + " where `tagId`=" + type + " and `tagstarttime`=" + seDate[0].Ticks.ToString() + " and `tagendtime`=" + seDate[1].Ticks.ToString();
+                isok = DAL.AlgorithmDAL.excuSqlStr(sqlStr);
+
+                return isok;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static bool InsertMHisOp(string type, double value, List<DateTime> seDate)
+        {
+            try
+            {
+                bool isok = false;
+
+                string sqlStr = "Insert into psldb.psldata" + seDate[0].ToString("yyyyMM") + " (`tagid`,`tagstarttime`,`tagendtime`,`tagvalue`,`tagstatus`) Values(\"" + type + "\"," + seDate[0].Ticks + "," + seDate[1].Ticks + "," + value + ",1)";
+                isok = DAL.AlgorithmDAL.excuSqlStr(sqlStr);
+
+                return isok;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
     }
 }

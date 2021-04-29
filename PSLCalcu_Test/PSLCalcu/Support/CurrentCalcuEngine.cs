@@ -519,6 +519,7 @@ namespace PSLCalcu
                                 {
                                     //这里调用PSLDataDAO.SaveDAta()，一次写入一个List<PValue>。每个List<PValue>通常只有一个值。List<PValue>长度大于1，通常意味着该值是时间序列。
                                     writeflage = PSLDataDAO.WriteOrUpdate(pslcalcuitem.foutputpsltagids[i], results[i], pslcalcuitem.fstarttime, pslcalcuitem.fendtime);
+                                    
                                 }
                                 if (!writeflage)
                                 {  //如果写入返回结果为false，则说明写入过程中出错，计数器递增。出错信息已经在DAO写入接口中记录。

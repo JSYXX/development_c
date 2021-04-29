@@ -27,7 +27,7 @@ namespace PSLCalcu
     /// 上述任何检查发现问题，或检查程序运行中发生错误，将返回false。
     /// </summary>   
     public class ConfigCSV
-    {        
+    {
         private static LogHelper logHelper = LogFactory.GetLogger(typeof(ConfigCSV));       //全局log
         public int MAX_NUMBER_CONSTTAG;
 
@@ -49,8 +49,8 @@ namespace PSLCalcu
         public int fmodulenameIndex;
         public int fnodeIndex;
         public int fgroupIndex;
-        public int forderIndex;       
-        
+        public int forderIndex;
+
         public int falgorithmsflagIndex;
         public int fparasIndex;
         public int fcondpslnamesIndex;
@@ -61,7 +61,7 @@ namespace PSLCalcu
         public int foutputpsltagprefIndex;      //计算结果标签名称前缀（核心名称）(计算引擎内部标签id映射表)
         public int foutputpsltagaliasIndex;     //计算结果标签别名(替代核心名称+计算结果名称)(web端标签id映射表)
         public int foutputpsltagdescIndex;
-        
+
         public int fintervalIndex;  //计算周期间隔
         public int fintervaltypeIndex;  //计算周期
         public int fdelayIndex;
@@ -69,7 +69,7 @@ namespace PSLCalcu
 
         public List<PSLCalcuItem> readyPslCalcuItems { get; set; }  //已经导入好存在于数据库的计算项。追加新计算项时，如果是rdbset类型时，源标签填写时，会有可能引用已经存在的计算项。
         #endregion
-        
+
         #region 公有方法
         //检查CSV数据：包括文件结构和具体数据
         public bool CheckCSVData()
@@ -124,7 +124,7 @@ namespace PSLCalcu
 
                 //只要有一列找不到，返回false
                 if (this.sourcetagnameIndex == -1 || this.sourcetagdbIndex == -1 || this.sourcetagdescIndex == -1 || this.sourcetagdimIndex == -1 || this.sourcetagmrbIndex == -1 || this.sourcetagmreIndex == -1 ||
-                    this.fmodulenameIndex == -1 || this.fnodeIndex== -1 ||this.fgroupIndex == -1 || this.forderIndex == -1 ||
+                    this.fmodulenameIndex == -1 || this.fnodeIndex == -1 || this.fgroupIndex == -1 || this.forderIndex == -1 ||
                     this.falgorithmsflagIndex == -1 || this.fparasIndex == -1 || this.fcondpslnamesIndex == -1 ||
                     this.foutputtableIndex == -1 || this.foutputpsltagprefIndex == -1 ||
                     this.fintervalIndex == -1 || this.fintervaltypeIndex == -1 || this.fdelayIndex == -1 || this.fstartdateIndex == -1
@@ -135,7 +135,7 @@ namespace PSLCalcu
                 //对各column的值进行检查，如果有问题，给出详细说明。该功能随后在Excel模板中实现。
                 //出现的问题写入专门的log
                 int sum = 0;
-               
+
                 sum = sum + this.checkSourceDb(this.sourcetagdbIndex);                                          //检查“数据库类型”是否正确：必须是rdb或者rtdb，大小写均可。
                 //特别检查
                 sum = sum + this.checkRdbSet();                                                                 //检查“数据库类型为rdbset”的源标签
@@ -157,13 +157,13 @@ namespace PSLCalcu
                 sum = sum + this.checkfInterval(this.fintervalIndex);                                           //检查“计算间隔”字段：不能为空。mysql整形不能为空
                 sum = sum + this.checkfDelay(this.fdelayIndex);                                                 //检查“计算延时“字段：不能为空。mysql整形不能为空
                 sum = sum + this.checkfStartdate(this.fstartdateIndex);                                         //检查“计算起始时间”格式是否正确
-                if (sum != 0) 
+                if (sum != 0)
                 {
                     string messageStr = String.Format("概化计算组态文件组态数据项有错误，请检查log文件！");
                     MessageBox.Show(messageStr);
                     return false;
                 }
-            }            
+            }
             catch
             {
                 string messageStr = String.Format("概化计算组态文件数据解析错误，请检查组态文件！\n——1、用文本编辑器打开csv文件，检查是否有非正常换行。Excel单元格内换行可造成该问题");
@@ -175,7 +175,7 @@ namespace PSLCalcu
         //针对PGIM数据库tagname路径中的\进行特殊处理，全部转换为^
         public bool PGIMPathCharChange()
         {
-            try 
+            try
             {
                 for (int i = this.firstDataRow; i < this.importdata.Length; i++)
                 {
@@ -183,7 +183,7 @@ namespace PSLCalcu
                     {
                         this.importdata[i][this.sourcetagnameIndex] = this.importdata[i][this.sourcetagnameIndex].Replace(@"\", "^");
                     }
-                
+
                 }
             }
             catch
@@ -237,7 +237,7 @@ namespace PSLCalcu
                         if (filevaliddateDic.Count == 0)
                         {
                             string messageStr;
-                            messageStr = String.Format("概化计算组态文件组态信息错误。常数读取计算项MReadConst检查错误！")+Environment.NewLine;
+                            messageStr = String.Format("概化计算组态文件组态信息错误。常数读取计算项MReadConst检查错误！") + Environment.NewLine;
                             //logHelper.Error(messageStr);
                             messageStr += String.Format("***在ConstConfig下没有找到常数标签配置文件constcofig_xxxx-xx-xx_xxxx.csv。");
                             logHelper.Error(messageStr);
@@ -250,23 +250,23 @@ namespace PSLCalcu
                             filefullpath = csvFilePath + filename;
                             csvdata = CsvFileReader.Read(filefullpath);
                         }
-                        
+
                         //4、读取常数标签
                         if (csvdata == null || csvdata.Length == 0)
                         {
                             string messageStr;
-                            messageStr = String.Format("概化计算组态文件组态信息错误。常数读取计算项MReadConst检查错误！") + Environment.NewLine;                           
+                            messageStr = String.Format("概化计算组态文件组态信息错误。常数读取计算项MReadConst检查错误！") + Environment.NewLine;
                             //logHelper.Error(messageStr);
                             messageStr += String.Format("***选定的常数标签配置文件为空。");
                             logHelper.Error(messageStr);
                             return false;
                         }
-                        else if (csvdata.Length-1 >= MAX_NUMBER_CONSTTAG)
+                        else if (csvdata.Length - 1 >= MAX_NUMBER_CONSTTAG)
                         {
                             string messageStr;
                             messageStr = String.Format("概化计算组态文件组态信息错误。常数读取计算项MReadConst检查错误！") + Environment.NewLine;
                             //logHelper.Error(messageStr);
-                            messageStr += String.Format("***包含的常数标签数量大于{0}个。",MAX_NUMBER_CONSTTAG);
+                            messageStr += String.Format("***包含的常数标签数量大于{0}个。", MAX_NUMBER_CONSTTAG);
                             logHelper.Error(messageStr);
                             return false;
                         }
@@ -302,7 +302,7 @@ namespace PSLCalcu
                             this.importdata[i][this.foutputpsltagprefIndex] = outputtags.Substring(1, outputtags.Length - 1);       //根据配置文档，修改输出标签，
                             this.importdata[i][this.foutputpsltagaliasIndex] = outputalias.Substring(1, outputalias.Length - 1);    //根据配置文档，修改输入标签别名。由于别名是在用核心标签和计算结果组合的时候进行替换。而那个程序中const类型的计算项直接跳过了。因此需要在这里直接给出别名。
                             this.importdata[i][this.foutputpsltagdescIndex] = outputdesc.Substring(1, outputdesc.Length - 1);       //根据配置文当，修改输出描述，
-                           
+
                         }
                     }
                     else if (this.importdata[i][this.sourcetagdbIndex].Trim().ToLower() == "noinput" && this.importdata[i][this.fmodulenameIndex] != "MReadConst")
@@ -325,7 +325,7 @@ namespace PSLCalcu
             catch (Exception ex)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。常数读取计算项MReadConst检查错误！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。常数读取计算项MReadConst检查错误！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 messageStr += String.Format("****检查过程发生异常，详细信息：{0}。", ex.ToString());
                 logHelper.Error(messageStr);
@@ -335,7 +335,7 @@ namespace PSLCalcu
         //检查“计算条件参数和计算条件逻辑参数”：计算条件参数有1个条件，计算条件逻辑参数为空。计算条件有1个以上，计算条件逻辑参数不为空。
         public bool checkfCond()
         {
-            int columncondpsltagname=this.fcondpslnamesIndex;
+            int columncondpsltagname = this.fcondpslnamesIndex;
             int columnmocondexpress = this.fcondexpressionIndex;
 
             int sum = 0;
@@ -345,7 +345,7 @@ namespace PSLCalcu
 
                 if (this.importdata[i][columncondpsltagname].Trim() == "")
                 {
-                    
+
                     //如果条件标签为空，表达式必须为空。如果不为空，则错误。
                     if (this.importdata[i][columnmocondexpress].Trim() != "")
                     {
@@ -365,7 +365,7 @@ namespace PSLCalcu
                         {
                             string messageStr = String.Format("第{0}行的计算条件标签{1}，条件表达式必须为空，请检查！", i + 1, this.importdata[i][columncondpsltagname]);
                             logHelper.Error(messageStr);
-                            sum = sum + 1;                            
+                            sum = sum + 1;
                         }
                     }
                     //如果条件标签不为空，当只有多个条件标签时
@@ -377,18 +377,18 @@ namespace PSLCalcu
                         int paraNumberInExpress = NumberOfDigits(this.importdata[i][columnmocondexpress].Trim());
                         if (condpsltagsArray.Length != paraNumberInExpress)
                         {
-                            string messageStr = String.Format("第{0}行的计算条件标签数量与条件表达式变量数量不符，请检查！", i+1);
+                            string messageStr = String.Format("第{0}行的计算条件标签数量与条件表达式变量数量不符，请检查！", i + 1);
                             logHelper.Error(messageStr);
                             sum = sum + 1;
                             continue;
                         }
                         //——2、表达式的参数表示，必须是从1开始的1、2、3....
                         Boolean errorflag = false;
-                        for (int j = 0; j < condpsltagsArray.Length; j++) 
+                        for (int j = 0; j < condpsltagsArray.Length; j++)
                         {
                             if (!this.importdata[i][columnmocondexpress].Contains("{" + (j + 1).ToString() + "}"))
                             {
-                                string messageStr = String.Format("第{0}行的计算条件表达式变量索引有误，变量索引必须从1开始，并且数量和计算条件相同，请检查！", i+1);
+                                string messageStr = String.Format("第{0}行的计算条件表达式变量索引有误，变量索引必须从1开始，并且数量和计算条件相同，请检查！", i + 1);
                                 logHelper.Error(messageStr);
                                 sum = sum + 1;
                                 errorflag = true;
@@ -402,7 +402,7 @@ namespace PSLCalcu
                         exp = new CondExpression(condExpressionStr[0]);
                         if (exp.IsValid == false)
                         {
-                            string messageStr = String.Format("第{0}行的计算条件表达式有误，含有非法字符，或表达式结构有误，请检查！", i+1);
+                            string messageStr = String.Format("第{0}行的计算条件表达式有误，含有非法字符，或表达式结构有误，请检查！", i + 1);
                             logHelper.Error(messageStr);
                             sum = sum + 1;
                             continue;
@@ -418,12 +418,12 @@ namespace PSLCalcu
                 return false;
             }
             else
-            {            
+            {
                 return true;
             }
         }
         //自动生成概化标签对内名称，对外别名，中文描述        
-        public bool AutoGeneratePSLTags() 
+        public bool AutoGeneratePSLTags()
         {
             //根据modulename字段自动生成psltagnames字段
             //将importdata二维数组中的foutputpsltagprefIndex对应的列的内容，替换成由sourcetagnameIndex列和fmodulenameIndex列对应的公式输出描述组合成的新标签。
@@ -463,12 +463,12 @@ namespace PSLCalcu
                 //1、先从PSLModule表中读取计算模件信息。
                 List<PSLModule> pslmodules = PSLModulesDAO.ReadData();            //从数据库中读取计算模件信息。
                 if (PSLModulesDAO.ErrorFlag)
-                { 
+                {
                     string messageStr = String.Format("计算模件信息读取错误，请检查计算模件信息表PSLModules！");
                     MessageBox.Show(messageStr);
                     return false;
                 }
-                else if(pslmodules.Count == 0)
+                else if (pslmodules.Count == 0)
                 {
                     string messageStr = String.Format("没有读取到任何计算模件信息，请先抽取计算模件信息！");
                     MessageBox.Show(messageStr);
@@ -476,11 +476,11 @@ namespace PSLCalcu
                 }
                 //2、对每一行配置信息，根据规则自动生成计算结果标签名称，并替换在原来的foutputpsltagprefIndex位置
                 for (int i = this.firstDataRow; i < this.importdata.Length; i++)
-                {   
+                {
                     //*****************对于读取常数计算项，直接跳过*******************************
                     //读取常数计算项的特点是，输入类型是noinput，计算组件名称为MReadConst
-                    if (this.importdata[i][this.sourcetagdbIndex] == "noinput" && this.importdata[i][this.fmodulenameIndex]=="MReadConst") continue;     //这里常数项处理直接跳过了，因此：1、不会将标签名作为核心再去组合。2、不糊将标签描述作为核心再去组合。
-                    
+                    if (this.importdata[i][this.sourcetagdbIndex] == "noinput" && this.importdata[i][this.fmodulenameIndex] == "MReadConst") continue;     //这里常数项处理直接跳过了，因此：1、不会将标签名作为核心再去组合。2、不糊将标签描述作为核心再去组合。
+
                     //*****************处理计算引擎内部使用的标签名称***********************
                     //2.1、获取名称第一部分，前缀部分
                     //——如果foutputpsltagpref为空，则采用sourcetagname作为前缀，需要对sourcetagname做处理。不同的实时数据库，标签全路径形式不一样。
@@ -502,12 +502,12 @@ namespace PSLCalcu
                             tagnamepref = this.importdata[i][this.sourcetagnameIndex].Trim();
                         }
                     }
-                    else 
+                    else
                     {
                         //否则直接读取输出标签前缀
                         tagnamepref = this.importdata[i][this.foutputpsltagprefIndex].Trim();
-                    }                  
-                    
+                    }
+
                     //2.2、获得名称第二部分，当前行对应公式的计算结果描述
                     //对计算结果标签名为空的项，自动填写。源标签名称如果有"."，则表示数据表名称，仅采用"."后的字符串作为源数据标签名
                     //当前需要做些特殊处理
@@ -516,9 +516,9 @@ namespace PSLCalcu
                     int moduleindex = pslmodules.FindIndex(x => x.modulename == modulename);            //用当前行modulename从 这行有可能出错，找不到算法模块    
                     string moduleoutputdescs = pslmodules[moduleindex].moduleoutputdescs;               //根据modulename从pslmodules中找对应的公式信息。pslmodules中找到计算模块输出描述moduleoutputdescs
                     string[] outputdescs = Regex.Split(moduleoutputdescs, ";|；");                 //根据计算模块输出描述moduleoutputdescs，分割得到计算结果描述字符串数组
-                  
-                   
-                  
+
+
+
                     //2.3根据参数APPConfig.rdbtable_resulttagincludeinterval，决定自动生成的概化标签名称中是否自动添加时间间隔
                     string strinterval = "";
                     if (APPConfig.rdbtable_resulttagincludeinterval == "1")    //自动生成标签时，带计算间隔类型
@@ -537,7 +537,7 @@ namespace PSLCalcu
 
                     //*****************处理web端使用的标签名称***********************
                     //2.6web端标签的别名
-                    string[] outputalias; 
+                    string[] outputalias;
                     if (this.importdata[i][this.foutputpsltagaliasIndex].Trim() == "")
                     {
                         //如果别名为空，则用前面已经准备好的计算引擎内部的标签名，做别名。这样计算引擎内部标签名和web端标签名称一致。
@@ -577,14 +577,14 @@ namespace PSLCalcu
                     }
                     else
                     {
-                        
+
                     }
 
-                   
+
                 }//end for 每个点
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string messageStr = String.Format("公式配置信息出错，找不到配置的算法模块！");
                 MessageBox.Show(messageStr);
@@ -641,15 +641,15 @@ namespace PSLCalcu
                 }
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+
                 string messageStr = String.Format("公式配置信息替换rdbset类型的源标签出错，请检查！");
                 MessageBox.Show(messageStr);
                 return false;
             }
         }
-        
+
         //检查计算结果标签唯一性
         public bool checkPSLNameUnique()
         {
@@ -672,7 +672,7 @@ namespace PSLCalcu
                     else
                     {
                         sum += 1;
-                        string messageStr = String.Format("第{0}行的计算结果标签{1}，与第{2}行计算结果标签重复，请检查！", i+1, outputtagsArray[j], outputtagnamelist[outputtagsArray[j]]);
+                        string messageStr = String.Format("第{0}行的计算结果标签{1}，与第{2}行计算结果标签重复，请检查！", i + 1, outputtagsArray[j], outputtagnamelist[outputtagsArray[j]]);
                         logHelper.Error(messageStr);
                     }
                 }
@@ -694,14 +694,17 @@ namespace PSLCalcu
 
         #region 辅助函数，
         //查找字段对应的列
-        private int SearchField(string[] str,string key){  
-             
-            int ret=-1;   
-            for(int i=0;i<str.Length;i++){  
-                if(str[i]==key){
-                    ret=i;  
-                    break;  
-                }      
+        private int SearchField(string[] str, string key)
+        {
+
+            int ret = -1;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] == key)
+                {
+                    ret = i;
+                    break;
+                }
             }
 
             if (ret == -1)
@@ -709,19 +712,20 @@ namespace PSLCalcu
                 string messageStr = String.Format("找不到数据列{0}，请检查组态文件！", key);
                 MessageBox.Show(messageStr);
             }
-            
-            return ret;  
+
+            return ret;
         }
         //检查数据库类型字段：数据库类型必须是rtdb或者rdb，计算引擎要根据这个字段做读取数据的分支判断
-        private int checkSourceDb(int column){
-            int sum=0;
+        private int checkSourceDb(int column)
+        {
+            int sum = 0;
             List<string> errorlines = new List<string>();
 
             for (int i = this.firstDataRow; i < this.importdata.Length; i++)
             {
                 string sourcdb = this.importdata[i][column].Trim().ToLower();
                 this.importdata[i][column] = sourcdb;
-                if (sourcdb != "noinput" && sourcdb != "rtdb" && sourcdb != "opc" && sourcdb != "rdb" && sourcdb != "rdbset" ) 
+                if (sourcdb != "noinput" && sourcdb != "rtdb" && sourcdb != "opc" && sourcdb != "rdb" && sourcdb != "rdbset")
                 {
                     sum = sum + 1;
                     errorlines.Add((i - this.firstDataRow + 1).ToString());
@@ -732,10 +736,10 @@ namespace PSLCalcu
                 string messageStr;
                 messageStr = String.Format("概化计算组态文件组态信息错误。有数据库类型填写错误。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
-                string errorlinesStr = string.Join(",", errorlines.ToArray());                
-                messageStr += String.Format("****错误的数据行是(总表Excel行数)：{0}。", errorlinesStr);                
-                logHelper.Error(messageStr);                
-            }  
+                string errorlinesStr = string.Join(",", errorlines.ToArray());
+                messageStr += String.Format("****错误的数据行是(总表Excel行数)：{0}。", errorlinesStr);
+                logHelper.Error(messageStr);
+            }
             return sum;
         }
         //检查数据类型为rdbset时，对源数据进行替换和整理。支持两种格式：1、批量读取某算法结果标签。2、从文件批量读取。
@@ -748,7 +752,7 @@ namespace PSLCalcu
             //第三种配置源标签的方式：根据设备号和计算序号。比如：D;33;1
             //注意，以上两种情况下的源标签替换工作，都在导入计算配置csv文件的过程中完成。实际导入计算引擎数据库的，是已经替换好源标签的计算项。
 
-            int sum=0;
+            int sum = 0;
             List<string> errorlines = new List<string>();
             string csvFilePath = System.Environment.CurrentDirectory + "\\SourcTagConfig\\";
 
@@ -764,7 +768,7 @@ namespace PSLCalcu
                        )
                     {
                         //所有正确的配置在if中列举
-                        
+
                         //1、
                         //如果是配置为读取某算法结果标签，第一个配置项应为"M",即module。则后面字符串必须以三部分构成。
                         //如M;060000UnitLoad_000000;MDivBase;1d。
@@ -781,12 +785,12 @@ namespace PSLCalcu
 
                         //这里是正常情况，不做任何处理
                     }
-                    else 
+                    else
                     {
                         //不满足以上正常情况的，即为非正常情况，记错，跳转下一个
                         //sum = sum + 1;
                         //errorlines.Add((i - this.firstDataRow + 1).ToString());
-                        
+
                         //20181229修改，不满足以上条件，说明标签是直接用；配置好的多个标签，不需要要替换，但仍需要多个标签同时读取
                         //这种情况，无需替换，直接跳过
                         continue;
@@ -794,13 +798,13 @@ namespace PSLCalcu
 
                     if (tagnames[0].Trim().ToUpper() == "M")
                     {
-                       
+
                         //如果配置为M，如M;060000UnitLoad_000000;MDivBase;1d。就是读取某一个计算项所有结果。
                         //就是找到对应的算法项，并将算法项序号替换到sourcetagnameIndex字段中。如#calcuIndex;1
                         string sourcetagdescs = tagnames[1];
                         string modulename = tagnames[2];
                         string period = tagnames[3];
-                       
+
 
                         bool findflag = false;
                         for (int j = this.firstDataRow; j < this.importdata.Length; j++)
@@ -811,15 +815,15 @@ namespace PSLCalcu
                             //string temp3 = this.importdata[j][this.fintervalIndex].ToUpper() + this.importdata[j][this.fintervaltypeIndex].ToUpper();
                             //
                             //此处zuoweiqiang 修改过
-                           
+
                             if (this.importdata[j][this.fmodulenameIndex].ToUpper() == modulename.ToUpper() &&                  //前置计算项的算法模块名称与rdbset源标签中的算法模块名称相同
                                 this.importdata[j][this.sourcetagnameIndex].ToUpper() == sourcetagdescs.ToUpper() &&            //前置计算项的输入标签描述与rdbset源标签中引用的输入标签描述相同
                                 this.importdata[j][this.fintervalIndex].ToUpper() + this.importdata[j][this.fintervaltypeIndex].ToUpper() == period.ToUpper())  //前置计算项的计算周期与rdbset源标签中指定的核心周期相同
                             {
-                                this.importdata[i][this.sourcetagnameIndex] ="#calcuIndex;" +this.importdata[j][0];                         //将找到的行号給到columnsourctag
-                                                                                                                             //因为此时找到的计算项，其结果标签还没有生成
-                                                                                                                             //因此这没有办法直接填写当前项的源标签。
-                                                                                                                             //只能在后面先生成结果标签后，再填写源标签。在AutoReplaceSourceTags()中执行
+                                this.importdata[i][this.sourcetagnameIndex] = "#calcuIndex;" + this.importdata[j][0];                         //将找到的行号給到columnsourctag
+                                                                                                                                              //因为此时找到的计算项，其结果标签还没有生成
+                                                                                                                                              //因此这没有办法直接填写当前项的源标签。
+                                                                                                                                              //只能在后面先生成结果标签后，再填写源标签。在AutoReplaceSourceTags()中执行
                                 findflag = true;
                                 break;
                             }
@@ -829,7 +833,7 @@ namespace PSLCalcu
                             if (this.readyPslCalcuItems[j].fmodulename.ToUpper() == modulename.ToUpper() &&
                                this.readyPslCalcuItems[j].sourcetagname.ToUpper() == sourcetagdescs.ToUpper() &&
                                this.readyPslCalcuItems[j].finterval.ToString().ToUpper() + this.readyPslCalcuItems[j].fintervaltype.ToUpper() == period.ToUpper())
-                               this.importdata[i][this.sourcetagnameIndex] = "#calcuIndex;" + this.readyPslCalcuItems[j].fid;
+                                this.importdata[i][this.sourcetagnameIndex] = "#calcuIndex;" + this.readyPslCalcuItems[j].fid;
 
                         }
                         if (findflag == false)
@@ -838,7 +842,7 @@ namespace PSLCalcu
                             errorlines.Add((i - this.firstDataRow + 1).ToString());
                             continue;
                         }
-                       
+
                     }//end if “M”
 
                     if (tagnames[0].Trim().ToUpper() == "F")
@@ -874,7 +878,7 @@ namespace PSLCalcu
                         //如果配置成D;30;1-4。就是读取同属某一个设备30所有点，序号为1到4的所有计算项的计算结果
                         //如果配置成D;30;1|4。就是读取同属某一个设备30所有点，序号为1和4的所有计算项的计算结果
                         //就要找到所有的算法项，并将算法项序号替换到sourcetagnameIndex字段中。如#calcuIndex;1;2;3;4;5
-                        
+
                         //找出有哪些计算号
                         try
                         {
@@ -951,17 +955,17 @@ namespace PSLCalcu
 
                 }//end if rebset
             }//end for
-            
+
             //根据结果给出提示
             if (sum != 0)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。rdbset类型的计算源标签格式不正确。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。rdbset类型的计算源标签格式不正确。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
-                messageStr += String.Format("****错误的源标签和对应的算法是(总表Excel行数)：{0}。", errorlinesStr);               
+                messageStr += String.Format("****错误的源标签和对应的算法是(总表Excel行数)：{0}。", errorlinesStr);
                 logHelper.Error(messageStr);
-            }    
+            }
             return sum;
         }
         //检查node字段必须能转化成数字
@@ -973,7 +977,7 @@ namespace PSLCalcu
             {
                 string nodeStr = this.importdata[i][column].Trim();
 
-                try 
+                try
                 {
                     Convert.ToInt32(nodeStr);
                 }
@@ -999,7 +1003,7 @@ namespace PSLCalcu
         {
             int sum = 0;
             List<string> errorlines = new List<string>();
-           
+
             for (int i = this.firstDataRow; i < this.importdata.Length; i++)
             {
                 string groupStr = this.importdata[i][column].Trim();
@@ -1056,7 +1060,7 @@ namespace PSLCalcu
             return sum;
         }
         //检查标签配置的算法是否重复：一个标签某一算法只能配置一次。
-        private int checkCalcuUnique(int columntag,int columnmodule) 
+        private int checkCalcuUnique(int columntag, int columnmodule)
         {
 
             int sum = 0;
@@ -1079,22 +1083,22 @@ namespace PSLCalcu
                     errorlines.Add(sourceTagAndmoduleName[i]);
                 }
             }
-           
-            if (sum != 0) 
+
+            if (sum != 0)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。有同一标签使用相同算法两次的重复。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。有同一标签使用相同算法两次的重复。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****错误的源标签和对应的算法是(总表Excel行数)：{0}。", errorlinesStr);
                 logHelper.Error(messageStr);
-            }    
+            }
             return sum;
         }
         //检查“计算模块名称”字段：必须是在pslmodules表内存在的。
         private int checkfModuleName(int column)
         {
-            int sum=0;
+            int sum = 0;
             List<string> errorlines = new List<string>();
 
             List<PSLModule> pslmodules = PSLModulesDAO.ReadData();
@@ -1105,22 +1109,22 @@ namespace PSLCalcu
                 try
                 {   //在pslmodules中找modulename，找不到会报错
                     int moduleindex = pslmodules.FindIndex(x => x.modulename == modulename);    //这行有可能出错，找不到算法模块 
-                    if (moduleindex == -1) 
+                    if (moduleindex == -1)
                     {
                         sum = sum + 1;
                         errorlines.Add((i - this.firstDataRow + 1).ToString());
                     }
                 }
-                catch 
+                catch
                 {
                     sum = sum + 1;
                     errorlines.Add((i - this.firstDataRow + 1).ToString());
-                }               
+                }
             }
             if (sum != 0)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法模块在算法库中不存在。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法模块在算法库中不存在。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****算法配置有问题的数据行是(总表Excel行数)：{0}。请仔细核对算法模块的名称，包括大小写！", errorlinesStr);
@@ -1129,7 +1133,7 @@ namespace PSLCalcu
             return sum;
         }
         //检查“计算模块参数”字段：计算模块参数必须符合模块参数的正则表达式
-        private int checkfModulePara(int columnmodulename,int columnmoduleparas)
+        private int checkfModulePara(int columnmodulename, int columnmoduleparas)
         {
             int sum = 0;
             List<string> errorlines = new List<string>();
@@ -1140,38 +1144,41 @@ namespace PSLCalcu
                 string modulename = this.importdata[i][columnmodulename].Trim();     //特别注意这里必须用trim()函数，否则单元格的前后空格会影响判断的准确性
                 string moduleparas = this.importdata[i][columnmoduleparas].Trim();   //获取计算参数字符串                
                 try
-                {                   
-                    Assembly assembly = Assembly.LoadFrom(APPConfig.DLLNAME_CALCUMODULE);               //获得PSLCalcu.exe
-                    Type type = assembly.GetType(APPConfig.NAMESPACE_CALCUMODULE+"." + modulename);     //获得PSLCalcu.exe中指定计算模块
-                    object tmpModuleObj = Activator.CreateInstance(type);                               //获取计算公式类实例
-                    //如果对应的类有moduleParaExample属性，则获取该属性。没有该属性，则返回值为null
-                    PropertyInfo GetModuleParaExample = type.GetProperty("moduleParaExample");
-                    //如果对应的类有moduleParaExample属性，则获得具体值。
-                    string moduleParaExample="";
-                    if (GetModuleParaExample!=null) moduleParaExample = (string)GetModuleParaExample.GetValue(tmpModuleObj, null);
-                    //如果计算公式的paraexample不为空，则用正则表达式对配置信息中的para进行检查
-                    if (moduleParaExample!="" | moduleParaExample.Trim() != "")
+                {
+                    if (!APPConfig.noCheckFunction.Contains(modulename))
                     {
-                        PropertyInfo GetModuleParaRegex = type.GetProperty("moduleParaRegex");
-                        Regex moduleParaRegex = (Regex)GetModuleParaRegex.GetValue(tmpModuleObj, null);
-                        if (!moduleParaRegex.IsMatch(moduleparas))
+                        Assembly assembly = Assembly.LoadFrom(APPConfig.DLLNAME_CALCUMODULE);               //获得PSLCalcu.exe
+                        Type type = assembly.GetType(APPConfig.NAMESPACE_CALCUMODULE + "." + modulename);     //获得PSLCalcu.exe中指定计算模块
+                        object tmpModuleObj = Activator.CreateInstance(type);                               //获取计算公式类实例
+                                                                                                            //如果对应的类有moduleParaExample属性，则获取该属性。没有该属性，则返回值为null
+                        PropertyInfo GetModuleParaExample = type.GetProperty("moduleParaExample");
+                        //如果对应的类有moduleParaExample属性，则获得具体值。
+                        string moduleParaExample = "";
+                        if (GetModuleParaExample != null) moduleParaExample = (string)GetModuleParaExample.GetValue(tmpModuleObj, null);
+                        //如果计算公式的paraexample不为空，则用正则表达式对配置信息中的para进行检查
+                        if (moduleParaExample != "" | moduleParaExample.Trim() != "")
                         {
-                            sum = sum + 1;
-                            errorlines.Add((i - this.firstDataRow + 1).ToString());
+                            PropertyInfo GetModuleParaRegex = type.GetProperty("moduleParaRegex");
+                            Regex moduleParaRegex = (Regex)GetModuleParaRegex.GetValue(tmpModuleObj, null);
+                            if (!moduleParaRegex.IsMatch(moduleparas))
+                            {
+                                sum = sum + 1;
+                                errorlines.Add((i - this.firstDataRow + 1).ToString());
+                            }
                         }
-                    }   
+                    }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     sum = sum + 1;
                     errorlines.Add((i - this.firstDataRow + 1).ToString());
-                  
+
                 }
             }
             if (sum != 0)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。算法参数格式有误。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。算法参数格式有误。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****算法配置有问题的数据行是(总表Excel行数)：{0}。", errorlinesStr);
@@ -1181,9 +1188,9 @@ namespace PSLCalcu
             return sum;
         }
         //检查“计算结果数量”字段是否正确：必须是由Y或N构成，长度必须和计算模块包含的算法项数量相同。
-        private int checkfOutputNumber(int columnmodulename,int columnoutputnumber)
+        private int checkfOutputNumber(int columnmodulename, int columnoutputnumber)
         {
-            int sum=0;
+            int sum = 0;
             List<string> errorlines = new List<string>();
 
             List<PSLModule> pslmodules = PSLModulesDAO.ReadData();
@@ -1191,32 +1198,36 @@ namespace PSLCalcu
             for (int i = this.firstDataRow; i < this.importdata.Length; i++)
             {
                 string modulename = this.importdata[i][columnmodulename].Trim();
-                 try
-                 {
-                     int moduleindex = pslmodules.FindIndex(x => x.modulename == modulename);    //这行有可能出错，找不到算法模块 
-                     int outputnumber = pslmodules[moduleindex].moduleoutputnumber;
-                     if (outputnumber == 0)
-                     {   //如果对应算法的输入数量为0，表示算法实际的输出数量不确定，直接跳过检查。比如MReadConst。
-                         continue;
-                     }
-                     else if (int.Parse(this.importdata[i][columnoutputnumber].Trim()) != outputnumber)
-                     {
-                         sum = sum + 1;
-                         errorlines.Add((i - this.firstDataRow + 1).ToString());
-                     }
-                 }
-                 catch (Exception ex)
-                 {
-                     sum = sum + 1;
-                     errorlines.Add((i - this.firstDataRow + 1).ToString());
-                     
-                 }
+
+                try
+                {
+                    if (!APPConfig.noCheckFunction.Contains(modulename))
+                    {
+                        int moduleindex = pslmodules.FindIndex(x => x.modulename == modulename);    //这行有可能出错，找不到算法模块 
+                        int outputnumber = pslmodules[moduleindex].moduleoutputnumber;
+                        if (outputnumber == 0)
+                        {   //如果对应算法的输入数量为0，表示算法实际的输出数量不确定，直接跳过检查。比如MReadConst。
+                            continue;
+                        }
+                        else if (int.Parse(this.importdata[i][columnoutputnumber].Trim()) != outputnumber)
+                        {
+                            sum = sum + 1;
+                            errorlines.Add((i - this.firstDataRow + 1).ToString());
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    sum = sum + 1;
+                    errorlines.Add((i - this.firstDataRow + 1).ToString());
+
+                }
 
             }
             if (sum != 0)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法模块计算结果数量有误。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法模块计算结果数量有误。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****计算结果数量有问题的数据行是(总表Excel行数)：{0}。", errorlinesStr);
@@ -1237,7 +1248,7 @@ namespace PSLCalcu
                 string mre = this.importdata[i][columnsourcetagmrbIndex].Trim();
                 try
                 {
-                    if (mre=="")
+                    if (mre == "")
                     {
                         sum = sum + 1;
                         errorlines.Add((i - this.firstDataRow + 1).ToString());
@@ -1253,7 +1264,7 @@ namespace PSLCalcu
             if (sum != 0)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法模块量程最小值不能为空。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法模块量程最小值不能为空。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****计算结果数量有问题的数据行是(总表Excel行数)：{0}。", errorlinesStr);
@@ -1290,7 +1301,7 @@ namespace PSLCalcu
             if (sum != 0)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法模块量程最大值不能为空。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法模块量程最大值不能为空。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****计算结果数量有问题的数据行是(总表Excel行数)：{0}。", errorlinesStr);
@@ -1299,9 +1310,9 @@ namespace PSLCalcu
             return sum;
         }
         //检查“计算结果标志位”字段是否正确：算法标志位数量，则数量必须和输出数量一致
-        private int checkfAlgorithmsFlag(int columnmodulename,int columnalgorithmsflag)
+        private int checkfAlgorithmsFlag(int columnmodulename, int columnalgorithmsflag)
         {
-            int sum=0;
+            int sum = 0;
             List<string> errorlines = new List<string>();
 
             List<PSLModule> pslmodules = PSLModulesDAO.ReadData();
@@ -1310,43 +1321,46 @@ namespace PSLCalcu
                 string modulename = this.importdata[i][columnmodulename].Trim();
                 try
                 {   //在pslmodules中找modulename，找不到会报错
-                    int moduleindex = pslmodules.FindIndex(x => x.modulename == modulename);    //这行有可能出错，找不到算法模块 
-                    int outputnumber=pslmodules[moduleindex].moduleoutputnumber;
-                    if (outputnumber == 0)
-                    {   //如果输入结果为0，表示输出数量不确定，不需要检查标志，直接跳过
-                        continue;
-                    }
-                    string algorithmflag = this.importdata[i][columnalgorithmsflag].Trim();
-                    Regex regex = new Regex(@"^([ynYN]){"+outputnumber.ToString()+"}$");
-                    if (!regex.IsMatch(algorithmflag))
+                    if (!APPConfig.noCheckFunction.Contains(modulename))
                     {
-                        sum = sum + 1;
-                        errorlines.Add((i - this.firstDataRow + 1).ToString());
+                        int moduleindex = pslmodules.FindIndex(x => x.modulename == modulename);    //这行有可能出错，找不到算法模块 
+                        int outputnumber = pslmodules[moduleindex].moduleoutputnumber;
+                        if (outputnumber == 0)
+                        {   //如果输入结果为0，表示输出数量不确定，不需要检查标志，直接跳过
+                            continue;
+                        }
+                        string algorithmflag = this.importdata[i][columnalgorithmsflag].Trim();
+                        Regex regex = new Regex(@"^([ynYN]){" + outputnumber.ToString() + "}$");
+                        if (!regex.IsMatch(algorithmflag))
+                        {
+                            sum = sum + 1;
+                            errorlines.Add((i - this.firstDataRow + 1).ToString());
+                        }
                     }
                 }
-                catch(Exception ex) 
+                catch (Exception ex)
                 {
                     sum = sum + 1;
                     errorlines.Add((i - this.firstDataRow + 1).ToString());
-                } 
-                
+                }
+
             }
             if (sum != 0)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法计算结果标志位有误。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法计算结果标志位有误。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****计算结果标志位有问题的数据行是(总表Excel行数)：{0}。", errorlinesStr);
-                logHelper.Error(messageStr);              
+                logHelper.Error(messageStr);
             }
             return sum;
         }
         //不用了！计算结果标签名全部自动生成。检查“计算结果名称”字段数量:计算结果输出标签如果不为空，则数量必须和输出数量一致:2017.12.26修改。修改计算结果的标签名生成规则。这个函数不在使用       
-        private int checkfOutputPSLNames(int columnmodulename,int columnoutputplsnames)
-         {
+        private int checkfOutputPSLNames(int columnmodulename, int columnoutputplsnames)
+        {
             //输出项名称用分号分隔，不计算的不取结果的，要用空字符站位。
-            int sum=0;
+            int sum = 0;
             List<string> errorlines = new List<string>();
 
             List<PSLModule> pslmodules = PSLModulesDAO.ReadData();
@@ -1358,69 +1372,72 @@ namespace PSLCalcu
                     try
                     {   //在pslmodules中找modulename，找不到会报错
                         int moduleindex = pslmodules.FindIndex(x => x.modulename == modulename);    //这行有可能出错，找不到算法模块 
-                        int outputnumber=pslmodules[moduleindex].moduleoutputnumber;
+                        int outputnumber = pslmodules[moduleindex].moduleoutputnumber;
                         string[] outputnames = Regex.Split(this.importdata[i][columnoutputplsnames].Trim(), ";|；");
-                        if (outputnumber != outputnames.Length )
+                        if (outputnumber != outputnames.Length)
                         {
-                             sum = sum + 1;
-                             errorlines.Add((i - this.firstDataRow + 1).ToString());
+                            sum = sum + 1;
+                            errorlines.Add((i - this.firstDataRow + 1).ToString());
                         }
                     }
                     catch
                     {
                         sum = sum + 1;
                         errorlines.Add((i - this.firstDataRow + 1).ToString());
-                    } 
+                    }
                 }
             }
             if (sum != 0)
-            {        
+            {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法计算结果标签数量与算法输出数量不符。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法计算结果标签数量与算法输出数量不符。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****数量不符的数据行是(总表Excel行数)：{0}。", errorlinesStr);
-                logHelper.Error(messageStr); 
+                logHelper.Error(messageStr);
             }
             return sum;
-         }
+        }
         //检查“计算结果别名”数量是否正确
-        private int checkOutputTagAlias(int columnoutputpsltagalias ,int columnoutputnumberIndex)
-         {
+        private int checkOutputTagAlias(int columnoutputpsltagalias, int columnoutputnumberIndex)
+        {
             //输出项名称用分号分隔，不计算的不取结果的，要用空字符站位。
-            int sum=0;
+            int sum = 0;
             List<string> errorlines = new List<string>();
-           
+
             for (int i = this.firstDataRow; i < this.importdata.Length; i++)
             {
-                if (this.importdata[i][columnoutputpsltagalias].Trim() != "")
+                if (!APPConfig.noCheckFunction.Contains(this.importdata[i][this.fmodulenameIndex].Trim()))
                 {
-                    string[] outputalias = Regex.Split(this.importdata[i][columnoutputpsltagalias].Trim(), ";|；");
-                    if(outputalias.Length.ToString()!=this.importdata[i][columnoutputnumberIndex])
-                    {   
-                        sum = sum + 1;
-                        errorlines.Add((i - this.firstDataRow + 1).ToString());                       
+                    if (this.importdata[i][columnoutputpsltagalias].Trim() != "")
+                    {
+                        string[] outputalias = Regex.Split(this.importdata[i][columnoutputpsltagalias].Trim(), ";|；");
+                        if (outputalias.Length.ToString() != this.importdata[i][columnoutputnumberIndex])
+                        {
+                            sum = sum + 1;
+                            errorlines.Add((i - this.firstDataRow + 1).ToString());
+                        }
+
                     }
-                    
                 }
             }
             if (sum != 0)
-            {        
+            {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法计算结果标签别名数量与算法输出数量不符。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法计算结果标签别名数量与算法输出数量不符。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****数量不符的数据行是(总表Excel行数)：{0}。", errorlinesStr);
-                logHelper.Error(messageStr); 
+                logHelper.Error(messageStr);
             }
             return sum;
-         }
-        
+        }
+
         //检查“计算间隔”字段：不能为空。mysql整形不能为空
         private int checkfInterval(int column)
         {
             //输出项名称用分号分隔，不计算的不取结果的，要用空字符站位。
-            int sum=0;
+            int sum = 0;
             List<string> errorlines = new List<string>();
             for (int i = this.firstDataRow; i < this.importdata.Length; i++)
             {
@@ -1432,12 +1449,12 @@ namespace PSLCalcu
                 {
                     sum = sum + 1;
                     errorlines.Add((i - this.firstDataRow + 1).ToString());
-                }                
+                }
             }
             if (sum != 0)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法计算间隔填写有误。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法计算间隔填写有误。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****填写有误的数据行是(总表Excel行数)：{0}。", errorlinesStr);
@@ -1466,7 +1483,7 @@ namespace PSLCalcu
             if (sum != 0)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法计算延时填写有误。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法计算延时填写有误。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****填写有误的数据行是(总表Excel行数)：{0}。", errorlinesStr);
@@ -1476,7 +1493,7 @@ namespace PSLCalcu
         }
         //检查startdate
         private int checkfStartdate(int column)
-        { 
+        {
             //
             int sum = 0;
             List<string> errorlines = new List<string>();
@@ -1497,7 +1514,7 @@ namespace PSLCalcu
             if (sum != 0)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法起始时间填写有误。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。配置的算法起始时间填写有误。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****填写有误的数据行是(总表Excel行数)：{0}。", errorlinesStr);
@@ -1506,7 +1523,7 @@ namespace PSLCalcu
             return sum;
         }
         //不用了！！该函数已将被CheckCondPSLName取代。检查“计算条件标签名”字段：必须是已经存在的计算结果，必须在psltagnameidmap中存在
-        private int checkCondPSLTagName(int column) 
+        private int checkCondPSLTagName(int column)
         {
             //
             int sum = 0;
@@ -1531,7 +1548,7 @@ namespace PSLCalcu
             if (sum != 0)
             {
                 string messageStr;
-                messageStr = String.Format("概化计算组态文件组态信息错误。配置的条件标签不存在。请检查组态文件！") + Environment.NewLine;                
+                messageStr = String.Format("概化计算组态文件组态信息错误。配置的条件标签不存在。请检查组态文件！") + Environment.NewLine;
                 //logHelper.Error(messageStr);
                 string errorlinesStr = string.Join(",", errorlines.ToArray());
                 messageStr += String.Format("****填写有误的数据行是(总表Excel行数)：{0}。", errorlinesStr);
