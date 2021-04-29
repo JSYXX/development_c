@@ -252,19 +252,32 @@ namespace PSLCalcu.Module
                 }
                 //声明加权和
                 double SumAmount = 0;
+                double EffectiveCount = 0;
                 for (int x = 0; x < inputs.Length; x++)
                 {
-                    SumAmount += inputs[x][0].Value * kiList[x];
+                    if (inputs[x] != null && inputs[x].Count > 0)
+                    {
+                        SumAmount += inputs[x][0].Value * kiList[x];
+                        EffectiveCount++;
+                    }
                 }
                 //声明返回参数
                 List<PValue> result = new List<PValue>();
-                double MANGSum, MANGAvg = 0;
-                MANGSum = k * SumAmount + b;
-                MANGAvg = k * SumAmount / (double)(inputs.Length) + b;
-                results[0] = new List<PValue>();
-                results[0].Add(new PValue(MANGSum, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
-                results[1] = new List<PValue>();
-                results[1].Add(new PValue(MANGAvg, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                if (EffectiveCount > 0)
+                {
+                    double MANGSum, MANGAvg = 0;
+                    MANGSum = k * SumAmount + b;
+                    MANGAvg = k * SumAmount / (double)(EffectiveCount) + b;
+                    results[0] = new List<PValue>();
+                    results[0].Add(new PValue(MANGSum, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                    results[1] = new List<PValue>();
+                    results[1].Add(new PValue(MANGAvg, calcuinfo.fstarttime, calcuinfo.fendtime, 0));
+                }
+                else
+                {
+                    _fatalFlag = true;
+                    _fatalInfo = "有效数据个数为0";
+                }
 
                 return new Results(results, _errorFlag, _errorInfo, _warningFlag, _warningInfo, _fatalFlag, _fatalInfo);
 
